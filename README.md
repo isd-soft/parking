@@ -1,3 +1,6 @@
 
-web-app REST CRUD API with Spring Boot, Mysql, JPA and Hibernate 
+Project build during an internship program. 
+
+--- ISD ParKing ---
+(Angular, Spring Boot, PostgreSQL, JPA, Hibernate) 
 
