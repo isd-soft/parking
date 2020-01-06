@@ -1,3 +1,5 @@
+
+
 // defines pins numbers
 const int trigPin = 2;
 const int echoPin = 5;
@@ -5,6 +7,7 @@ const int echoPin = 5;
 // defines variables
 long duration;
 int distance;
+boolean isAvailable1; 
 
 void setup() {
 pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
@@ -31,4 +34,18 @@ distance= duration*0.034/2;
 // Prints the distance on the Serial Monitor
 Serial.print("Distance: ");
 Serial.println(distance);
+
+if (distance>=20){
+  //digitalWrite(3,HIGH);
+  Serial.println("Park place is occupied:");
+  isAvailable1= true;
+  Serial.println(isAvailable1);
+
+}
+else {
+  Serial.println("Park place is free");
+  isAvailable1=false;
+  Serial.println(isAvailable1);
+
+}
 }
