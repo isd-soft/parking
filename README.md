@@ -1,3 +1,3 @@
 
-# Sample REST CRUD API with Spring Boot, Mysql, JPA and Hibernate 
+web-app REST CRUD API with Spring Boot, Mysql, JPA and Hibernate 
 
