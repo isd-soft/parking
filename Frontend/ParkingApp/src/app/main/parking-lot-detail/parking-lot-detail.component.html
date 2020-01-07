@@ -1,0 +1,23 @@
+<h2>Parking lot details</h2>
+<div *ngIf="parkingLot != null">
+
+  <div class="btn lot col-12"  [ngClass]="{'green': parkingLot.isFree, 'red' : !parkingLot.isFree, 'grey' : parkingLot == null}">
+    <i class="fas fa-car" *ngIf="!parkingLot.isFree"></i>
+    <i class="fas fa-parking" *ngIf="parkingLot.isFree"></i>
+  </div>
+
+  <div class="col-sm-12">
+    <div>
+      <span >Name: </span>
+      <span class="lot-name">{{parkingLot.name}}</span>
+    </div>
+    <div>
+      <span>Status: </span>
+      <span>{{parkingLot.isFree ? 'FREE' : 'OCCUPIED'}} </span><span *ngIf="!parkingLot.isFree">since {{parkingLot.dateTime.toUTCString()}}</span>
+    </div>
+  </div>
+</div>
+
+<div class="error" [hidden]="parkingLot != null">Something went wrong, please click on Refresh button</div>
+
+<div class="btn btn-info refresh" (click)="goBack()">Back</div>

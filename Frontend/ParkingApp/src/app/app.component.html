@@ -1,0 +1,6 @@
+<div class="container" *ngIf="userLogged">
+  <app-menu ></app-menu>
+  <router-outlet></router-outlet>
+</div>
+
+<app-login-form *ngIf="!userLogged" (userLoginEvent)="userLogged = true"></app-login-form>

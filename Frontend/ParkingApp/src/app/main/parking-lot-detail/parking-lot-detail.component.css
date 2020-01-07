@@ -1,0 +1,24 @@
+.lot-name {
+  text-transform: uppercase;
+}
+
+.refresh {
+  min-width: 100%;
+  margin-top: 20px;
+}
+
+.green {
+  background-color: #20b600;
+}
+
+.red {
+  background-color: #fb0006;
+}
+
+.fas, .far {
+  font-size: 3rem;
+}
+
+.lot {
+  cursor: unset;
+}
