@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * The interface User repository.
+ * The interface ParkingLot repository.
  *
  * @author ISD Inthership Team
  */

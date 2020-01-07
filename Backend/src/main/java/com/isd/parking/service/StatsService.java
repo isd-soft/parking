@@ -20,6 +20,9 @@ public class StatsService {
 
     public List<StatsRow> listAll() {
 
+        //Template mockup datasource for testing API
+        //it will be removed after DB connect
+
         List<StatsRow> s = new ArrayList<>();
         UUID uuid = UUID.randomUUID();
 

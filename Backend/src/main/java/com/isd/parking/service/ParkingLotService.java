@@ -18,6 +18,9 @@ public class ParkingLotService {
 
     public List<ParkingLot> listAll() {
 
+        //Template mockup datasource for testing API
+        //it will be removed after DB connect
+
         List<ParkingLot> p = new ArrayList<>();
         Date date = new Date(System.currentTimeMillis());
         UUID uuid = UUID.randomUUID();
