@@ -13,7 +13,8 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
    getAllParkingLots(): Observable<Array<ParkingLot>> {
-     return this.http.get<Array<ParkingLot>>(environment.restUrl + '/parkingLots')
+     console.log(this.http.get<Array<ParkingLot>>(environment.restUrl + '/api/v1/parking'));
+     return this.http.get<Array<ParkingLot>>(environment.restUrl + '/api/v1/parking')
      .pipe(
        map(
          data => data.map(

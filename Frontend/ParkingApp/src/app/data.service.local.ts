@@ -14,82 +14,82 @@ export class DataService {
     this.parkingLots = new Array<ParkingLot>();
 
     const pl1 = new ParkingLot();
-    pl1.id = 1;
-    pl1.name = 'lot 01';
-    pl1.isFree = false;
-    pl1.dateTime = new Date();
+    pl1.id = 'f9aa68b9-779d-4853-8277-4f7120c183d5';
+    pl1.number = 'lot 01';
+    pl1.status = 'FREE';
+    pl1.date = new Date();
 
     this.parkingLots.push(pl1);
 
     const pl2 = new ParkingLot();
-    pl2.id = 2;
-    pl2.name = 'lot 02';
-    pl2.isFree = false;
-    pl2.dateTime = new Date();
+    pl2.id = 'f9aa68b9-779d-4853-8277-4f7120c183d5';
+    pl2.number = 'lot 02';
+    pl2.status = 'FREE';
+    pl2.date = new Date();
 
     this.parkingLots.push(pl2);
 
     const pl3 = new ParkingLot();
-    pl3.id = 3;
-    pl3.name = 'lot 03';
-    pl3.isFree = true;
-    pl3.dateTime = new Date();
+    pl3.id = 'f9aa68b9-779d-4853-8277-4f7120c183d5';
+    pl3.number = 'lot 03';
+    pl3.status = 'OCCUPIED';
+    pl3.date = new Date();
 
     this.parkingLots.push(pl3);
 
     const pl4 = new ParkingLot();
-    pl4.id = 4;
-    pl4.name = 'lot 04';
-    pl4.isFree = true;
-    pl4.dateTime = new Date();
+    pl4.id = 'f9aa68b9-779d-4853-8277-4f7120c183d5';
+    pl4.number = 'lot 04';
+    pl4.status = 'UNKNOWN';
+    pl4.date = new Date();
 
     this.parkingLots.push(pl4);
 
     const pl5 = new ParkingLot();
-    pl5.id = 5;
-    pl5.name = 'lot 05';
-    pl5.isFree = false;
-    pl5.dateTime = new Date();
+    pl5.id = 'f9aa68b9-779d-4853-8277-4f7120c183d5';
+    pl5.number = 'lot 05';
+    pl5.status = 'OCCUPIED';
+    pl5.date = new Date();
 
     this.parkingLots.push(pl5);
 
     const pl6 = new ParkingLot();
-    pl6.id = 6;
-    pl6.name = 'lot 06';
-    pl6.isFree = true;
-    pl6.dateTime = new Date();
+    pl6.id = 'f9aa68b9-779d-4853-8277-4f7120c183d5';
+    pl6.number = 'lot 06';
+    pl6.status = 'FREE';
+    pl6.date = new Date();
 
     this.parkingLots.push(pl6);
 
     const pl7 = new ParkingLot();
-    pl7.id = 7;
-    pl7.name = 'lot 07';
-    pl7.isFree = false;
-    pl7.dateTime = new Date();
+    pl7.id = 'f9aa68b9-779d-4853-8277-4f7120c183d5';
+    pl7.number = 'lot 07';
+    pl7.status = 'FREE';
+    pl7.date = new Date();
 
     this.parkingLots.push(pl7);
 
     const pl8 = new ParkingLot();
-    pl8.id = 8;
-    pl8.name = 'lot 08';
-    pl8.isFree = true;
-    pl8.dateTime = new Date();
+    pl8.id = 'f9aa68b9-779d-4853-8277-4f7120c183d5';
+    pl8.number = 'lot 08';
+    pl8.status = 'OCCUPIED';
+    pl8.date = new Date();
 
     this.parkingLots.push(pl8);
 
     const pl9 = new ParkingLot();
-    pl9.id = 9;
-    pl9.name = 'lot 09';
-    pl9.isFree = true;
-    pl9.dateTime = new Date();
+    pl9.id = 'f9aa68b9-779d-4853-8277-4f7120c183d5';
+    pl9.number = 'lot 09';
+    pl9.status = 'FREE';
+    pl9.date = new Date();
 
     this.parkingLots.push(pl9);
 
     const pl10 = new ParkingLot();
-    pl10.id = 10;
-    pl10.name = 'lot 10';
-    pl10.isFree = false;
-    pl10.dateTime = new Date();
+    pl10.id = 'f9aa68b9-779d-4853-8277-4f7120c183d5';
+    pl10.number = 'lot 10';
+    pl10.status = 'OCCUPIED';
+    pl10.date = new Date();
 
     this.parkingLots.push(pl10);
    }

@@ -6,12 +6,13 @@
 
 <div class="row" *ngIf="action !== 'view'">
   <div class="col-12 col-sm-6 col-md-4 col-lg-3 elem" *ngFor="let parkingLot of parkingLots">
-    <div class="lot-name">{{parkingLot.name}}</div>
-    <div class="btn lot col-12"  [ngClass]="{'green': parkingLot.isFree,
-                                            'red' : !parkingLot.isFree,
-                                            'grey' : parkingLot == null}" (click)="showDetails(parkingLot.id)">
-      <i class="fas fa-car" *ngIf="!parkingLot.isFree"></i>
-      <i class="fas fa-parking" *ngIf="parkingLot.isFree"></i>
+    <div class="lot-name">{{parkingLot.number}}</div>
+    <div class="btn lot col-12"  [ngClass]="{'green': parkingLot.status === 'FREE',
+                                            'red' : parkingLot.status === 'OCCUPIED',
+                                            'grey' : parkingLot.status === 'UNKNOWN'}" (click)="showDetails(parkingLot.id)">
+      <i class="fas fa-car" *ngIf="parkingLot.status === 'OCCUPIED'"></i>
+      <i class="fas fa-parking" *ngIf="parkingLot.status === 'FREE'"></i>
+      <i class="fas fa-ban" *ngIf="parkingLot.status === 'UNKNOWN'"></i>
     </div>
   </div>
 </div>
@@ -20,7 +21,7 @@
   <h2 class="error col-12" style="text-align: center; margin-bottom: 20px;">Connection error, please contact support</h2>
   <div class="col-12 col-sm-6 col-md-4 col-lg-3 elem" *ngFor="let lot of noData">
     <div class="lot-name">{{'LOT ' + (lot < 10 ? 0 : '') + lot}}</div>
-    <div class="btn lot col-12"  [ngClass]="{'grey' : parkingLot == null}">
+    <div class="btn lot col-12"  [ngClass]="{'grey' : parkingLot == 'UNKNOWN'}">
       <i class="fas fa-ban"></i>
     </div>
   </div>

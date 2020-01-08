@@ -1,15 +1,15 @@
 export class ParkingLot {
-  id: number;
-  name: string;
-  isFree: boolean;
-  dateTime: Date;
+  id: string;
+  number: string;
+  status: string;
+  date: Date;
 
   static fromHttp(pl: ParkingLot): ParkingLot {
     const newParkingLot = new ParkingLot();
     newParkingLot.id = pl.id;
-    newParkingLot.name = pl.name;
-    newParkingLot.isFree = pl.isFree;
-    newParkingLot.dateTime = new Date(pl.dateTime);
+    newParkingLot.number = pl.number;
+    newParkingLot.status = pl.status;
+    newParkingLot.date = new Date(pl.date);
     return newParkingLot;
   }
 }

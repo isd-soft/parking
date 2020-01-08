@@ -1,19 +1,19 @@
 <h2>Parking lot details</h2>
 <div *ngIf="parkingLot != null">
 
-  <div class="btn lot col-12"  [ngClass]="{'green': parkingLot.isFree, 'red' : !parkingLot.isFree, 'grey' : parkingLot == null}">
-    <i class="fas fa-car" *ngIf="!parkingLot.isFree"></i>
-    <i class="fas fa-parking" *ngIf="parkingLot.isFree"></i>
+  <div class="btn lot col-12"  [ngClass]="{'green': parkingLot.status === 'FREE', 'red' : parkingLot.status === 'OCCUPIED', 'grey' : parkingLot.status === 'UNKNOWN'}">
+    <i class="fas fa-car" *ngIf="parkingLot.status === 'OCCUPIED'"></i>
+    <i class="fas fa-parking" *ngIf="parkingLot.status === 'FREE'"></i>
   </div>
 
   <div class="col-sm-12">
     <div>
       <span >Name: </span>
-      <span class="lot-name">{{parkingLot.name}}</span>
+      <span class="lot-name">{{parkingLot.number}}</span>
     </div>
     <div>
       <span>Status: </span>
-      <span>{{parkingLot.isFree ? 'FREE' : 'OCCUPIED'}} </span><span *ngIf="!parkingLot.isFree">since {{parkingLot.dateTime.toUTCString()}}</span>
+      <span>{{parkingLot.status}} </span><span *ngIf="parkingLot.status === 'OCCUPIED'">since {{parkingLot.date.toUTCString()}}</span>
     </div>
   </div>
 </div>
