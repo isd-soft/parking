@@ -15,7 +15,6 @@ public class ParkingLot {
     @GeneratedValue(strategy = GenerationType.AUTO)
     UUID id;
     Integer number;
-    Time time;
     Date date;
     ParkingLotStatus status;
 
@@ -25,14 +24,6 @@ public class ParkingLot {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public Time getTime() {
-        return time;
-    }
-
-    public void setTime(Time time) {
-        this.time = time;
     }
 
     public Date getDate() {
@@ -50,7 +41,6 @@ public class ParkingLot {
     public void setNumber(Integer number) {
         this.number = number;
     }
-
 
     public ParkingLotStatus getStatus() {
         return status;
