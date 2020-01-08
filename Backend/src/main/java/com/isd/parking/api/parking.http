@@ -12,7 +12,7 @@ PUT {{host-url}}//parking
 Content-Type: application/json
 
 {
-  "parkingLotId": 1,
-  "status": "FREE"
+  "parkingLotId": 15,
+  "status": "TEST"
 }
 ###

@@ -1,6 +1,6 @@
 package com.isd.parking.controller;
 
-import com.isd.parking.config.EndpointsAPI;
+import com.isd.parking.api.EndpointsAPI;
 import com.isd.parking.exception.ResourceNotFoundException;
 import com.isd.parking.model.ParkingLot;
 import com.isd.parking.model.ParkingLotStatus;

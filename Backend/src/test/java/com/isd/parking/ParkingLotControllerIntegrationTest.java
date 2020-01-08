@@ -1,7 +1,7 @@
 package com.isd.parking;
 
 
-import com.isd.parking.config.EndpointsAPI;
+import com.isd.parking.api.EndpointsAPI;
 import com.isd.parking.model.ParkingLot;
 import com.isd.parking.model.ParkingLotStatus;
 import org.junit.Test;

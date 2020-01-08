@@ -1,4 +1,4 @@
-package com.isd.parking.config;
+package com.isd.parking.api;
 
 public class EndpointsAPI {
 
