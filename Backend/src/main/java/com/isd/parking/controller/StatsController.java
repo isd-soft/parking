@@ -28,7 +28,7 @@ public class StatsController {
      *
      * @return the list
      */
-    @GetMapping("/stats")
+    @GetMapping(EndpointsAPI.STATISTICS)
     public List<StatsRow> getAllStats() {
         return statsService.listAll();
     }
