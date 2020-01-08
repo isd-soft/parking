@@ -10,3 +10,7 @@ img {
 .app-name {
   text-align: center;
 }
+
+.user {
+  cursor: pointer;
+}

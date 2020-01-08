@@ -15,6 +15,10 @@
   background-color: #fb0006;
 }
 
+.grey {
+  background-color: grey;
+}
+
 .fas, .far {
   font-size: 3rem;
 }
