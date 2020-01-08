@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @Service
 public class ParkingLotService {
+
     @Autowired
     private ParkingLotRepo parkingLotRepo;
 
@@ -92,7 +93,7 @@ public class ParkingLotService {
         parkingLot9.setId(uuid9);
         parkingLot9.setNumber(10);
         parkingLot9.setStatus(ParkingLotStatus.OCCUPIED);
-        parkingLot9.setDate(date);        
+        parkingLot9.setDate(date);
 
         p.add(parkingLot);
         p.add(parkingLot1);
