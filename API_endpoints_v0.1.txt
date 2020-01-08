@@ -1,0 +1,14 @@
+	API name			|	HTTP method		|			Path			|	Status code		|	Description
+------------------------------------------------------------------------------------------------------------------
+
+											----  Front end points ----
+
+1) GET Parking lots		|		GET			|		/api/v1/parking		|		200 (OK)	|	all parking lots resources are fetched
+2) GET Statistics		|		GET			|		/api/v1/stats		|		200 (OK)	|	all statistics resources are fetched
+
+											----  Arduino end points ----
+											
+											//TO DO Arduino end point
+											
+1) POST Parking lot		| POST (id, status)	|		/api/v1/parking		|		200 (OK)	|	Update parking lot status
+
