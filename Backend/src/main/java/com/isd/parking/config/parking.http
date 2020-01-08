@@ -1,0 +1,18 @@
+# API PARKING LOT MANAGEMENT
+
+GET {{host-url}}//parking
+
+###
+
+GET {{host-url}}//parking//1
+
+###
+
+PUT {{host-url}}//parking
+Content-Type: application/json
+
+{
+  "parkingLotId": 1,
+  "status": "FREE"
+}
+###
