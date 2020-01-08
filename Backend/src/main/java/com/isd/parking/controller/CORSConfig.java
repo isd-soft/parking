@@ -11,17 +11,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * Cross Origin Resource Sharing configuration
- * 
+ *
  * @author Mircea
  */
 @Configuration
 public class CORSConfig implements WebMvcConfigurer {
 
-  @Override
-  public void addCorsMappings(CorsRegistry registry) {
-      System.out.println("call from front");
-    registry.addMapping("/**")
-            .allowedMethods("GET", "POST", "PUT", "DELETE")
-            .allowedOrigins("http://localhost:4200");  //TODO: change the URL for the prod URL when we deploy
-  }
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        System.out.println("call from front");
+        registry.addMapping("/**")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedOrigins("http://localhost:4200");  //TODO: change the URL for the prod URL when we deploy
+    }
 }
