@@ -1,6 +1,7 @@
 package com.isd.parking;
 
 
+import com.isd.parking.config.EndpointsAPI;
 import com.isd.parking.model.ParkingLot;
 import com.isd.parking.model.ParkingLotStatus;
 import org.junit.Test;
@@ -42,28 +43,28 @@ public class ParkingLotControllerIntegrationTest {
     public void testGetAllParkingLots() {
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/parking",
+        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + EndpointsAPI.PARKING_LIST,
                 HttpMethod.GET, entity, String.class);
         assertNotNull(response.getBody());
     }
 
     @Test
     public void testGetParkingLotById() {
-        ParkingLot parkingLot = restTemplate.getForObject(getRootUrl() + "/parking/1", ParkingLot.class);
+        ParkingLot parkingLot = restTemplate.getForObject(getRootUrl() + EndpointsAPI.PARKING_LIST + "/1", ParkingLot.class);
         System.out.println(parkingLot.getNumber());
         assertNotNull(parkingLot);
     }
 
     @Test
     public void testUpdateParkingLot() {
-        int id = 1;
-        ParkingLot parkingLot = restTemplate.getForObject(getRootUrl() + "/parking/" + id, ParkingLot.class);
+        Long id = 1L;
+        ParkingLot parkingLot = restTemplate.getForObject(getRootUrl() + EndpointsAPI.PARKING_LIST + "/" + id, ParkingLot.class);
 
         parkingLot.setStatus(ParkingLotStatus.FREE);
         parkingLot.setUpdatedAt(new Date());
 
-        restTemplate.put(getRootUrl() + "/parking/" + id, parkingLot);
-        ParkingLot updatedParkingLot = restTemplate.getForObject(getRootUrl() + "/parking/" + id, ParkingLot.class);
+        restTemplate.put(getRootUrl() + EndpointsAPI.PARKING_LIST + "/" + id, parkingLot);
+        ParkingLot updatedParkingLot = restTemplate.getForObject(getRootUrl() + EndpointsAPI.PARKING_LIST + "/" + id, ParkingLot.class);
         assertNotNull(updatedParkingLot);
     }
 

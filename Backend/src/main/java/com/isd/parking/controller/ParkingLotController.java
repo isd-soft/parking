@@ -1,5 +1,6 @@
 package com.isd.parking.controller;
 
+import com.isd.parking.config.EndpointsAPI;
 import com.isd.parking.exception.ResourceNotFoundException;
 import com.isd.parking.model.ParkingLot;
 import com.isd.parking.model.ParkingLotStatus;
@@ -8,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+
 
 /**
  * The type ParkingLot controller.
@@ -19,7 +20,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping(EndpointsAPI.API)
 public class ParkingLotController {
 
     @Autowired
@@ -30,13 +31,13 @@ public class ParkingLotController {
      *
      * @return the list
      */
-    @GetMapping("/parking")
+    @GetMapping(EndpointsAPI.PARKING_LIST)
     public List<ParkingLot> getAllParkingLots() {
         return parkingLotService.listAll();
     }
 
 
-    @GetMapping("/parking/{id}")
+    @GetMapping(EndpointsAPI.PARKING_LIST + "/{id}")
     public ResponseEntity<ParkingLot> getEmployeeById(@PathVariable(value = "id") Long parkingLotId)
             throws ResourceNotFoundException {
         ParkingLot parkingLot = parkingLotService.findById(parkingLotId)
@@ -46,7 +47,7 @@ public class ParkingLotController {
     }
 
 
-    @PutMapping("/parking/{id}{status}")
+    @PutMapping(EndpointsAPI.PARKING_LIST + "/{id}{status}")
     public ResponseEntity<ParkingLot> updateEmployee(@PathVariable(value = "id") Long parkingLotId,
                                                      @PathVariable(value = "status") ParkingLotStatus status) throws ResourceNotFoundException {
         ParkingLot parkingLot = parkingLotService.findById(parkingLotId)
