@@ -1,0 +1,6 @@
+Some cmd useful scripts
+
+-- Clean 8080 port if in use
+
+1) netstat -ao | find "8080"
+2) Taskkill /PID  20712 /F		-  where instead of 20712 enter PID of process launching on port 8080 (last column)
