@@ -10,5 +10,5 @@
 											
 											//TO DO Arduino end point
 											
-1) POST Parking lot		| POST (id, status)	|		/api/v1/parking		|		200 (OK)	|	Update parking lot status
+1) PUT Parking lot		| PUT (id, status)	|	/api/v1/parking/{id}	|		200 (OK)	|	Update parking lot status
 
