@@ -31,7 +31,7 @@ public class StatsService {
 
         ParkingLot parkingLot = new ParkingLot();
         Date date = new Date(System.currentTimeMillis());
-        parkingLot.setId(uuid);
+        parkingLot.setId(1L);
         parkingLot.setStatus(ParkingLotStatus.FREE);
         parkingLot.setUpdatedAt(date);
 

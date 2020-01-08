@@ -30,71 +30,70 @@ public class ParkingLotService {
         Date date = new Date(System.currentTimeMillis());
 
         ParkingLot parkingLot = new ParkingLot();
-        UUID uuid = UUID.randomUUID();
-        parkingLot.setId(uuid);
+
+        parkingLot.setId(1L);
         parkingLot.setNumber(1);
         parkingLot.setStatus(ParkingLotStatus.FREE);
         parkingLot.setUpdatedAt(date);
 
         ParkingLot parkingLot1 = new ParkingLot();
-        UUID uuid1 = UUID.randomUUID();
-        parkingLot1.setId(uuid1);
+
+        parkingLot1.setId(2L);
         parkingLot1.setNumber(2);
         parkingLot1.setStatus(ParkingLotStatus.FREE);
         parkingLot1.setUpdatedAt(date);
 
         ParkingLot parkingLot2 = new ParkingLot();
-        UUID uuid2 = UUID.randomUUID();
-        parkingLot2.setId(uuid2);
+
+        parkingLot2.setId(3L);
         parkingLot2.setNumber(3);
         parkingLot2.setStatus(ParkingLotStatus.FREE);
         parkingLot2.setUpdatedAt(date);
 
         ParkingLot parkingLot3 = new ParkingLot();
-        UUID uuid3 = UUID.randomUUID();
-        parkingLot3.setId(uuid3);
+
+        parkingLot3.setId(4L);
         parkingLot3.setNumber(4);
         parkingLot3.setStatus(ParkingLotStatus.OCCUPIED);
         parkingLot3.setUpdatedAt(date);
 
         ParkingLot parkingLot4 = new ParkingLot();
-        UUID uuid4 = UUID.randomUUID();
-        parkingLot4.setId(uuid4);
+        parkingLot4.setId(5L);
         parkingLot4.setNumber(5);
         parkingLot4.setStatus(ParkingLotStatus.OCCUPIED);
         parkingLot4.setUpdatedAt(date);
 
         ParkingLot parkingLot5 = new ParkingLot();
-        UUID uuid5 = UUID.randomUUID();
-        parkingLot5.setId(uuid5);
+
+        parkingLot5.setId(6L);
         parkingLot5.setNumber(6);
         parkingLot5.setStatus(ParkingLotStatus.FREE);
         parkingLot5.setUpdatedAt(date);
 
         ParkingLot parkingLot6 = new ParkingLot();
-        UUID uuid6 = UUID.randomUUID();
-        parkingLot6.setId(uuid6);
+
+        parkingLot6.setId(7L);
         parkingLot6.setNumber(7);
         parkingLot6.setStatus(ParkingLotStatus.OCCUPIED);
         parkingLot6.setUpdatedAt(date);
 
         ParkingLot parkingLot7 = new ParkingLot();
-        UUID uuid7 = UUID.randomUUID();
-        parkingLot7.setId(uuid7);
+
+        parkingLot7.setId(8L);
         parkingLot7.setNumber(8);
         parkingLot7.setStatus(ParkingLotStatus.FREE);
         parkingLot7.setUpdatedAt(date);
 
         ParkingLot parkingLot8 = new ParkingLot();
-        UUID uuid8 = UUID.randomUUID();
-        parkingLot8.setId(uuid8);
+
+        parkingLot8.setId(9L);
         parkingLot8.setNumber(9);
         parkingLot8.setStatus(ParkingLotStatus.FREE);
         parkingLot8.setUpdatedAt(date);
 
         ParkingLot parkingLot9 = new ParkingLot();
-        UUID uuid9 = UUID.randomUUID();
-        parkingLot9.setId(uuid9);
+
+        parkingLot9.setId(10L);
         parkingLot9.setNumber(10);
         parkingLot9.setStatus(ParkingLotStatus.OCCUPIED);
         parkingLot9.setUpdatedAt(date);

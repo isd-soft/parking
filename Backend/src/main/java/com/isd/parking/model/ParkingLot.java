@@ -12,16 +12,16 @@ public class ParkingLot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    UUID id;
+    Long id;
     Integer number;
     Date updatedAt;
     ParkingLotStatus status;
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
