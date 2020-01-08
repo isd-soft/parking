@@ -6,23 +6,27 @@ import com.isd.parking.repository.ParkingLotRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ParkingLotService {
+
+    //Template mockup datasource for testing API
+    //it will be removed after DB connect
+    private List<ParkingLot> p = new ArrayList<>();
 
     @Autowired
     private ParkingLotRepo parkingLotRepo;
 
     public List<ParkingLot> listAll() {
 
-        //Template mockup datasource for testing API
-        //it will be removed after DB connect
+        initParkingList();
+        return p;
 
-        List<ParkingLot> p = new ArrayList<>();
+        // return parkingLotRepo.findAll();
+    }
+
+    private void initParkingList() {
         Date date = new Date(System.currentTimeMillis());
 
         ParkingLot parkingLot = new ParkingLot();
@@ -105,8 +109,16 @@ public class ParkingLotService {
         p.add(parkingLot7);
         p.add(parkingLot8);
         p.add(parkingLot9);
-        return p;
-
-        // return parkingLotRepo.findAll();
     }
+
+    public Optional<ParkingLot> findById(Long employeeId) {
+        return parkingLotRepo.findById(employeeId);
+    }
+
+    public ParkingLot save(ParkingLot parkingLot) {
+        return parkingLotRepo.save(parkingLot);
+    }
+
+
 }
+

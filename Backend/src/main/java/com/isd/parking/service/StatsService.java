@@ -15,15 +15,15 @@ import java.util.UUID;
 @Service
 public class StatsService {
 
+    //Template mockup datasource for testing API
+    //it will be removed after DB connect
+    private List<StatsRow> s = new ArrayList<>();
+
     @Autowired
     private StatsRepo statsRepo;
 
     public List<StatsRow> listAll() {
 
-        //Template mockup datasource for testing API
-        //it will be removed after DB connect
-
-        List<StatsRow> s = new ArrayList<>();
         UUID uuid = UUID.randomUUID();
 
         StatsRow statsRow = new StatsRow();
