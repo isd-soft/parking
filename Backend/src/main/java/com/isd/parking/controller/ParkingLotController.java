@@ -60,4 +60,6 @@ public class ParkingLotController {
         final ParkingLot updatedParkingLot = parkingLotService.save(parkingLot);
         return ResponseEntity.ok(updatedParkingLot);
     }
+
+    //TODO: endpoint for creating and deleting parking lots
 }
