@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.sql.Time;
 import java.util.Date;
 import java.util.UUID;
 
@@ -15,7 +14,7 @@ public class ParkingLot {
     @GeneratedValue(strategy = GenerationType.AUTO)
     UUID id;
     Integer number;
-    Date date;
+    Date updatedAt;
     ParkingLotStatus status;
 
     public UUID getId() {
@@ -26,12 +25,12 @@ public class ParkingLot {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public Integer getNumber() {
