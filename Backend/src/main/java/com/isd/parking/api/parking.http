@@ -55,14 +55,14 @@ GET {{host-url}}//arduino_get_p?id=1&status=2
 
 // working update status
 
-PUT {{host-url}}//FREE
+PUT {{host-url}}//
 Content-Type: application/json
 
 {
   "id": 1,
   "number": 2,
-  "updatedAt": "2020-01-09T15:43:35.000+0000",
-  "status": "FREE"
+  "updatedAt": "1900-01-09T15:43:35.000+0000",
+  "status": "UNKNOWN"
 }
 
 ###

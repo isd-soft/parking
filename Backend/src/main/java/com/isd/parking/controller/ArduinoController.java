@@ -27,19 +27,11 @@ public class ArduinoController {
         return new ResponseEntity<ParkingLot>(parkingLotService.save(parkingLot), HttpStatus.CREATED);
     }*/
 
-
     //working update
-    @RequestMapping(value = "/{status}", method = RequestMethod.PUT)
-    public void modifyParkingById(@PathVariable("status") ParkingLotStatus status, @Valid @RequestBody ParkingLot parkingLot) {
-        parkingLot.setStatus(status);
+    @PutMapping
+    public void modifyParkingById(@RequestBody ParkingLot parkingLot) {
         parkingLotService.save(parkingLot);
     }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public void modifyParkingById(@Valid @RequestBody ParkingLot parkingLot) {
-        parkingLotService.save(parkingLot);
-    }
-
 
     @PostMapping(value = EndpointsAPI.PARKING_LIST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ParkingLot> updateParkingLotPost(@RequestParam(value = "id") int parkingLotId,
