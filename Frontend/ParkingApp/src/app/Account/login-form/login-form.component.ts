@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { DataService } from 'src/app/data.service.local';
 
 @Component({
   selector: 'app-login-form',
@@ -10,7 +11,10 @@ export class LoginFormComponent implements OnInit {
   @Output()
   userLoginEvent = new EventEmitter();
 
-  constructor() { }
+  userLogin: string;
+  userPassword: string;
+
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
   }
