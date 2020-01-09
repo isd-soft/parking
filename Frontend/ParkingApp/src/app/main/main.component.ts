@@ -31,8 +31,19 @@ export class MainComponent implements OnInit {
 
   loadData() {
     this.dataService.getAllParkingLots().subscribe(
-      data => this.parkingLots = data
+      data => {
+        this.parkingLots = data.sort((a, b) => (a.number > b.number) ? 1 : (a.number < b.number ? -1 : 0));
+
+      }
     );
+    // for (let i = 0; i < this.parkingLots.length - 1; i++) {
+    //   if (this.parkingLots[i].number > this.parkingLots[i + 1].number) {
+    //     let pl = new ParkingLot();
+    //     pl = this.parkingLots[i];
+    //     this.parkingLots[i] = this.parkingLots[i + 1];
+    //     this.parkingLots[i + 1] = pl;
+    //   }
+    // }
   }
 
   processUrlParams() {
