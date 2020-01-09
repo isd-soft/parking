@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ParkingLot } from './Model/ParkingLot';
 import { Observable, of } from 'rxjs';
+import { User } from './Model/User';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,8 @@ import { Observable, of } from 'rxjs';
 export class DataService {
 
   parkingLots: Array<ParkingLot>;
+
+  users: Array<User>;
 
   constructor() {
 
@@ -92,9 +95,27 @@ export class DataService {
     pl10.date = new Date();
 
     this.parkingLots.push(pl10);
+
+
+    this.users = new Array<User>();
+
+    const user1 = new User('u001', 'Mircea', 'mircea');
+    const user2 = new User('u002', 'Alex', 'alex');
+    const user3 = new User('u003', 'Pavel', 'pavel');
+    const user4 = new User('u004', 'Victor', 'victor');
+
+    this.users.push(user1);
+    this.users.push(user2);
+    this.users.push(user3);
+    this.users.push(user4);
+
    }
 
    getAllParkingLots(): Observable<Array<ParkingLot>> {
      return of(this.parkingLots);
+   }
+
+   checkUser(name: string, password: string): Observable<User> {
+     return of(this.users.find(u => u.name === name && u.password === password));
    }
 }
