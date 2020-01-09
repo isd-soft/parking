@@ -14,13 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 
-
-/**
- * The type Arduino controller.
- *
- * @author ISD Inthership Team
- */
-
 @RestController
 @RequestMapping(EndpointsAPI.API)
 public class ArduinoController {

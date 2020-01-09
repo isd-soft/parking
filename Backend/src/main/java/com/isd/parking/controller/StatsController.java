@@ -10,12 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**
- * The type StatsController controller.
- *
- * @author ISD Inthership Team
- */
-
 @RestController
 @RequestMapping(EndpointsAPI.API)
 public class StatsController {
@@ -23,11 +17,6 @@ public class StatsController {
     @Autowired
     private StatsService statsService;
 
-    /**
-     * Get all stats list.
-     *
-     * @return the list
-     */
     @GetMapping(EndpointsAPI.STATISTICS)
     public List<StatsRow> getAllStats() {
         return statsService.listAll();
