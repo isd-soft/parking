@@ -153,10 +153,6 @@ export class DataService {
      return of(this.parkingLots);
    }
 
-   checkUser(name: string, password: string): Observable<User> {
-     return of(this.users.find(u => u.name === name && u.password === password));
-   }
-
    getAllStats(): Observable<Array<Statistics>> {
      return of(this.statistics);
    }
