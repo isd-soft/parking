@@ -66,6 +66,7 @@ public class ArduinoController {
 
     //TODO: endpoint for creating and deleting parking lots
 
+    //TODO: edit this methods - not working
     //test endpoints for arduino
 
     @GetMapping(value = "/arduino_get", produces = MediaType.TEXT_PLAIN_VALUE)
