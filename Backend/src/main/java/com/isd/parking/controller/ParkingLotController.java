@@ -47,5 +47,4 @@ public class ParkingLotController {
     }
 
     //TODO: endpoint for creating and deleting parking lots
-    //branch test
 }
