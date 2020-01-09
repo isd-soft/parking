@@ -1,1 +1,45 @@
-<p>statistics works!</p>
+<h1>Statistics</h1>
+
+<div class="search row">
+  <div class="date col-6">
+    <label for="dateBegin">Start date:</label>
+    <input class="form-control" id="dataBegin" type="date" [(ngModel)]="startDate"/><br>
+    <label for="dateEnd">End date:</label>
+    <input class="form-control" id="dateEnd" type="date" [(ngModel)]="endDate"/>
+    <div class="btn btn-info" (click)="sortData()">Select</div>
+  </div>
+  <div class="id col-6">
+    <label for="lotNumber">Lot number</label>
+    <select class="form-control" name="lots" [(ngModel)]="selectedLotNumber" (change)="sortData()">
+      <option disabled selected>Choose a parking lot number</option>
+      <option *ngFor="let lot of parkingLots">{{lot.number}}</option>
+    </select>
+  </div>
+</div>
+  <div class="row">
+    <div class="col-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Parking Lot</th>
+            <th>Status</th>
+            <th>Time</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let stat of sortedStatistics">
+            <td>{{stat.id}}</td>
+            <td>{{stat.parkingLotNumber}}</td>
+            <td>{{stat.status}}</td>
+            <td>{{stat.updatedAt | date : "HH:MM"}}</td>
+            <td>{{stat.updatedAt | date : "yyyy.MM.dd"}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
