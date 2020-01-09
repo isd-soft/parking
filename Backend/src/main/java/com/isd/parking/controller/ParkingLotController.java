@@ -26,16 +26,10 @@ public class ParkingLotController {
     @Autowired
     private ParkingLotService parkingLotService;
 
-    /**
-     * Get all parking lots list.
-     *
-     * @return the list
-     */
     @GetMapping(EndpointsAPI.PARKING_LIST)
     public List<ParkingLot> getAllParkingLots() {
         return parkingLotService.listAll();
     }
-
 
     @GetMapping(EndpointsAPI.PARKING_LIST + "/{id}")
     public ResponseEntity<ParkingLot> getEmployeeById(@PathVariable(value = "id") Long parkingLotId)
