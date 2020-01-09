@@ -1,48 +1,25 @@
 package com.isd.parking.model;
 
-import javax.persistence.*;
+import lombok.Data;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity(name = "parking_lots")
+@Data
 public class ParkingLot {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
-    Integer number;
-    Date updatedAt;
-    ParkingLotStatus status;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public Long getId() {
-        return id;
-    }
+    private Integer number;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private Date updatedAt;
 
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
+    private ParkingLotStatus status;
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
-    public ParkingLotStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(ParkingLotStatus status) {
-        this.status = status;
-    }
 }
