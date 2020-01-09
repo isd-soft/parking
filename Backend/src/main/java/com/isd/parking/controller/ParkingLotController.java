@@ -46,22 +46,6 @@ public class ParkingLotController {
         return ResponseEntity.ok().body(parkingLot);
     }
 
-
-    @PutMapping(EndpointsAPI.PARKING_LIST + "/{id}{status}")
-    public ResponseEntity<ParkingLot> updateEmployee(@PathVariable(value = "id") Long parkingLotId,
-                                                     @PathVariable(value = "status") ParkingLotStatus status) throws ResourceNotFoundException {
-        ParkingLot parkingLot = parkingLotService.findById(parkingLotId)
-                .orElseThrow(() -> new ResourceNotFoundException("Parking Lot found for this id :: " + parkingLotId));
-
-        parkingLot.setStatus(status);
-
-        Date date = new Date(System.currentTimeMillis());
-        parkingLot.setUpdatedAt(date);
-
-        final ParkingLot updatedParkingLot = parkingLotService.save(parkingLot);
-        return ResponseEntity.ok(updatedParkingLot);
-    }
-
     //TODO: endpoint for creating and deleting parking lots
     //branch test
 }
