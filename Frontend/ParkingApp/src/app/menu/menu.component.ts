@@ -21,4 +21,8 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['stats']);
   }
 
+  navigateTo404() {
+    this.router.navigate(['404']);
+  }
+
 }
