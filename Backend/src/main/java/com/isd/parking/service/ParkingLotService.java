@@ -22,16 +22,17 @@ public class ParkingLotService {
     private ParkingLotRepo parkingLotRepo;
 
     public ParkingLotService() {
-        initParkingList();
+        //initParkingList();
     }
 
     public List<ParkingLot> listAll() {
 
-        return p;
+        // return p;
 
-        // return parkingLotRepo.findAll();
+         return parkingLotRepo.findAll();
     }
 
+    //mockup method
     private void initParkingList() {
         Date date = new Date(System.currentTimeMillis());
 
@@ -118,26 +119,24 @@ public class ParkingLotService {
 
     public Optional<ParkingLot> findById(Long parkingLotId) {
 
-        int id = Math.toIntExact(parkingLotId);
+//        int id = Math.toIntExact(parkingLotId);
+//
+//        return Optional.ofNullable(p.get(id));
 
-        return Optional.ofNullable(p.get(id));
-
-        //return parkingLotRepo.findById(employeeId);
+        return parkingLotRepo.findById(parkingLotId);
     }
 
     public ParkingLot save(ParkingLot parkingLot) {
 
-        p.add(parkingLot);
+        /*p.add(parkingLot);
 
         parkingLot.setUpdatedAt(new Date(System.currentTimeMillis()));
 
         if (p.contains(parkingLot))
             return parkingLot;
-        else return null;
+        else return null;*/
 
-        //return parkingLotRepo.save(parkingLot);
+        return parkingLotRepo.save(parkingLot);
     }
-
-
 }
 

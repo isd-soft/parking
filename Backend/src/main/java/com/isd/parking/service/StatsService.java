@@ -17,14 +17,14 @@ public class StatsService {
 
     //Template mockup datasource for testing API
     //it will be removed after DB connect
-    private List<StatsRow> s = new ArrayList<>();
+    //private List<StatsRow> s = new ArrayList<>();
 
     @Autowired
     private StatsRepo statsRepo;
 
     public List<StatsRow> listAll() {
 
-        UUID uuid = UUID.randomUUID();
+        /*UUID uuid = UUID.randomUUID();
 
         StatsRow statsRow = new StatsRow();
         statsRow.setId(uuid);
@@ -41,8 +41,8 @@ public class StatsService {
         s.add(statsRow);
         s.add(statsRow);
 
-        return s;
+        return s;*/
 
-        // return parkingLotRepo.findAll();
+        return statsRepo.findAll();
     }
 }

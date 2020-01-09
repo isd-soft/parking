@@ -38,7 +38,7 @@ public class ParkingLotController {
 
 
     @GetMapping(EndpointsAPI.PARKING_LIST + "/{id}")
-    public ResponseEntity<ParkingLot> getEmployeeById(@PathVariable(value = "id") Long parkingLotId)
+    public ResponseEntity<ParkingLot> getParkingLotById(@PathVariable(value = "id") Long parkingLotId)
             throws ResourceNotFoundException {
         ParkingLot parkingLot = parkingLotService.findById(parkingLotId)
                 .orElseThrow(() -> new ResourceNotFoundException("Parking Lot not found for this id :: " + parkingLotId));
@@ -47,5 +47,4 @@ public class ParkingLotController {
     }
 
     //TODO: endpoint for creating and deleting parking lots
-    //branch test
 }
