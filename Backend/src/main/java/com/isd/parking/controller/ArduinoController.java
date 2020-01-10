@@ -5,6 +5,9 @@ import com.isd.parking.exception.ResourceNotFoundException;
 import com.isd.parking.model.ParkingLot;
 import com.isd.parking.model.ParkingLotStatus;
 import com.isd.parking.service.ParkingLotService;
+import com.isd.parking.sheduller.ScheduleStatisticsDeleter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +20,8 @@ import java.util.Date;
 @RestController
 @RequestMapping(EndpointsAPI.API)
 public class ArduinoController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ArduinoController.class);
 
     @Autowired
     private ParkingLotService parkingLotService;
@@ -34,10 +39,10 @@ public class ArduinoController {
     }
 
     @PostMapping(value = EndpointsAPI.PARKING_LIST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ParkingLot> updateParkingLotPost(@RequestParam(value = "id") int parkingLotId,
+    public ResponseEntity<ParkingLot> updateParkingLotPost(@RequestParam(value = "id") Long parkingLotId,
                                                            @RequestParam(value = "status") ParkingLotStatus status) throws ResourceNotFoundException {
 
-        ParkingLot parkingLot = parkingLotService.findById(Long.valueOf(parkingLotId))
+        ParkingLot parkingLot = parkingLotService.findById(parkingLotId)
                 .orElseThrow(() -> new ResourceNotFoundException("Parking Lot found for this id :: " + parkingLotId));
 
         parkingLot.setStatus(status);
