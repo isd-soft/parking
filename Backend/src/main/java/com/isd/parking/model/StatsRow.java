@@ -11,13 +11,17 @@ import java.util.UUID;
 public class StatsRow {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "lot_id")
     private ParkingLot lot;
 
+    @Column(name = "updated_at")
     private Date updatedAt;
-    private ParkingLotStatus parkingLotStatus;
+
+    @Column(name = "parking_lot_status")
+    private ParkingLotStatus status;
 }
