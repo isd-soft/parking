@@ -1,0 +1,57 @@
+.green {
+  background-color: #20b600;
+}
+
+.red {
+  background-color: #fd0006;
+}
+
+.grey {
+  background-color: grey;
+}
+
+.lot-side {
+  width: 7rem;
+  height: 3rem;
+}
+
+@media only screen and (max-width: 420px) {
+  .lot-side {
+    height: 2.5rem;
+  }
+
+  .fas {
+    margin-top: -0.4rem;
+  }
+}
+
+.lot {
+  height: 7rem;
+  width: 3.3rem;
+}
+
+.lot i {
+  margin-top: 2rem;
+}
+
+.fas, .far {
+  font-size: 2rem;
+  vertical-align: middle;
+}
+
+.elem {
+  text-align: center;
+  padding-left: 0;
+  padding-right: 0;
+  margin: 0;
+}
+
+.btn-light {
+  border: 1px solid gray;
+}
+
+.refresh {
+  min-width: 100%;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
