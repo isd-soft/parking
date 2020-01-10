@@ -1,6 +1,7 @@
-<div class="container" *ngIf="userLogged">
-  <app-menu ></app-menu>
-  <router-outlet></router-outlet>
+<div class="container">
+  <app-menu  *ngIf="userLogged"></app-menu>
+  <router-outlet  *ngIf="userLogged"></router-outlet>
+  <app-login-form *ngIf="!userLogged" (userLoginEvent)="userLogged = true"></app-login-form>
 </div>
 
-<app-login-form *ngIf="!userLogged" (userLoginEvent)="userLogged = true"></app-login-form>
+

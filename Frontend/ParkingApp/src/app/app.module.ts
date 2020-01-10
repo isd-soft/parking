@@ -11,8 +11,10 @@ import { MenuComponent } from './menu/menu.component';
 import { ParkingLotDetailComponent } from './main/parking-lot-detail/parking-lot-detail.component';
 import { LoginFormComponent } from './Account/login-form/login-form.component';
 import { StatisticsComponent } from './statistics/statistics.component';
+import { FeatureComponent } from './feature/feature.component';
 
 const routes: Routes = [
+  {path : 'test', component : FeatureComponent},
   {path : 'stats', component : StatisticsComponent},
   {path : '', component : MainComponent},
   {path : '404', component : PageNotFoundComponent},
@@ -27,7 +29,8 @@ const routes: Routes = [
     MenuComponent,
     ParkingLotDetailComponent,
     LoginFormComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    FeatureComponent
   ],
   imports: [
     BrowserModule,

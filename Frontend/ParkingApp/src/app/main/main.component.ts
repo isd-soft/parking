@@ -34,6 +34,9 @@ export class MainComponent implements OnInit {
       data => {
         this.parkingLots = data.sort((a, b) => (a.number > b.number) ? 1 : (a.number < b.number ? -1 : 0));
 
+      },
+      error => {
+        this.parkingLots = null;
       }
     );
   }

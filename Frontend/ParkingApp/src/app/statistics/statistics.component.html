@@ -16,30 +16,28 @@
     </select>
   </div>
 </div>
-  <div class="row">
-    <div class="col-12">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Parking Lot</th>
-            <th>Status</th>
-            <th>Time</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let stat of sortedStatistics">
-            <td>{{stat.id}}</td>
-            <td>{{'LOT ' + stat.parkingLotNumber}}</td>
-            <td>{{stat.status}}</td>
-            <td>{{stat.updatedAt | date : "HH:MM"}}</td>
-            <td>{{stat.updatedAt | date : "yyyy.MM.dd"}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+<div>
+  <div class="col-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Parking Lot</th>
+          <th>Status</th>
+          <th>Time</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let stat of sortedStatistics">
+          <td>{{'LOT ' + stat.parkingLotNumber}}</td>
+          <td>{{stat.status}}</td>
+          <td>{{stat.updatedAt | date : "HH:MM"}}</td>
+          <td>{{stat.updatedAt | date : "yy.MM.dd"}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+</div>
 
 
 
