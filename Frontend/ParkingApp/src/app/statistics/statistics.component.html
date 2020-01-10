@@ -11,7 +11,7 @@
   <div class="id col-6">
     <label for="lotNumber">Lot number</label>
     <select class="form-control" name="lots" [(ngModel)]="selectedLotNumber" (change)="sortData()">
-      <option disabled selected>Choose a parking lot number</option>
+      <option selected>-</option>
       <option *ngFor="let lot of parkingLots">{{lot.number}}</option>
     </select>
   </div>
