@@ -3,6 +3,7 @@ package com.isd.parking.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity(name = "stats")
@@ -17,4 +18,6 @@ public class StatsRow {
     @JoinColumn(name = "lot_id")
     private ParkingLot lot;
 
+    private Date updatedAt;
+    private ParkingLotStatus parkingLotStatus;
 }

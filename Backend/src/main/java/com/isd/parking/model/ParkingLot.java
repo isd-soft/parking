@@ -1,6 +1,7 @@
 package com.isd.parking.model;
 
 import lombok.Data;
+import org.apache.catalina.User;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,5 +22,9 @@ public class ParkingLot {
     private Date updatedAt;
 
     private ParkingLotStatus status;
+
+//    private boolean reserved;
+
+//    private User user;
 
 }
