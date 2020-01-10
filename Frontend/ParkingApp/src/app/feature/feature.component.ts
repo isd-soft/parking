@@ -12,6 +12,8 @@ export class FeatureComponent implements OnInit {
 
   noData: Array<number>;
 
+  otherParkingLots: Array<number>;
+
   parkingLots: Array<ParkingLot>;
 
   selectedParkingLot: ParkingLot;
@@ -26,6 +28,11 @@ export class FeatureComponent implements OnInit {
     this.noData = new Array<number>();
     for (let i = 1; i <= 10; i++) {
       this.noData.push(i);
+    }
+
+    this.otherParkingLots = new Array<number>();
+    for (let i = 1; i <= 7; i++) {
+      this.otherParkingLots.push(i);
     }
 
     this.loadData();

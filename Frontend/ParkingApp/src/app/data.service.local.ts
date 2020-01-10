@@ -45,7 +45,7 @@ export class DataService {
     const pl4 = new ParkingLot();
     pl4.id = 'f9aa68b9-779d-4853-8277-4f7120c183d4';
     pl4.number = 4;
-    pl4.status = 'UNKNOWN';
+    pl4.status = 'FREE';
     pl4.updatedAt = new Date();
 
     this.parkingLots.push(pl4);

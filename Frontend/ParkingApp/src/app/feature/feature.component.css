@@ -10,32 +10,39 @@
   background-color: grey;
 }
 
-.lot-side {
-  width: 7rem;
-  height: 3rem;
+.corner {
+  width: 54.75px;
+  height: 2rem;
 }
 
-@media only screen and (max-width: 420px) {
-  .lot-side {
-    height: 2.5rem;
-  }
+.corner i {
+  margin-top: -0.5rem;
+}
 
-  .fas {
-    margin-top: -0.4rem;
-  }
+.lot-side {
+  width: 3.422rem;
+  height: 2rem;
+}
+
+.lot-side i {
+  margin-top: -0.5rem;
+}
+
+.first-side {
+  margin-top: -16px;
 }
 
 .lot {
-  height: 7rem;
-  width: 3.3rem;
+  height: 3rem;
+  width: 2rem;
 }
 
 .lot i {
-  margin-top: 2rem;
+  margin-top: 0.5rem;
 }
 
 .fas, .far {
-  font-size: 2rem;
+  font-size: 1rem;
   vertical-align: middle;
 }
 
@@ -47,11 +54,67 @@
 }
 
 .btn-light {
-  border: 1px solid gray;
+  border: 1px solid #bbbbbb;
 }
 
 .refresh {
-  min-width: 100%;
+  min-width: 50%;
   margin-top: 20px;
   margin-bottom: 30px;
+}
+
+
+@media only screen and (max-width: 470px) {
+  .corner {
+    width: 54.75px;
+    height: 1.5rem;
+  }
+
+  .corner i {
+    margin-top: -1rem;
+  }
+
+  .lot-side {
+    height: 1.5rem;
+  }
+
+  .lot-side i {
+    margin-top: -0.85rem;
+  }
+
+  .first-side {
+    margin-top: -24px;
+  }
+
+  .space {
+    margin-right: 10px;
+  }
+
+  .lot {
+    height: 3rem;
+    width: 1.4rem;
+  }
+
+  .lot i {
+    margin-left: -1px;
+  }
+}
+
+@media only screen and (max-width: 370px) {
+  .lot {
+    height: 3rem;
+    width: 1.2rem;
+  }
+
+  .lot i {
+    margin-left: -2px;
+  }
+
+  .lot-side {
+    height: 1.3rem;
+  }
+
+  .lot-side i {
+    margin-top: -1rem;
+  }
 }
