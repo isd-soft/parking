@@ -10,3 +10,45 @@
 td, th {
   text-align: center;
 }
+
+th {
+  cursor: pointer;
+}
+
+th:hover {
+  text-decoration: underline;
+}
+
+span {
+  position: relative;
+}
+
+.lot .fas {
+  position: absolute;
+  left: 90px;
+  bottom: 1px;
+}
+
+.date .fas {
+  position: absolute;
+  left: 39px;
+  bottom: 1px;
+}
+
+@media only screen and (max-width: 416px) {
+  .lot .fas {
+    position: absolute;
+    left: 62px;
+    bottom: 13px;
+  }
+
+  .date .fas {
+    position: absolute;
+    left: 39px;
+    bottom: 1px;
+  }
+
+  .table thead th {
+    vertical-align: middle;
+  }
+}

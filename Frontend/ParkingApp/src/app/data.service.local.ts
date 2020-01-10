@@ -114,21 +114,21 @@ export class DataService {
 
     this.statistics = new Array<Statistics>();
 
-    const stats1 = new Statistics('s001', 5, 'OCCUPIED', new Date('01-08-2020 07:00'));
+    const stats1 = new Statistics('s001', 5, 'OCCUPIED', new Date('01-05-2020 07:00'));
     const stats2 = new Statistics('s002', 7, 'OCCUPIED', new Date('01-08-2020 08:00:00'));
     const stats3 = new Statistics('s003', 10, 'OCCUPIED', new Date('2020-01-08 08:04'));
-    const stats4 = new Statistics('s004', 1, 'OCCUPIED', new Date('2020-01-08 08:05'));
+    const stats4 = new Statistics('s004', 1, 'OCCUPIED', new Date('2020-01-05 08:05'));
     const stats5 = new Statistics('s005', 3, 'OCCUPIED', new Date('2020-01-08 08:10'));
-    const stats6 = new Statistics('s006', 5, 'FREE', new Date('2020-01-08 12:00'));
+    const stats6 = new Statistics('s006', 5, 'FREE', new Date('2020-01-05 12:00'));
     const stats7 = new Statistics('s007', 7, 'FREE', new Date('2020-01-08 13:00'));
 
-    const stats8 = new Statistics('s001', 5, 'OCCUPIED', new Date('2020-01-07 07:00'));
-    const stats9 = new Statistics('s002', 7, 'OCCUPIED', new Date('2020-01-07 08:00:00'));
-    const stats10 = new Statistics('s003', 10, 'OCCUPIED', new Date('2020-01-07 08:04'));
-    const stats11 = new Statistics('s004', 1, 'OCCUPIED', new Date('2020-01-07 08:05'));
-    const stats12 = new Statistics('s005', 3, 'OCCUPIED', new Date('2020-01-07 08:10'));
-    const stats13 = new Statistics('s006', 5, 'FREE', new Date('2020-01-07 12:00'));
-    const stats14 = new Statistics('s007', 7, 'FREE', new Date('2020-01-07 13:00'));
+    const stats8 = new Statistics('s008', 8, 'OCCUPIED', new Date('2020-01-06 07:00'));
+    const stats9 = new Statistics('s009', 4, 'FREE', new Date('2020-01-07 08:00:00'));
+    const stats10 = new Statistics('s010', 9, 'OCCUPIED', new Date('2020-01-07 08:04'));
+    const stats11 = new Statistics('s011', 5, 'FREE', new Date('2020-01-06 08:05'));
+    const stats12 = new Statistics('s012', 3, 'FREE', new Date('2020-01-07 08:10'));
+    const stats13 = new Statistics('s013', 5, 'OCCUPIED', new Date('2020-01-07 12:00'));
+    const stats14 = new Statistics('s014', 7, 'OCCUPIED', new Date('2020-01-07 13:00'));
 
     this.statistics.push(stats1);
     this.statistics.push(stats2);

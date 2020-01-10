@@ -12,12 +12,19 @@ import { ParkingLot } from '../Model/ParkingLot';
 export class StatisticsComponent implements OnInit {
 
   statistics: Array<Statistics>;
-  sortedStatistics: Array<Statistics>;
+  filteredStatistics: Array<Statistics>;
   parkingLots: Array<ParkingLot>;
   selectedLotNumber = null;
 
   startDate: string;
   endDate: string;
+
+  lotSortedAsc: boolean;
+  lotSortedDesc: boolean;
+
+  dateSortedAsc: boolean;
+  dateSortedDesc: boolean;
+
 
 
   constructor(private dataService: DataService) { }
@@ -35,14 +42,20 @@ export class StatisticsComponent implements OnInit {
       data => this.parkingLots = data.sort((a, b) => (a.number > b.number) ? 1 : (a.number < b.number ? -1 : 0))
     );
 
-    this.sortedStatistics = this.statistics;
+    this.filteredStatistics = this.statistics;
     this.selectedLotNumber = undefined;
 
     this.startDate = formatDate('2020-01-01', 'yyyy-MM-dd', 'en-UK');
     this.endDate = formatDate(new Date(), 'yyyy-MM-dd', 'en-UK');
+
+    this.lotSortedAsc = false;
+    this.lotSortedDesc = false;
+
+    this.dateSortedAsc = false;
+    this.dateSortedDesc = false;
   }
 
-  sortData() {
+  filterData() {
     let tempStats = new Array<Statistics>();
 
     if (this.selectedLotNumber === '-') {
@@ -62,6 +75,77 @@ export class StatisticsComponent implements OnInit {
       }
 
     }
-    this.sortedStatistics = tempStats;
+    this.filteredStatistics = tempStats;
+  }
+
+  sortTableByLotNumber() {
+
+    this.lotSortedAsc = true;
+    this.lotSortedDesc = true;
+
+
+    for (let i = 0; i < this.filteredStatistics.length - 1; i++) {
+
+      if (this.filteredStatistics[i].parkingLotNumber > this.filteredStatistics[i + 1].parkingLotNumber) {
+        this.lotSortedAsc = false;
+      }
+
+      if (this.filteredStatistics[i].parkingLotNumber < this.filteredStatistics[i + 1].parkingLotNumber) {
+        this.lotSortedDesc = false;
+      }
+    }
+
+
+    if (this.lotSortedAsc) {
+      this.filteredStatistics.sort(
+        (a, b) => a.parkingLotNumber < b.parkingLotNumber ? 1 : (a.parkingLotNumber > b.parkingLotNumber ? -1 : 0));
+
+      this.lotSortedAsc = false;
+      this.lotSortedDesc = true;
+    } else {
+      this.filteredStatistics.sort(
+        (a, b) => a.parkingLotNumber > b.parkingLotNumber ? 1 : (a.parkingLotNumber < b.parkingLotNumber ? -1 : 0));
+
+      this.lotSortedDesc = false;
+      this.lotSortedAsc = true;
+    }
+
+    this.dateSortedAsc = false;
+    this.dateSortedDesc = false;
+  }
+
+  sortTableByDate() {
+    this.dateSortedDesc = true;
+    this.dateSortedAsc = true;
+
+    for (let i = 0; i < this.filteredStatistics.length - 1; i++) {
+
+      if (this.filteredStatistics[i].updatedAt.getDate() > this.filteredStatistics[i + 1].updatedAt.getDate()) {
+        this.dateSortedAsc = false;
+      }
+
+      if (this.filteredStatistics[i].updatedAt.getDate() < this.filteredStatistics[i + 1].updatedAt.getDate()) {
+        this.dateSortedDesc = false;
+      }
+    }
+
+    if (this.dateSortedAsc) {
+      this.filteredStatistics.sort(
+        (a, b) => a.updatedAt.getDate() < b.updatedAt.getDate() ? 1 : (a.updatedAt.getDate() > b.updatedAt.getDate() ? -1 : 0)
+      );
+
+      this.dateSortedAsc = false;
+      this.dateSortedDesc = true;
+    } else {
+      this.filteredStatistics.sort(
+        (a, b) => a.updatedAt.getDate() > b.updatedAt.getDate() ? 1 : (a.updatedAt.getDate() < b.updatedAt.getDate() ? -1 : 0)
+      );
+
+      this.dateSortedDesc = false;
+      this.dateSortedAsc = true;
+    }
+
+    this.lotSortedAsc = false;
+    this.lotSortedDesc = false;
   }
 }
