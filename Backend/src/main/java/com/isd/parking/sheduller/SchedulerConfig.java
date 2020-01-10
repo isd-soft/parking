@@ -5,6 +5,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
 public class SchedulerConfig implements SchedulingConfigurer {
+
     private final int POOL_SIZE = 10;
 
     @Override
