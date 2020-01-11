@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import java.util.Date;
+
 
 @EnableScheduling
 @Configuration
@@ -24,20 +26,16 @@ public class ScheduleStatisticsDeleter {
         this.statsService = statsService;
     }
 
-    @Scheduled(cron = "0 0 1 * * MON")        //task will be executed weekly every Monday at 13-00
+    /*
+    task will be executed every day at 13-00
+     */
+
+    @Scheduled(cron = "0 0 1 * * *")
     public void sheduleTaskDeleteStats() {
 
         long now = System.currentTimeMillis() / 1000;
-        LOG.info("Delete stats shedule job executing..." + now);
+        LOG.info("Delete stats shedule job executing... " + new Date());
 
-        statsService.deleteStatsOlderThanWeek();
-    }
-
-    //test method, working
-    @Scheduled(fixedDelay = 5000)
-    public void scheduleFixedDelayTask() {
-        System.out.println(
-                "Fixed delay task - " + System.currentTimeMillis() / 1000);
         statsService.deleteStatsOlderThanWeek();
     }
 }
