@@ -120,25 +120,25 @@ export class StatisticsComponent implements OnInit {
 
     for (let i = 0; i < this.filteredStatistics.length - 1; i++) {
 
-      if (this.filteredStatistics[i].updatedAt.getDate() > this.filteredStatistics[i + 1].updatedAt.getDate()) {
+      if (this.filteredStatistics[i].updatedAt > this.filteredStatistics[i + 1].updatedAt) {
         this.dateSortedAsc = false;
       }
 
-      if (this.filteredStatistics[i].updatedAt.getDate() < this.filteredStatistics[i + 1].updatedAt.getDate()) {
+      if (this.filteredStatistics[i].updatedAt < this.filteredStatistics[i + 1].updatedAt) {
         this.dateSortedDesc = false;
       }
     }
 
     if (this.dateSortedAsc) {
       this.filteredStatistics.sort(
-        (a, b) => a.updatedAt.getDate() < b.updatedAt.getDate() ? 1 : (a.updatedAt.getDate() > b.updatedAt.getDate() ? -1 : 0)
+        (a, b) => a.updatedAt < b.updatedAt ? 1 : (a.updatedAt > b.updatedAt ? -1 : 0)
       );
 
       this.dateSortedAsc = false;
       this.dateSortedDesc = true;
     } else {
       this.filteredStatistics.sort(
-        (a, b) => a.updatedAt.getDate() > b.updatedAt.getDate() ? 1 : (a.updatedAt.getDate() < b.updatedAt.getDate() ? -1 : 0)
+        (a, b) => a.updatedAt > b.updatedAt ? 1 : (a.updatedAt < b.updatedAt ? -1 : 0)
       );
 
       this.dateSortedDesc = false;
