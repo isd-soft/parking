@@ -7,7 +7,7 @@ import { DataService } from './data.service';
 @Injectable({
   providedIn: 'root'
 })
-export class PrefectchStatsService implements Resolve<Observable<Array<Statistics>>> {
+export class PrefetchStatsService implements Resolve<Observable<Array<Statistics>>> {
 
 
   constructor(private dataService: DataService) { }

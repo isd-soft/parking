@@ -7,7 +7,7 @@ import { ParkingLot } from './Model/ParkingLot';
 @Injectable({
   providedIn: 'root'
 })
-export class PrefectchParkingLotsService implements Resolve<Observable<Array<ParkingLot>>> {
+export class PrefetchParkingLotsService implements Resolve<Observable<Array<ParkingLot>>> {
 
   constructor(private dataService: DataService) { }
 
