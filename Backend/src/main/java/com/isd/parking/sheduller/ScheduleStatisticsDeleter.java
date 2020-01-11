@@ -20,18 +20,10 @@ public class ScheduleStatisticsDeleter {
     private static final Logger LOG = LoggerFactory.getLogger(ScheduleStatisticsDeleter.class);
 
     @Autowired
-    private final StatsService statsService;
+    private StatsService statsService;
 
-    public ScheduleStatisticsDeleter(final StatsService statsService) {
-        this.statsService = statsService;
-    }
-
-    /*
-    task will be executed every day at 13-00
-     */
-
-    @Scheduled(cron = "0 0 1 * * *")
-    public void sheduleTaskDeleteStats() {
+    @Scheduled(cron = "0 0 1 * * *")            //task will be executed at 13:00 every day
+    public void scheduleTaskDeleteStats() {
 
         LOG.info("Delete stats shedule job executing...");
 

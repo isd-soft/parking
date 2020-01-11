@@ -37,4 +37,11 @@ public class StatsService {
         statsRepo.removeOlderThan(oneWeek);
 
     }
+
+    public StatsRow save(StatsRow statsRow) {
+
+        LOG.info("Service save statistics event executed...");
+
+        return statsRepo.save(statsRow);
+    }
 }
