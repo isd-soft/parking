@@ -26,7 +26,7 @@ export class DataService {
    }
 
    getAllStats(): Observable<Array<Statistics>> {
-     return this.http.get<Array<Statistics>>(environment.restUrl + '/stats')
+     return this.http.get<Array<Statistics>>(environment.restUrl + '/statistics')
      .pipe(
        map(
          data => data

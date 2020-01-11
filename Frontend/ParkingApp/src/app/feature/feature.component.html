@@ -2,128 +2,130 @@
   <div class="btn btn-info refresh" (click)="refresh()">Refresh</div>
 </div>
 
+<div class="bg-warning pg-5" *ngIf="message">{{message}}</div>
 
 <app-parking-lot-detail *ngIf="action === 'view'" [parkingLot]="selectedParkingLot" (goBackEvent)="refresh()"></app-parking-lot-detail>
 
-<!-- Upper parking lots -->
+<div *ngIf='dataLoaded'>
+  <!-- Upper parking lots -->
+  <div class="row justify-content-center" *ngIf="action !== 'view'">
+    <div class="col-xl-12 col-lg-6 col-md-8">
+      <div class="d-flex flex-row justify-content-start">
+        <div class=" btn btn-light corner"><i class="fas fa-parking"></i></div>
+        <div class="p-1 space"></div>
+        <div class="p-1 btn btn-light lot"><i class="fas fa-parking"></i></div>
+        <div class="p-1 btn btn-light lot"><i class="fas fa-parking"></i></div>
+        <div class="p-1 btn btn-light lot"><i class="fas fa-parking"></i></div>
 
-<div class="row justify-content-center" *ngIf="action !== 'view'">
-  <div class="col-xl-12 col-lg-6 col-md-8">
-    <div class="d-flex flex-row justify-content-start">
-      <div class=" btn btn-light corner"><i class="fas fa-parking"></i></div>
-      <div class="p-1 space"></div>
-      <div class="p-1 btn btn-light lot"><i class="fas fa-parking"></i></div>
-      <div class="p-1 btn btn-light lot"><i class="fas fa-parking"></i></div>
-      <div class="p-1 btn btn-light lot"><i class="fas fa-parking"></i></div>
+        <div class="p-1 btn btn-light lot" [ngClass]="{'green': parkingLots[3].status === 'FREE',
+                                                          'red' : parkingLots[3].status === 'OCCUPIED',
+                                                          'grey' : parkingLots[3].status === 'UNKNOWN'}"
+                                                          (click)="showDetails(parkingLots[3].id)">
+          <i class="fas fa-car" *ngIf="parkingLots[3].status === 'OCCUPIED'"></i>
+          <i class="fas fa-parking" *ngIf="parkingLots[3].status === 'FREE'"></i>
+          <i class="fas fa-ban" *ngIf="parkingLots[3].status === 'UNKNOWN'"></i>
+        </div>
 
-      <div class="p-1 btn btn-light lot" [ngClass]="{'green': parkingLots[3].status === 'FREE',
-                                                         'red' : parkingLots[3].status === 'OCCUPIED',
-                                                         'grey' : parkingLots[3].status === 'UNKNOWN'}"
-                                                         (click)="showDetails(parkingLots[3].id)">
-        <i class="fas fa-car" *ngIf="parkingLots[3].status === 'OCCUPIED'"></i>
-        <i class="fas fa-parking" *ngIf="parkingLots[3].status === 'FREE'"></i>
-        <i class="fas fa-ban" *ngIf="parkingLots[3].status === 'UNKNOWN'"></i>
+        <div class="p-1 btn btn-light lot" [ngClass]="{'green': parkingLots[4].status === 'FREE',
+                                                          'red' : parkingLots[4].status === 'OCCUPIED',
+                                                          'grey' : parkingLots[4].status === 'UNKNOWN'}"
+                                                          (click)="showDetails(parkingLots[4].id)">
+          <i class="fas fa-car" *ngIf="parkingLots[4].status === 'OCCUPIED'"></i>
+          <i class="fas fa-parking" *ngIf="parkingLots[4].status === 'FREE'"></i>
+          <i class="fas fa-ban" *ngIf="parkingLots[4].status === 'UNKNOWN'"></i>
+        </div>
+
+        <div class="p-1 btn btn-light lot" [ngClass]="{'green': parkingLots[5].status === 'FREE',
+                                                          'red' : parkingLots[5].status === 'OCCUPIED',
+                                                          'grey' : parkingLots[5].status === 'UNKNOWN'}"
+                                                          (click)="showDetails(parkingLots[5].id)">
+          <i class="fas fa-car" *ngIf="parkingLots[5].status === 'OCCUPIED'"></i>
+          <i class="fas fa-parking" *ngIf="parkingLots[5].status === 'FREE'"></i>
+          <i class="fas fa-ban" *ngIf="parkingLots[5].status === 'UNKNOWN'"></i>
+        </div>
+
+        <div class="p-1 btn btn-light lot" [ngClass]="{'green': parkingLots[6].status === 'FREE',
+                                                          'red' : parkingLots[6].status === 'OCCUPIED',
+                                                          'grey' : parkingLots[6].status === 'UNKNOWN'}"
+                                                          (click)="showDetails(parkingLots[6].id)">
+          <i class="fas fa-car" *ngIf="parkingLots[6].status === 'OCCUPIED'"></i>
+          <i class="fas fa-parking" *ngIf="parkingLots[6].status === 'FREE'"></i>
+          <i class="fas fa-ban" *ngIf="parkingLots[6].status === 'UNKNOWN'"></i>
+        </div>
+
+        <div class="p-1 btn btn-light lot" [ngClass]="{'green': parkingLots[7].status === 'FREE',
+                                                          'red' : parkingLots[7].status === 'OCCUPIED',
+                                                          'grey' : parkingLots[7].status === 'UNKNOWN'}"
+                                                          (click)="showDetails(parkingLots[7].id)">
+          <i class="fas fa-car" *ngIf="parkingLots[7].status === 'OCCUPIED'"></i>
+          <i class="fas fa-parking" *ngIf="parkingLots[7].status === 'FREE'"></i>
+          <i class="fas fa-ban" *ngIf="parkingLots[7].status === 'UNKNOWN'"></i>
+        </div>
+
+        <div class="p-1 btn btn-light lot" [ngClass]="{'green': parkingLots[8].status === 'FREE',
+                                                          'red' : parkingLots[8].status === 'OCCUPIED',
+                                                          'grey' : parkingLots[8].status === 'UNKNOWN'}"
+                                                          (click)="showDetails(parkingLots[8].id)">
+          <i class="fas fa-car" *ngIf="parkingLots[8].status === 'OCCUPIED'"></i>
+          <i class="fas fa-parking" *ngIf="parkingLots[8].status === 'FREE'"></i>
+          <i class="fas fa-ban" *ngIf="parkingLots[8].status === 'UNKNOWN'"></i>
+        </div>
+
+        <div class="p-1 btn btn-light lot" [ngClass]="{'green': parkingLots[9].status === 'FREE',
+                                                          'red' : parkingLots[9].status === 'OCCUPIED',
+                                                          'grey' : parkingLots[9].status === 'UNKNOWN'}"
+                                                          (click)="showDetails(parkingLots[9].id)">
+          <i class="fas fa-car" *ngIf="parkingLots[9].status === 'OCCUPIED'"></i>
+          <i class="fas fa-parking" *ngIf="parkingLots[9].status === 'FREE'"></i>
+          <i class="fas fa-ban" *ngIf="parkingLots[9].status === 'UNKNOWN'"></i>
+        </div>
+
+        <div class="p-1 btn btn-light lot"><i class="fas fa-parking"></i></div>
+        <div class="p-1 btn btn-light lot"><i class="fas fa-parking"></i></div>
       </div>
 
-      <div class="p-1 btn btn-light lot" [ngClass]="{'green': parkingLots[4].status === 'FREE',
-                                                         'red' : parkingLots[4].status === 'OCCUPIED',
-                                                         'grey' : parkingLots[4].status === 'UNKNOWN'}"
-                                                         (click)="showDetails(parkingLots[4].id)">
-        <i class="fas fa-car" *ngIf="parkingLots[4].status === 'OCCUPIED'"></i>
-        <i class="fas fa-parking" *ngIf="parkingLots[4].status === 'FREE'"></i>
-        <i class="fas fa-ban" *ngIf="parkingLots[4].status === 'UNKNOWN'"></i>
+      <!-- Left side parking lots -->
+
+      <div class="d-flex flex-row justify-content-start">
+        <div class="p-1 btn btn-light lot-side first-side"><i class="fas fa-parking"></i></div>
       </div>
 
-      <div class="p-1 btn btn-light lot" [ngClass]="{'green': parkingLots[5].status === 'FREE',
-                                                         'red' : parkingLots[5].status === 'OCCUPIED',
-                                                         'grey' : parkingLots[5].status === 'UNKNOWN'}"
-                                                         (click)="showDetails(parkingLots[5].id)">
-        <i class="fas fa-car" *ngIf="parkingLots[5].status === 'OCCUPIED'"></i>
-        <i class="fas fa-parking" *ngIf="parkingLots[5].status === 'FREE'"></i>
-        <i class="fas fa-ban" *ngIf="parkingLots[5].status === 'UNKNOWN'"></i>
+      <div class="d-flex flex-row justify-content-start" *ngFor="let lot of otherParkingLots">
+        <div class="p-1 btn btn-light lot-side"><i class="fas fa-parking"></i></div>
       </div>
 
-      <div class="p-1 btn btn-light lot" [ngClass]="{'green': parkingLots[6].status === 'FREE',
-                                                         'red' : parkingLots[6].status === 'OCCUPIED',
-                                                         'grey' : parkingLots[6].status === 'UNKNOWN'}"
-                                                         (click)="showDetails(parkingLots[6].id)">
-        <i class="fas fa-car" *ngIf="parkingLots[6].status === 'OCCUPIED'"></i>
-        <i class="fas fa-parking" *ngIf="parkingLots[6].status === 'FREE'"></i>
-        <i class="fas fa-ban" *ngIf="parkingLots[6].status === 'UNKNOWN'"></i>
+
+      <div class="d-flex flex-row justify-content-start">
+        <div class="p-1 btn btn-light lot-side" [ngClass]="{'green': parkingLots[0].status === 'FREE',
+                                                      'red' : parkingLots[0].status === 'OCCUPIED',
+                                                      'grey' : parkingLots[0].status === 'UNKNOWN'}"
+                                                      (click)="showDetails(parkingLots[0].id)">
+                                                      <i class="fas fa-car" *ngIf="parkingLots[0].status === 'OCCUPIED'"></i>
+                                                      <i class="fas fa-parking" *ngIf="parkingLots[0].status === 'FREE'"></i>
+                                                      <i class="fas fa-ban" *ngIf="parkingLots[0].status === 'UNKNOWN'"></i>
+        </div>
       </div>
 
-      <div class="p-1 btn btn-light lot" [ngClass]="{'green': parkingLots[7].status === 'FREE',
-                                                         'red' : parkingLots[7].status === 'OCCUPIED',
-                                                         'grey' : parkingLots[7].status === 'UNKNOWN'}"
-                                                         (click)="showDetails(parkingLots[7].id)">
-        <i class="fas fa-car" *ngIf="parkingLots[7].status === 'OCCUPIED'"></i>
-        <i class="fas fa-parking" *ngIf="parkingLots[7].status === 'FREE'"></i>
-        <i class="fas fa-ban" *ngIf="parkingLots[7].status === 'UNKNOWN'"></i>
+      <div class="d-flex flex-row justify-content-start">
+        <div class="p-1 btn btn-light lot-side" [ngClass]="{'green': parkingLots[1].status === 'FREE',
+                                                      'red' : parkingLots[1].status === 'OCCUPIED',
+                                                      'grey' : parkingLots[1].status === 'UNKNOWN'}"
+                                                      (click)="showDetails(parkingLots[1].id)">
+                                                      <i class="fas fa-car" *ngIf="parkingLots[1].status === 'OCCUPIED'"></i>
+                                                      <i class="fas fa-parking" *ngIf="parkingLots[1].status === 'FREE'"></i>
+                                                      <i class="fas fa-ban" *ngIf="parkingLots[1].status === 'UNKNOWN'"></i>
+        </div>
       </div>
 
-      <div class="p-1 btn btn-light lot" [ngClass]="{'green': parkingLots[8].status === 'FREE',
-                                                         'red' : parkingLots[8].status === 'OCCUPIED',
-                                                         'grey' : parkingLots[8].status === 'UNKNOWN'}"
-                                                         (click)="showDetails(parkingLots[8].id)">
-        <i class="fas fa-car" *ngIf="parkingLots[8].status === 'OCCUPIED'"></i>
-        <i class="fas fa-parking" *ngIf="parkingLots[8].status === 'FREE'"></i>
-        <i class="fas fa-ban" *ngIf="parkingLots[8].status === 'UNKNOWN'"></i>
+      <div class="d-flex flex-row justify-content-start">
+        <div class="p-1 btn btn-light lot-side" [ngClass]="{'green': parkingLots[2].status === 'FREE',
+                                                      'red' : parkingLots[2].status === 'OCCUPIED',
+                                                      'grey' : parkingLots[2].status === 'UNKNOWN'}"
+                                                      (click)="showDetails(parkingLots[2].id)">
+                                                      <i class="fas fa-car" *ngIf="parkingLots[2].status === 'OCCUPIED'"></i>
+                                                      <i class="fas fa-parking" *ngIf="parkingLots[2].status === 'FREE'"></i>
+                                                      <i class="fas fa-ban" *ngIf="parkingLots[2].status === 'UNKNOWN'"></i>
+        </div>
       </div>
-
-      <div class="p-1 btn btn-light lot" [ngClass]="{'green': parkingLots[9].status === 'FREE',
-                                                         'red' : parkingLots[9].status === 'OCCUPIED',
-                                                         'grey' : parkingLots[9].status === 'UNKNOWN'}"
-                                                         (click)="showDetails(parkingLots[9].id)">
-        <i class="fas fa-car" *ngIf="parkingLots[9].status === 'OCCUPIED'"></i>
-        <i class="fas fa-parking" *ngIf="parkingLots[9].status === 'FREE'"></i>
-        <i class="fas fa-ban" *ngIf="parkingLots[9].status === 'UNKNOWN'"></i>
-      </div>
-
-      <div class="p-1 btn btn-light lot"><i class="fas fa-parking"></i></div>
-      <div class="p-1 btn btn-light lot"><i class="fas fa-parking"></i></div>
-    </div>
-
-    <!-- Left side parking lots -->
-
-    <div class="d-flex flex-row justify-content-start">
-      <div class="p-1 btn btn-light lot-side first-side"><i class="fas fa-parking"></i></div>
-    </div>
-
-    <div class="d-flex flex-row justify-content-start" *ngFor="let lot of otherParkingLots">
-      <div class="p-1 btn btn-light lot-side"><i class="fas fa-parking"></i></div>
-    </div>
-
-
-    <div class="d-flex flex-row justify-content-start">
-      <div class="p-1 btn btn-light lot-side" [ngClass]="{'green': parkingLots[0].status === 'FREE',
-                                                    'red' : parkingLots[0].status === 'OCCUPIED',
-                                                    'grey' : parkingLots[0].status === 'UNKNOWN'}"
-                                                    (click)="showDetails(parkingLots[0].id)">
-                                                    <i class="fas fa-car" *ngIf="parkingLots[0].status === 'OCCUPIED'"></i>
-                                                    <i class="fas fa-parking" *ngIf="parkingLots[0].status === 'FREE'"></i>
-                                                    <i class="fas fa-ban" *ngIf="parkingLots[0].status === 'UNKNOWN'"></i>
-      </div>
-    </div>
-
-    <div class="d-flex flex-row justify-content-start">
-      <div class="p-1 btn btn-light lot-side" [ngClass]="{'green': parkingLots[1].status === 'FREE',
-                                                    'red' : parkingLots[1].status === 'OCCUPIED',
-                                                    'grey' : parkingLots[1].status === 'UNKNOWN'}"
-                                                    (click)="showDetails(parkingLots[1].id)">
-                                                    <i class="fas fa-car" *ngIf="parkingLots[1].status === 'OCCUPIED'"></i>
-                                                    <i class="fas fa-parking" *ngIf="parkingLots[1].status === 'FREE'"></i>
-                                                    <i class="fas fa-ban" *ngIf="parkingLots[1].status === 'UNKNOWN'"></i>
-      </div>
-    </div>
-
-    <div class="d-flex flex-row justify-content-start">
-      <div class="p-1 btn btn-light lot-side" [ngClass]="{'green': parkingLots[2].status === 'FREE',
-                                                    'red' : parkingLots[2].status === 'OCCUPIED',
-                                                    'grey' : parkingLots[2].status === 'UNKNOWN'}"
-                                                    (click)="showDetails(parkingLots[2].id)">
-                                                    <i class="fas fa-car" *ngIf="parkingLots[2].status === 'OCCUPIED'"></i>
-                                                    <i class="fas fa-parking" *ngIf="parkingLots[2].status === 'FREE'"></i>
-                                                    <i class="fas fa-ban" *ngIf="parkingLots[2].status === 'UNKNOWN'"></i>
-      </div>
-    </div>
+  </div>
 </div>

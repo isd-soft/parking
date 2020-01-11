@@ -28,6 +28,9 @@ export class StatisticsComponent implements OnInit {
   timeSortedAsc: boolean;
   timeSortedDesc: boolean;
 
+  dataLoaded = false;
+  message = 'Please wait...';
+
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
@@ -57,9 +60,15 @@ export class StatisticsComponent implements OnInit {
 
     this.timeSortedAsc = false;
     this.timeSortedDesc = false;
+
+    this.dataLoaded = true;
+    this.message = '';
   }
 
   filterData() {
+    console.log(this.statistics);
+    console.log(this.parkingLots);
+    console.log(this.filteredStatistics);
     let tempStats = new Array<Statistics>();
 
     if (this.selectedLotNumber === '-') {
@@ -75,7 +84,7 @@ export class StatisticsComponent implements OnInit {
 
       if (this.selectedLotNumber != null) {
         tempStats = tempStats
-          .filter(st => st.parkingLotNumber === +this.selectedLotNumber);
+          .filter(st => st.lot.number === +this.selectedLotNumber);
       }
 
     }
@@ -90,11 +99,11 @@ export class StatisticsComponent implements OnInit {
 
     for (let i = 0; i < this.filteredStatistics.length - 1; i++) {
 
-      if (this.filteredStatistics[i].parkingLotNumber > this.filteredStatistics[i + 1].parkingLotNumber) {
+      if (this.filteredStatistics[i].lot.number > this.filteredStatistics[i + 1].lot.number) {
         this.lotSortedAsc = false;
       }
 
-      if (this.filteredStatistics[i].parkingLotNumber < this.filteredStatistics[i + 1].parkingLotNumber) {
+      if (this.filteredStatistics[i].lot.number < this.filteredStatistics[i + 1].lot.number) {
         this.lotSortedDesc = false;
       }
     }
@@ -102,13 +111,13 @@ export class StatisticsComponent implements OnInit {
 
     if (this.lotSortedAsc) {
       this.filteredStatistics.sort(
-        (a, b) => a.parkingLotNumber < b.parkingLotNumber ? 1 : (a.parkingLotNumber > b.parkingLotNumber ? -1 : 0));
+        (a, b) => a.lot.number < b.lot.number ? 1 : (a.lot.number > b.lot.number ? -1 : 0));
 
       this.lotSortedAsc = false;
       this.lotSortedDesc = true;
     } else {
       this.filteredStatistics.sort(
-        (a, b) => a.parkingLotNumber > b.parkingLotNumber ? 1 : (a.parkingLotNumber < b.parkingLotNumber ? -1 : 0));
+        (a, b) => a.lot.number > b.lot.number ? 1 : (a.lot.number < b.lot.number ? -1 : 0));
 
       this.lotSortedDesc = false;
       this.lotSortedAsc = true;

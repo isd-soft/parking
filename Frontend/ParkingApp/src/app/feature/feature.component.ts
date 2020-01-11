@@ -20,11 +20,17 @@ export class FeatureComponent implements OnInit {
 
   action: string;
 
+  dataLoaded = false;
+
+
+  message = 'Please wait...';
+
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit() {
+    this.loadData();
     this.noData = new Array<number>();
     for (let i = 1; i <= 10; i++) {
       this.noData.push(i);
@@ -35,7 +41,6 @@ export class FeatureComponent implements OnInit {
       this.otherParkingLots.push(i);
     }
 
-    this.loadData();
     this.processUrlParams();
   }
 
@@ -43,7 +48,8 @@ export class FeatureComponent implements OnInit {
     this.dataService.getAllParkingLots().subscribe(
       data => {
         this.parkingLots = data.sort((a, b) => (a.number > b.number) ? 1 : (a.number < b.number ? -1 : 0));
-
+        this.dataLoaded = true;
+        this.message = '';
       },
       error => {
         this.parkingLots = null;
@@ -63,7 +69,7 @@ export class FeatureComponent implements OnInit {
     this.router.navigate(['test']);
   }
 
-  showDetails(id: string) {
+  showDetails(id: number) {
     this.router.navigate(['test'], {queryParams : {id , action : 'view'}});
     this.selectedParkingLot = this.parkingLots.find(pl => pl.id === id);
     this.processUrlParams();

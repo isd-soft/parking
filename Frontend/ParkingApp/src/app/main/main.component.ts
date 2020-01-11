@@ -53,7 +53,7 @@ export class MainComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-  showDetails(id: string) {
+  showDetails(id: number) {
     this.router.navigate([''], {queryParams : {id , action : 'view'}});
     this.selectedParkingLot = this.parkingLots.find(pl => pl.id === id);
     this.processUrlParams();

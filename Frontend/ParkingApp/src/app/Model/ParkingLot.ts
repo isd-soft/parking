@@ -1,5 +1,5 @@
 export class ParkingLot {
-  id: string;
+  id: number;
   number: number;
   status: string;
   updatedAt: Date;

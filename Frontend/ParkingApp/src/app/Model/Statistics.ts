@@ -1,13 +1,15 @@
-export class Statistics {
-  id: string;
-  parkingLotNumber: number;
-  status: string;
-  updatedAt: Date;
+import { ParkingLot } from './ParkingLot';
 
-  constructor(id?: string, parkingLotNumber?: number, status?: string, updatedAt?: Date) {
+export class Statistics {
+  id: number;
+  lot: ParkingLot;
+  updatedAt: Date;
+  status: string;
+
+  constructor(id?: number, parkingLotNumber?: ParkingLot, status?: string, updatedAt?: Date) {
     if (id) {
       this.id = id;
-      this.parkingLotNumber = parkingLotNumber;
+      this.lot = parkingLotNumber;
       this.status = status;
       this.updatedAt = updatedAt;
     }
@@ -16,7 +18,7 @@ export class Statistics {
   static fromHttp(stats: Statistics): Statistics {
     const newStats = new Statistics();
     newStats.id = stats.id;
-    newStats.parkingLotNumber = stats.parkingLotNumber;
+    newStats.lot = ParkingLot.fromHttp(stats.lot);
     newStats.status = stats.status;
     newStats.updatedAt = new Date(stats.updatedAt);
     return newStats;
