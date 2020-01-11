@@ -15,9 +15,8 @@ public class StatsRow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "lot_id")
-    private ParkingLot lot;
+    @Column(name = "lot_id")
+    private Long lotId;
 
     @Column(name = "updated_at")
     private Date updatedAt;
