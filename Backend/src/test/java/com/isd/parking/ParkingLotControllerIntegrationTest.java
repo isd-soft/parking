@@ -38,35 +38,34 @@ public class ParkingLotControllerIntegrationTest {
 
     }
 
-//    @Test
-//    public void testGetAllParkingLots() {
-//        HttpHeaders headers = new HttpHeaders();
-//        HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-//        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + EndpointsAPI.PARKING_LIST,
-//                HttpMethod.GET, entity, String.class);
-//        assertNotNull(response.getBody());
-//    }
-//
-//    @Test
-//    public void testGetParkingLotById() {
-//        ParkingLot parkingLot = restTemplate.getForObject(getRootUrl() + EndpointsAPI.PARKING_LIST + "/1", ParkingLot.class);
-//        System.out.println(parkingLot.getNumber());
-//        assertNotNull(parkingLot);
-//    }
-//
-//    @Test
-//    public void testUpdateParkingLot() {
-//        Long id = 1L;
-//        ParkingLot parkingLot = restTemplate.getForObject(getRootUrl() + EndpointsAPI.PARKING_LIST + "/" + id, ParkingLot.class);
-//
-//        parkingLot.setStatus(ParkingLotStatus.FREE);
-//        parkingLot.setUpdatedAt(new Date());
-//
-//        restTemplate.put(getRootUrl() + EndpointsAPI.PARKING_LIST + "/" + id, parkingLot);
-//        ParkingLot updatedParkingLot = restTemplate.getForObject(getRootUrl() + EndpointsAPI.PARKING_LIST + "/" + id, ParkingLot.class);
-//        assertNotNull(updatedParkingLot);
-//    }
+    @Test
+    public void testGetAllParkingLots() {
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/parking",
+                HttpMethod.GET, entity, String.class);
+        assertNotNull(response.getBody());
+    }
 
+    @Test
+    public void testGetParkingLotById() {
+        ParkingLot parkingLot = restTemplate.getForObject(getRootUrl() + "/parking/1", ParkingLot.class);
+        System.out.println(parkingLot.getNumber());
+        assertNotNull(parkingLot);
+    }
+
+    @Test
+    public void testUpdateParkingLot() {
+        Long id = 1L;
+        ParkingLot parkingLot = restTemplate.getForObject(getRootUrl() + "/parking/" + id, ParkingLot.class);
+
+        parkingLot.setStatus(ParkingLotStatus.FREE);
+        parkingLot.setUpdatedAt(new Date());
+
+        restTemplate.put(getRootUrl() + "/parking/" + id, parkingLot);
+        ParkingLot updatedParkingLot = restTemplate.getForObject(getRootUrl() + "/parking" + id, ParkingLot.class);
+        assertNotNull(updatedParkingLot);
+    }
 
     //TODO: tests creating and deleting parking lots
 

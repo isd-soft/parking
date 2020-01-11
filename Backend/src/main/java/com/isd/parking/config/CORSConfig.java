@@ -5,6 +5,9 @@
  */
 package com.isd.parking.config;
 
+import com.isd.parking.controller.ArduinoController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -12,9 +15,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CORSConfig implements WebMvcConfigurer {
 
+    private static final Logger LOG = LoggerFactory.getLogger(CORSConfig.class);
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        System.out.println("call from front");
+
+        LOG.info("Call from front");
+
         registry.addMapping("/**")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedOrigins("http://localhost:4200");  //TODO: change the URL for the prod URL when we deploy

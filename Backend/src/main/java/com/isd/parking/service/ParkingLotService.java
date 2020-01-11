@@ -20,14 +20,23 @@ public class ParkingLotService {
     private ParkingLotRepo parkingLotRepo;
 
     public List<ParkingLot> listAll() {
+
+        LOG.info("Service get all parking lots list executed...");
+
         return parkingLotRepo.findAll();
     }
 
     public Optional<ParkingLot> findById(Long parkingLotId) {
+
+        LOG.info("Service get parking lot by id executed...");
+
         return parkingLotRepo.findById(parkingLotId);
     }
 
     public ParkingLot save(ParkingLot parkingLot) {
+
+        LOG.info("Service save parking lot executed...");
+
         return parkingLotRepo.save(parkingLot);
     }
 

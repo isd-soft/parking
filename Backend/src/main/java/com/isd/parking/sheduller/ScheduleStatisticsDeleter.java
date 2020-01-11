@@ -33,8 +33,7 @@ public class ScheduleStatisticsDeleter {
     @Scheduled(cron = "0 0 1 * * *")
     public void sheduleTaskDeleteStats() {
 
-        long now = System.currentTimeMillis() / 1000;
-        LOG.info("Delete stats shedule job executing... " + new Date());
+        LOG.info("Delete stats shedule job executing...");
 
         statsService.deleteStatsOlderThanWeek();
     }

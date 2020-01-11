@@ -19,10 +19,15 @@ public class StatsService {
     private StatsRepo statsRepo;
 
     public List<StatsRow> listAll() {
+
+        LOG.info("Service get statistics list executed...");
+
         return statsRepo.findAll();
     }
 
     public void deleteStatsOlderThanWeek() {
+
+        LOG.info("Service delete statistics older than one week executed...");
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -7);

@@ -21,14 +21,20 @@ public class ParkingLotController {
     @Autowired
     private ParkingLotService parkingLotService;
 
-    @GetMapping()
+    @GetMapping("parking")
     public List<ParkingLot> getAllParkingLots() {
+
+        LOG.info("Controller update parking lot executed...");
+
         return parkingLotService.listAll();
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<ParkingLot> getEmployeeById(@PathVariable("id") Long parkingLotId)
+    @GetMapping("parking/{id}")
+    public ResponseEntity<ParkingLot> getParkingLotById(@PathVariable("id") Long parkingLotId)
             throws ResourceNotFoundException {
+
+        LOG.info("Controller get parking lot by id executed...");
+
         ParkingLot parkingLot = parkingLotService.findById(parkingLotId)
                 .orElseThrow(() -> new ResourceNotFoundException("Parking Lot not found for this id :: " + parkingLotId));
 

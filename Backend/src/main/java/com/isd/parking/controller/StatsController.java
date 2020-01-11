@@ -20,6 +20,9 @@ public class StatsController {
 
     @GetMapping("/statistics")
     public List<StatsRow> getAllStats() {
+
+        LOG.info("Controller get all statistics executed...");
+
         return statsService.listAll();
     }
 }

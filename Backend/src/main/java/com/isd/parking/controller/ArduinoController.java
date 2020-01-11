@@ -19,6 +19,9 @@ public class ArduinoController {
 
     @PutMapping("/arduino")
     public void updateParkingLot(@RequestBody ParkingLot parkingLot) {
+
+        LOG.info("Controller update parking lot executed...");
+
         parkingLotService.save(parkingLot);
     }
 

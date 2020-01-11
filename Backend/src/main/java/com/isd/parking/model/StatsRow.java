@@ -13,7 +13,7 @@ public class StatsRow {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
 
     @Column(name = "lot_id")
     private Long lotId;
