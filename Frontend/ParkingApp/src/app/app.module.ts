@@ -12,10 +12,12 @@ import { ParkingLotDetailComponent } from './main/parking-lot-detail/parking-lot
 import { LoginFormComponent } from './Account/login-form/login-form.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { FeatureComponent } from './feature/feature.component';
+import { PrefetchStatsService } from './prefetch-stats.service';
+import { PrefetchParkingLotsService } from './prefetch-parking-lots.service';
 
 const routes: Routes = [
   {path : 'test', component : FeatureComponent},
-  {path : 'stats', component : StatisticsComponent},
+  {path : 'stats', component : StatisticsComponent, resolve : {stats : PrefetchStatsService, parkingLots : PrefetchParkingLotsService}},
   {path : '', component : MainComponent},
   {path : '404', component : PageNotFoundComponent},
   {path : '**', redirectTo : '/404'}

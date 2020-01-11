@@ -3,6 +3,7 @@ import { DataService } from '../data.service';
 import { Statistics } from '../Model/Statistics';
 import { formatDate } from '@angular/common';
 import { ParkingLot } from '../Model/ParkingLot';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-statistics',
@@ -19,56 +20,39 @@ export class StatisticsComponent implements OnInit {
   startDate: string;
   endDate: string;
 
-  lotSortedAsc: boolean;
-  lotSortedDesc: boolean;
+  lotSortedAsc = false;
+  lotSortedDesc = false;
 
-  dateSortedAsc: boolean;
-  dateSortedDesc: boolean;
+  dateSortedAsc = false;
+  dateSortedDesc = false;
 
-  timeSortedAsc: boolean;
-  timeSortedDesc: boolean;
+  timeSortedAsc = false;
+  timeSortedDesc = false;
 
-  dataLoaded = false;
-  message = 'Please wait...';
-
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.loadData();
   }
 
   loadData() {
-    this.dataService.getAllStats().subscribe(
-      data => this.statistics = data.sort((a, b) => a.updatedAt > b.updatedAt ? 1 : (a.updatedAt < b.updatedAt ? -1 : 0))
-    );
+    // tslint:disable: no-string-literal
+    this.parkingLots = this.route.snapshot.data['parkingLots'];
+    this.parkingLots.sort((a, b) => (a.number > b.number) ? 1 : (a.number < b.number ? -1 : 0));
 
-    this.dataService.getAllParkingLots().subscribe(
-      data => this.parkingLots = data.sort((a, b) => (a.number > b.number) ? 1 : (a.number < b.number ? -1 : 0))
-    );
+    this.statistics = this.route.snapshot.data['stats'];
+    this.statistics.sort((a, b) => a.updatedAt > b.updatedAt ? 1 : (a.updatedAt < b.updatedAt ? -1 : 0));
+
 
     this.filteredStatistics = this.statistics;
     this.selectedLotNumber = undefined;
 
-    this.startDate = formatDate('2020-01-01', 'yyyy-MM-dd', 'en-UK');
-    this.endDate = formatDate(new Date(), 'yyyy-MM-dd', 'en-UK');
-
-    this.lotSortedAsc = false;
-    this.lotSortedDesc = false;
-
-    this.dateSortedAsc = false;
-    this.dateSortedDesc = false;
-
-    this.timeSortedAsc = false;
-    this.timeSortedDesc = false;
-
-    this.dataLoaded = true;
-    this.message = '';
+    this.startDate = this.endDate = formatDate(new Date(), 'yyyy-MM-dd', 'en-UK');
+    this.filterData();
   }
 
   filterData() {
-    console.log(this.statistics);
-    console.log(this.parkingLots);
-    console.log(this.filteredStatistics);
     let tempStats = new Array<Statistics>();
 
     if (this.selectedLotNumber === '-') {

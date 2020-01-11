@@ -1,8 +1,5 @@
 <h1>Statistics</h1>
 
-<div class="bg-warning pg-5" *ngIf="message">{{message}}</div>
-
-
 <div class="search row">
   <div class="date col-6">
     <label for="dateBegin">Start date:</label>
@@ -19,43 +16,42 @@
     </select>
   </div>
 </div>
-<div *ngIf="dataLoaded">
-  <div>
-    <div class="col-12">
-      <table class="table">
-        <thead>
-          <tr>
-            <th (click)="sortTableByLotNumber()">
-              <span class="lot">Parking Lot
-                <i class="fas fa-sort-up" *ngIf="lotSortedAsc"></i>
-                <i class="fas fa-sort-down" *ngIf="lotSortedDesc"></i>
+
+<div>
+  <div class="col-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th (click)="sortTableByLotNumber()">
+            <span class="lot">Parking Lot
+              <i class="fas fa-sort-up" *ngIf="lotSortedAsc"></i>
+              <i class="fas fa-sort-down" *ngIf="lotSortedDesc"></i>
+            </span>
+          </th>
+          <th>Status</th>
+          <th (click)="sortTableByTime()">
+            <span class="time">Time
+              <i class="fas fa-sort-up" *ngIf="timeSortedAsc"></i>
+              <i class="fas fa-sort-down" *ngIf="timeSortedDesc"></i>
               </span>
             </th>
-            <th>Status</th>
-            <th (click)="sortTableByTime()">
-              <span class="time">Time
-                <i class="fas fa-sort-up" *ngIf="timeSortedAsc"></i>
-                <i class="fas fa-sort-down" *ngIf="timeSortedDesc"></i>
-                </span>
-              </th>
-            <th (click)="sortTableByDate()">
-              <span class="date">Date
-                <i class="fas fa-sort-up" *ngIf="dateSortedAsc"></i>
-                <i class="fas fa-sort-down" *ngIf="dateSortedDesc"></i>
-              </span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let stat of filteredStatistics">
-            <td>{{'LOT ' + stat.lot.number}}</td>
-            <td>{{stat.status}}</td>
-            <td>{{stat.updatedAt | date : "HH:MM"}}</td>
-            <td>{{stat.updatedAt | date : "yy.MM.dd"}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+          <th (click)="sortTableByDate()">
+            <span class="date">Date
+              <i class="fas fa-sort-up" *ngIf="dateSortedAsc"></i>
+              <i class="fas fa-sort-down" *ngIf="dateSortedDesc"></i>
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let stat of filteredStatistics">
+          <td>{{'LOT ' + stat.lot.number}}</td>
+          <td>{{stat.status}}</td>
+          <td>{{stat.updatedAt | date : "HH:MM"}}</td>
+          <td>{{stat.updatedAt | date : "yy.MM.dd"}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
