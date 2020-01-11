@@ -14,7 +14,7 @@
     </div>
     <div>
       <span>Status: </span>
-      <span>{{parkingLot.status}} </span><span *ngIf="parkingLot.status === 'OCCUPIED'">since {{parkingLot.updatedAt.toUTCString()}}</span>
+      <span>{{parkingLot.status}} </span><span *ngIf="parkingLot.status === 'OCCUPIED'">since {{parkingLot.updatedAt | date : 'HH:mm dd-MMM-yyyy'}}</span>
     </div>
   </div>
 </div>
