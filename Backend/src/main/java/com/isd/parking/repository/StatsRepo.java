@@ -14,7 +14,7 @@ public interface StatsRepo extends JpaRepository<StatsRow, Long> {
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM stats s WHERE s.updatedAt < :date")
+    @Query("DELETE FROM statistics s WHERE s.updatedAt < :date")
     int removeOlderThan(@Param("date") java.sql.Date date);
 
 }

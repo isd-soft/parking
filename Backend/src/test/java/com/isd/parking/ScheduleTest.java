@@ -15,7 +15,7 @@ import static org.mockito.Mockito.mock;
 @EnableScheduling
 @Configuration
 @ConditionalOnProperty(name = "spring.enable.scheduling")
-public class SheduleTest {
+public class ScheduleTest {
 
 
     private static final Logger LOG = LoggerFactory.getLogger(ScheduleStatisticsDeleter.class);

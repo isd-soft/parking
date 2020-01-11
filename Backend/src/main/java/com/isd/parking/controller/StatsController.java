@@ -18,6 +18,7 @@ public class StatsController {
     @Autowired
     private StatsService statsService;
 
+
     @GetMapping("/statistics")
     public List<StatsRow> getAllStats() {
 
