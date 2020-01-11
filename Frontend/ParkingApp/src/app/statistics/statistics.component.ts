@@ -25,7 +25,8 @@ export class StatisticsComponent implements OnInit {
   dateSortedAsc: boolean;
   dateSortedDesc: boolean;
 
-
+  timeSortedAsc: boolean;
+  timeSortedDesc: boolean;
 
   constructor(private dataService: DataService) { }
 
@@ -53,6 +54,9 @@ export class StatisticsComponent implements OnInit {
 
     this.dateSortedAsc = false;
     this.dateSortedDesc = false;
+
+    this.timeSortedAsc = false;
+    this.timeSortedDesc = false;
   }
 
   filterData() {
@@ -112,6 +116,9 @@ export class StatisticsComponent implements OnInit {
 
     this.dateSortedAsc = false;
     this.dateSortedDesc = false;
+
+    this.timeSortedDesc = false;
+    this.timeSortedAsc = false;
   }
 
   sortTableByDate() {
@@ -147,5 +154,46 @@ export class StatisticsComponent implements OnInit {
 
     this.lotSortedAsc = false;
     this.lotSortedDesc = false;
+
+    this.timeSortedDesc = false;
+    this.timeSortedAsc = false;
+  }
+
+  sortTableByTime() {
+    this.timeSortedDesc = true;
+    this.timeSortedAsc = true;
+
+    for (let i = 0; i < this.filteredStatistics.length - 1; i++) {
+
+      if (this.filteredStatistics[i].updatedAt.getTime() > this.filteredStatistics[i + 1].updatedAt.getTime()) {
+        this.timeSortedAsc = false;
+      }
+
+      if (this.filteredStatistics[i].updatedAt.getTime() < this.filteredStatistics[i + 1].updatedAt.getTime()) {
+        this.timeSortedDesc = false;
+      }
+    }
+
+    if (this.timeSortedAsc) {
+      this.filteredStatistics.sort(
+        (a, b) => a.updatedAt.getTime() < b.updatedAt.getTime() ? 1 : (a.updatedAt.getTime() > b.updatedAt.getTime() ? -1 : 0)
+      );
+
+      this.timeSortedAsc = false;
+      this.timeSortedDesc = true;
+    } else {
+      this.filteredStatistics.sort(
+        (a, b) => a.updatedAt.getTime() > b.updatedAt.getTime() ? 1 : (a.updatedAt.getTime() < b.updatedAt.getTime() ? -1 : 0)
+      );
+
+      this.timeSortedDesc = false;
+      this.timeSortedAsc = true;
+    }
+
+    this.lotSortedAsc = false;
+    this.lotSortedDesc = false;
+
+    this.dateSortedDesc = false;
+    this.dateSortedAsc = false;
   }
 }

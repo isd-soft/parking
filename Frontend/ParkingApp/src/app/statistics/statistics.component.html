@@ -28,7 +28,12 @@
             </span>
           </th>
           <th>Status</th>
-          <th>Time</th>
+          <th (click)="sortTableByTime()">
+            <span class="time">Time
+              <i class="fas fa-sort-up" *ngIf="timeSortedAsc"></i>
+              <i class="fas fa-sort-down" *ngIf="timeSortedDesc"></i>
+              </span>
+            </th>
           <th (click)="sortTableByDate()">
             <span class="date">Date
               <i class="fas fa-sort-up" *ngIf="dateSortedAsc"></i>

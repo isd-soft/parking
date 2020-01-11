@@ -11,11 +11,15 @@ td, th {
   text-align: center;
 }
 
-th {
+th .lot,
+th .time,
+th .date {
   cursor: pointer;
 }
 
-th:hover {
+th .lot:hover,
+th .time:hover,
+th .date:hover {
   text-decoration: underline;
 }
 
@@ -35,6 +39,12 @@ span {
   bottom: 1px;
 }
 
+.time .fas {
+  position: absolute;
+  left: 41px;
+  bottom: 1px;
+}
+
 @media only screen and (max-width: 416px) {
   .lot .fas {
     position: absolute;
@@ -48,7 +58,17 @@ span {
     bottom: 1px;
   }
 
+  .time .fas {
+    position: absolute;
+    left: 41px;
+    bottom: 1px;
+  }
+
   .table thead th {
     vertical-align: middle;
+  }
+
+  .table td, .table th {
+    padding: 0.5rem
   }
 }
