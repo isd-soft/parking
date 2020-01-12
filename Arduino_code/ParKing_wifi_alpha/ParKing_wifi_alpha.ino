@@ -71,16 +71,19 @@ void loop() {
   // Calculating the distance
   distance = duration * 0.034 / 2;
   // converting int to char*
-  char buf[16]; // need a buffer for that
-  sprintf(buf, "%d", distance);
-  const char * p = buf;
+  //char buf[16]; // need a buffer for that
+  //sprintf(buf, "%d", distance);
+  //const char * p = buf;
   //if(distance > 200){
   // client.send("PARKING PLACE IS FREE");
   //} else {
   // client.send("PARKING PLACE IS OCUPPIED");
   // }
-  client.send(p);
-
+  if (distance > 200) {
+    client.send("FREE");
+  } else {
+    client.send("OCCUPIED");
+  }
   // let the websockets client check for incoming messages
   if (client.available()) {
     client.poll();
