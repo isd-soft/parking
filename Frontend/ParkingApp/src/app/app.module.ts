@@ -14,9 +14,11 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import { FeatureComponent } from './feature/feature.component';
 import { PrefetchStatsService } from './prefetch-stats.service';
 import { PrefetchParkingLotsService } from './prefetch-parking-lots.service';
+import { Feature2Component } from './feature/feature2/feature2.component';
 
 const routes: Routes = [
   {path : 'test', component : FeatureComponent},
+  {path : 'test2', component : Feature2Component},
   {path : 'stats', component : StatisticsComponent, resolve : {stats : PrefetchStatsService, parkingLots : PrefetchParkingLotsService}},
   {path : '', component : MainComponent},
   {path : '404', component : PageNotFoundComponent},
@@ -32,7 +34,8 @@ const routes: Routes = [
     ParkingLotDetailComponent,
     LoginFormComponent,
     StatisticsComponent,
-    FeatureComponent
+    FeatureComponent,
+    Feature2Component
   ],
   imports: [
     BrowserModule,

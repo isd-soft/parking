@@ -47,9 +47,8 @@ span {
 
 @media only screen and (max-width: 416px) {
   .lot .fas {
-    position: absolute;
-    left: 62px;
-    bottom: 13px;
+    left: 89px;
+    bottom: 2px;
   }
 
   .date .fas {
@@ -70,5 +69,31 @@ span {
 
   .table td, .table th {
     padding: 0.5rem
+  }
+}
+
+@media (max-width: 384px) {
+  .lot .fas {
+    left: 65px;
+    bottom: 12px;
+  }
+
+  th {
+    font-size: smaller;
+  }
+
+  .lot .fas {
+    left: 74px;
+    bottom: 1px;
+  }
+
+  .date .fas {
+    left: 33px;
+    bottom: 1px;
+  }
+
+  .time .fas {
+    left: 34px;
+    bottom: 1px;
   }
 }
