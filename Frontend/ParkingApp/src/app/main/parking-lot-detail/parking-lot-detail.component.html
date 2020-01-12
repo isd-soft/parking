@@ -1,7 +1,7 @@
 <h2>Parking lot details</h2>
 <div *ngIf="parkingLot != null">
 
-  <div class="btn lot col-12"  [ngClass]="{'green': parkingLot.status === 'FREE', 'red' : parkingLot.status === 'OCCUPIED', 'grey' : parkingLot.status === 'UNKNOWN'}">
+  <div class="btn lot col-sm-12 "  [ngClass]="{'green': parkingLot.status === 'FREE', 'red' : parkingLot.status === 'OCCUPIED', 'grey' : parkingLot.status === 'UNKNOWN'}">
     <i class="fas fa-car" *ngIf="parkingLot.status === 'OCCUPIED'"></i>
     <i class="fas fa-parking" *ngIf="parkingLot.status === 'FREE'"></i>
     <i class="fas fa-ban" *ngIf="parkingLot.status === 'UNKNOWN'"></i>

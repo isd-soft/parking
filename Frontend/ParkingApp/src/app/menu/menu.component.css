@@ -11,6 +11,6 @@ img {
   text-align: center;
 }
 
-.user {
+.user, a {
   cursor: pointer;
 }

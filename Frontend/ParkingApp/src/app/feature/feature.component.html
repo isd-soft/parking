@@ -10,45 +10,45 @@
   <div class="container text-center" *ngIf="action !== 'view'">
     <img src="assets/img/isd-parking-layout2.png" alt="layout">
     <!-- side lots -->
-    <div class="lot-side lot-1" [ngClass]="{'green': parkingLots[0].status === 'FREE',
+    <div class="lot-side lot-1 border-top border-left border-bottom border-secondary" [ngClass]="{'green': parkingLots[0].status === 'FREE',
                                             'red' : parkingLots[0].status === 'OCCUPIED',
                                             'grey' : parkingLots[0].status === 'UNKNOWN'}"
                                             (click)="showDetails(parkingLots[0].id)"></div>
-    <div class="lot-side lot-2" [ngClass]="{'green': parkingLots[1].status === 'FREE',
+    <div class="lot-side lot-2 border-top border-left border-bottom border-secondary" [ngClass]="{'green': parkingLots[1].status === 'FREE',
                                             'red' : parkingLots[1].status === 'OCCUPIED',
                                             'grey' : parkingLots[1].status === 'UNKNOWN'}"
                                             (click)="showDetails(parkingLots[1].id)"></div>
-    <div class="lot-side lot-3" [ngClass]="{'green': parkingLots[2].status === 'FREE',
+    <div class="lot-side lot-3 border-top border-left border-bottom border-secondary" [ngClass]="{'green': parkingLots[2].status === 'FREE',
                                           'red' : parkingLots[2].status === 'OCCUPIED',
                                           'grey' : parkingLots[2].status === 'UNKNOWN'}"
                                           (click)="showDetails(parkingLots[2].id)"></div>
 
     <!-- upper lots -->
-    <div class="lot-top lot-4" [ngClass]="{'green': parkingLots[3].status === 'FREE',
+    <div class="lot-top lot-4 border-top border-left border-right border-secondary" [ngClass]="{'green': parkingLots[3].status === 'FREE',
                                            'red' : parkingLots[3].status === 'OCCUPIED',
                                            'grey' : parkingLots[3].status === 'UNKNOWN'}"
                                            (click)="showDetails(parkingLots[3].id)"></div>
-    <div class="lot-top lot-5" [ngClass]="{'green': parkingLots[4].status === 'FREE',
+    <div class="lot-top lot-5 border-top border-left border-right border-secondary" [ngClass]="{'green': parkingLots[4].status === 'FREE',
                                            'red' : parkingLots[4].status === 'OCCUPIED',
                                            'grey' : parkingLots[4].status === 'UNKNOWN'}"
                                            (click)="showDetails(parkingLots[4].id)"></div>
-    <div class="lot-top lot-6" [ngClass]="{'green': parkingLots[5].status === 'FREE',
+    <div class="lot-top lot-6 border-top border-left border-right border-secondary" [ngClass]="{'green': parkingLots[5].status === 'FREE',
                                            'red' : parkingLots[5].status === 'OCCUPIED',
                                            'grey' : parkingLots[5].status === 'UNKNOWN'}"
                                            (click)="showDetails(parkingLots[5].id)"></div>
-    <div class="lot-top lot-7" [ngClass]="{'green': parkingLots[6].status === 'FREE',
+    <div class="lot-top lot-7 border-top border-left border-right border-secondary" [ngClass]="{'green': parkingLots[6].status === 'FREE',
                                            'red' : parkingLots[6].status === 'OCCUPIED',
                                            'grey' : parkingLots[6].status === 'UNKNOWN'}"
                                            (click)="showDetails(parkingLots[6].id)"></div>
-    <div class="lot-top lot-8" [ngClass]="{'green': parkingLots[7].status === 'FREE',
+    <div class="lot-top lot-8 border-top border-left border-right border-secondary" [ngClass]="{'green': parkingLots[7].status === 'FREE',
                                            'red' : parkingLots[7].status === 'OCCUPIED',
                                            'grey' : parkingLots[7].status === 'UNKNOWN'}"
                                            (click)="showDetails(parkingLots[7].id)"></div>
-    <div class="lot-top lot-9" [ngClass]="{'green': parkingLots[8].status === 'FREE',
+    <div class="lot-top lot-9 border-top border-left border-right border-secondary" [ngClass]="{'green': parkingLots[8].status === 'FREE',
                                            'red' : parkingLots[8].status === 'OCCUPIED',
                                            'grey' : parkingLots[8].status === 'UNKNOWN'}"
                                            (click)="showDetails(parkingLots[8].id)"></div>
-    <div class="lot-top lot-10" [ngClass]="{'green': parkingLots[9].status === 'FREE',
+    <div class="lot-top lot-10 border-top border-left border-right border-secondary" [ngClass]="{'green': parkingLots[9].status === 'FREE',
                                            'red' : parkingLots[9].status === 'OCCUPIED',
                                            'grey' : parkingLots[9].status === 'UNKNOWN'}"
                                            (click)="showDetails(parkingLots[9].id)"></div>
