@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../data.service';
 import { ParkingLot } from '../Model/ParkingLot';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription, interval } from 'rxjs';
 
 @Component({
   selector: 'app-feature',
   templateUrl: './feature.component.html',
   styleUrls: ['./feature.component.css']
 })
-export class FeatureComponent implements OnInit {
+export class FeatureComponent implements OnInit, OnDestroy {
 
   noData: Array<number>;
 
@@ -24,6 +25,8 @@ export class FeatureComponent implements OnInit {
 
 
   message = 'Please wait...';
+
+  updateSubscription: Subscription;
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
@@ -42,6 +45,17 @@ export class FeatureComponent implements OnInit {
     }
 
     this.processUrlParams();
+
+    this.updateSubscription = interval(1000).subscribe(
+      () => {
+        this.loadData();
+        console.log('try');
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.updateSubscription.unsubscribe();
   }
 
   loadData() {
