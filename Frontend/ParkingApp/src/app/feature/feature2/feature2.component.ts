@@ -36,15 +36,6 @@ export class Feature2Component implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadData();
-    this.noData = new Array<number>();
-    for (let i = 1; i <= 10; i++) {
-      this.noData.push(i);
-    }
-
-    this.otherParkingLots = new Array<number>();
-    for (let i = 1; i <= 7; i++) {
-      this.otherParkingLots.push(i);
-    }
 
     this.processUrlParams();
 
@@ -63,12 +54,16 @@ export class Feature2Component implements OnInit, OnDestroy {
   loadData() {
     this.dataService.getAllParkingLots().subscribe(
       data => {
-        this.parkingLots = data.sort((a, b) => (a.number > b.number) ? 1 : (a.number < b.number ? -1 : 0));
-        this.dataLoaded = true;
-        this.message = '';
+        if (data.length !== 0) {
+          this.parkingLots = data.sort((a, b) => (a.number > b.number) ? 1 : (a.number < b.number ? -1 : 0));
+          this.dataLoaded = true;
+          this.message = '';
+        } else {
+          this.message = 'No data found, please contact support';
+        }
       },
       error => {
-        this.parkingLots = null;
+        this.noData = new Array<number>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
       }
     );
   }

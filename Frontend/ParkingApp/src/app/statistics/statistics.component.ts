@@ -15,7 +15,7 @@ export class StatisticsComponent implements OnInit {
   statistics: Array<Statistics>;
   filteredStatistics: Array<Statistics>;
   parkingLots: Array<ParkingLot>;
-  selectedLotNumber = null;
+  selectedLotNumber: string = null;
 
   startDate: string;
   endDate: string;
@@ -68,7 +68,7 @@ export class StatisticsComponent implements OnInit {
 
       if (this.selectedLotNumber != null) {
         tempStats = tempStats
-          .filter(st => st.lot.number === +this.selectedLotNumber);
+          .filter(st => st.lotId === +this.selectedLotNumber);
       }
 
     }
@@ -83,11 +83,11 @@ export class StatisticsComponent implements OnInit {
 
     for (let i = 0; i < this.filteredStatistics.length - 1; i++) {
 
-      if (this.filteredStatistics[i].lot.number > this.filteredStatistics[i + 1].lot.number) {
+      if (this.filteredStatistics[i].lotId > this.filteredStatistics[i + 1].lotId) {
         this.lotSortedAsc = false;
       }
 
-      if (this.filteredStatistics[i].lot.number < this.filteredStatistics[i + 1].lot.number) {
+      if (this.filteredStatistics[i].lotId < this.filteredStatistics[i + 1].lotId) {
         this.lotSortedDesc = false;
       }
     }
@@ -95,13 +95,13 @@ export class StatisticsComponent implements OnInit {
 
     if (this.lotSortedAsc) {
       this.filteredStatistics.sort(
-        (a, b) => a.lot.number < b.lot.number ? 1 : (a.lot.number > b.lot.number ? -1 : 0));
+        (a, b) => a.lotId < b.lotId ? 1 : (a.lotId > b.lotId ? -1 : 0));
 
       this.lotSortedAsc = false;
       this.lotSortedDesc = true;
     } else {
       this.filteredStatistics.sort(
-        (a, b) => a.lot.number > b.lot.number ? 1 : (a.lot.number < b.lot.number ? -1 : 0));
+        (a, b) => a.lotId > b.lotId ? 1 : (a.lotId < b.lotId ? -1 : 0));
 
       this.lotSortedDesc = false;
       this.lotSortedAsc = true;

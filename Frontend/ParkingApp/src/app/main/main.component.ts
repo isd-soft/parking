@@ -32,7 +32,11 @@ export class MainComponent implements OnInit {
   loadData() {
     this.dataService.getAllParkingLots().subscribe(
       data => {
-        this.parkingLots = data.sort((a, b) => (a.number > b.number) ? 1 : (a.number < b.number ? -1 : 0));
+        if (data.length !== 0) {
+          this.parkingLots = data.sort((a, b) => (a.number > b.number) ? 1 : (a.number < b.number ? -1 : 0));
+        } else {
+          this.parkingLots = null;
+        }
 
       },
       error => {
