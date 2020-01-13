@@ -1,4 +1,4 @@
-package com.isd.parking.config.ldap;
+package com.isd.parking.service.ldap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -12,7 +12,6 @@ import java.util.Base64;
 import java.util.List;
 
 public class LdapClient {
-
     @Autowired
     private Environment env;
 
@@ -43,7 +42,7 @@ public class LdapClient {
                 .build();
         DirContextAdapter context = new DirContextAdapter(dn);
 
-        context.setAttributeValues("objectclass", new String[] { "top", "person", "organizationalPerson", "inetOrgPerson" });
+        context.setAttributeValues("objectclass", new String[]{"top", "person", "organizationalPerson", "inetOrgPerson"});
         context.setAttributeValue("cn", username);
         context.setAttributeValue("sn", username);
         context.setAttributeValue("userPassword", digestSHA(password));
@@ -59,7 +58,7 @@ public class LdapClient {
                 .build();
         DirContextOperations context = ldapTemplate.lookupContext(dn);
 
-        context.setAttributeValues("objectclass", new String[] { "top", "person", "organizationalPerson", "inetOrgPerson" });
+        context.setAttributeValues("objectclass", new String[]{"top", "person", "organizationalPerson", "inetOrgPerson"});
         context.setAttributeValue("cn", username);
         context.setAttributeValue("sn", username);
         context.setAttributeValue("userPassword", digestSHA(password));
