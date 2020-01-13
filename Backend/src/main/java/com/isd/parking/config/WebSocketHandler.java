@@ -2,8 +2,6 @@ package com.isd.parking.config;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.isd.parking.controller.ArduinoController;
-import com.isd.parking.model.ParkingLot;
-import com.isd.parking.model.ParkingLotStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.CloseStatus;
@@ -22,10 +20,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
         logger.info("A user with session Id:" + session.getId() + " created a session");
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
+
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
