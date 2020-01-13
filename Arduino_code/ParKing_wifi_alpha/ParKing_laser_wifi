@@ -16,6 +16,8 @@ WebsocketsClient client;
 
 int test_lot_number = 1;                                                //hardcoded test number
 
+boolean isLotFree = false;                                              // boolean variable to define if the status of parking lot was changed or not
+
 String status_free = "FREE";                                            //if string not compile use char *
 String status_occupied = "OCCUPIED";
 String status_unknown = "UNKNOWN";
@@ -69,11 +71,15 @@ void loop() {
     if (detected == HIGH) {
         digitalWrite(ACTION, HIGH);         // set the buzzer ON
         Serial.println("Detected!");
+        isLotFree = true;
         client.send(msg + test_lot_number + "\", \"status\":\"" + status_free + "\", \"token\":\"" + security_token + "\"}");
-    } else {
+    } 
+    
+    if (detect == LOW && isLotFree) {
         digitalWrite(ACTION, LOW);          // Set the buzzer OFF
         Serial.println("No laser");
         client.send(msg + test_lot_number + "\", \"status\":\"" + status_occupied + "\", \"token\":\"" + security_token + "\"}");
+        isLotFree = false;
     }
 
     // let the websockets client check for incoming messages
