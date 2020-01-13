@@ -2,7 +2,7 @@ package com.isd.parking;
 
 
 import com.isd.parking.model.ParkingLot;
-import com.isd.parking.model.ParkingLotStatus;
+import com.isd.parking.model.enums.ParkingLotStatus;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

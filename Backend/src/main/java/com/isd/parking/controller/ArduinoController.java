@@ -1,12 +1,11 @@
 package com.isd.parking.controller;
 
 import com.isd.parking.model.ParkingLot;
-import com.isd.parking.model.ParkingLotStatus;
 import com.isd.parking.model.StatsRow;
+import com.isd.parking.model.enums.ParkingLotStatus;
 import com.isd.parking.service.ParkingLotService;
 import com.isd.parking.service.StatsService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +15,8 @@ import java.sql.Date;
 import java.util.Optional;
 
 @RestController
+@Slf4j
 public class ArduinoController {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ArduinoController.class);
 
     @Autowired
     private ParkingLotService parkingLotService;
@@ -26,22 +24,11 @@ public class ArduinoController {
     @Autowired
     private StatsService statsService;
 
-
-    /**
-     * @param parkingLot
-     *        JSON object {
-     *                       "id": 1,
-     *                       "status": 0
-     *                    }
-     */
-
     @PutMapping("/arduino")
-    //@PostMapping("/arduino/update")           //also works
-
     @ResponseStatus(HttpStatus.OK)
     public void updateParkingLot(@Valid @RequestBody ParkingLot parkingLot) {
 
-        LOG.info("Controller update parking lot executed...");
+        log.info("Controller update parking lot executed...");
 
         Optional<ParkingLot> parkingLotOptional = parkingLotService.findById(parkingLot.getId());
 
@@ -56,7 +43,7 @@ public class ArduinoController {
                     .status(parkingLot.getStatus())
                     .updatedAt(new Date(System.currentTimeMillis())).build();
 
-            LOG.info("Controller update statistics executed...");
+            log.info("Controller update statistics executed...");
 
             statsService.save(statsRow);
         });
@@ -74,7 +61,7 @@ public class ArduinoController {
     public void updateParkingLotById(@RequestParam(value = "id") Long id,
                                      @RequestParam(value = "status") ParkingLotStatus parkingLotStatus) {
 
-        LOG.info("Controller update parking lot executed...");
+        log.info("Controller update parking lot executed...");
 
         Optional<ParkingLot> parkingLotOptional = parkingLotService.findById(id);
 
@@ -91,7 +78,7 @@ public class ArduinoController {
                     .status(parkingLot.getStatus())
                     .updatedAt(new Date(System.currentTimeMillis())).build();
 
-            LOG.info("Controller update statistics executed...");
+            log.info("Controller update statistics executed...");
 
             statsService.save(statsRow);
         });

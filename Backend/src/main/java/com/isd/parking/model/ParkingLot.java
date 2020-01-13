@@ -1,7 +1,7 @@
 package com.isd.parking.model;
 
+import com.isd.parking.model.enums.ParkingLotStatus;
 import lombok.Data;
-import org.apache.catalina.User;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;

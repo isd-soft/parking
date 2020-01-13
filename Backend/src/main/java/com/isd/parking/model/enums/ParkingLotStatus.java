@@ -1,4 +1,4 @@
-package com.isd.parking.model;
+package com.isd.parking.model.enums;
 
 public enum ParkingLotStatus {
     FREE,

@@ -1,5 +1,6 @@
 package com.isd.parking.model;
 
+import com.isd.parking.model.enums.ParkingLotStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity(name = "statistics")
 @Data
