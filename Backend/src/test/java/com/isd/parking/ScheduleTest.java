@@ -1,11 +1,8 @@
 package com.isd.parking;
 
 import com.isd.parking.service.StatsService;
-import com.isd.parking.sheduller.ScheduleStatisticsDeleter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
