@@ -17,7 +17,7 @@ const int echoPin = 5;
 long duration;
 int distance;
 
-boolean isLotFree = false;
+boolean isLotFree = false;                                              // boolean variable to define if the status of parking lot was changed or not
 
 WebsocketsClient client;
 
