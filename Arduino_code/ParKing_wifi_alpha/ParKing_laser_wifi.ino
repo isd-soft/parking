@@ -75,7 +75,7 @@ void loop() {
         client.send(msg + test_lot_number + "\", \"status\":\"" + status_free + "\", \"token\":\"" + security_token + "\"}");
     } 
     
-    if (detect == LOW && isLotFree) {
+    if (detected == LOW && isLotFree) {
         digitalWrite(ACTION, LOW);          // Set the buzzer OFF
         Serial.println("No laser");
         client.send(msg + test_lot_number + "\", \"status\":\"" + status_occupied + "\", \"token\":\"" + security_token + "\"}");
