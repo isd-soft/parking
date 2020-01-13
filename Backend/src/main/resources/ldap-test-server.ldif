@@ -52,7 +52,26 @@ objectclass: inetOrgPerson
 cn: Bob Hamilton
 sn: Hamilton
 uid: bob
-userPassword: bobspassword
+# userPassword: bobspassword
+userPassword: {SHA}Ym9ic3Bhc3N3b3Jk
+
+
+# custom user
+
+dn: uid=alex,ou=people,dc=isd,dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Alex G
+sn: G
+uid: alex
+userPassword: alexspassword
+
+
+
+
+
 
 dn: uid=joe,ou=otherpeople,dc=isd,dc=com
 objectclass: top
