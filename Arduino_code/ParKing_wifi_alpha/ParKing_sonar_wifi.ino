@@ -17,7 +17,7 @@ const int echoPin = 5;
 long duration;
 int distance;
 
-boolean isAvailable1;
+boolean isLotFree = false;
 
 WebsocketsClient client;
 
@@ -92,8 +92,12 @@ void loop() {
 
     if (distance > 200) {
         client.send(msg + test_lot_number + "\", \"status\":\"" + status_free + "\", \"token\":\"" + security_token + "\"}");
-    } else {
+        isLotFree = true;
+    } 
+
+    if (distance < 200 && isLotFree){ 
         client.send(msg + test_lot_number + "\", \"status\":\"" + status_occupied + "\", \"token\":\"" + security_token + "\"}");
+        isLotFree = false;
     }
 
     // let the websockets client check for incoming messages
