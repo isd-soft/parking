@@ -3,11 +3,15 @@
 }
 
 .red {
-  background-color: #fd0006;
+  background-color: #e76f51;
 }
 
 .grey {
   background-color: grey;
+}
+
+.refresh {
+  background-color: #3057e2;
 }
 
 img {
@@ -310,79 +314,79 @@ img {
 
   .backDoor {
     left: 1.4rem;
-    font-size: .5rem;
+    font-size: .8rem;
     bottom: 1rem;
   }
 }
 
 @media (max-width: 395px) {
   img {
-    width: 20.5rem;
+    width: 24.5rem;
   }
 
   .lot-side {
-    width: 2.15rem;
-    height: .93rem;
+    width: 2.56rem;
+    height: 1.2rem;
   }
 
   .lot-top {
-    width: .95rem;
-    height: 2.15rem;
+    width: 1.2rem;
+    height: 2.56rem;
   }
 
   .lot-1 {
-    top: 11.6rem;
-    left: 2.65rem;
+    top: 13.8rem;
+    left: 1.9rem;
   }
 
   .lot-2 {
-    top: 12.6rem;
-    left: 2.65rem;
+    top: 15.04rem;
+    left: 1.9rem;
   }
 
   .lot-3 {
-    top: 13.61rem;
-    left: 2.65rem;
+    top: 16.23rem;
+    left: 1.9rem;
   }
 
   .lot-4 {
-    top: 0.6rem;
-    left: 10.77rem;
+    top: .78rem;
+    left: 11.57rem;
   }
 
   .lot-5 {
-    top: 0.6rem;
-    left: 11.77rem;
-  }
-
-  .lot-6 {
-    top: 0.6rem;
+    top: .78rem;
     left: 12.77rem;
   }
 
+  .lot-6 {
+    top: .78rem;
+    left: 13.96rem;
+  }
+
   .lot-7 {
-    top: 0.6rem;
-    left: 13.77rem;
+    top: .78rem;
+    left: 15.17rem;
   }
 
   .lot-8 {
-    top: 0.6rem;
-    left: 14.77rem;
+    top: .78rem;
+    left: 16.37rem;
   }
 
   .lot-9 {
-    top: 0.6rem;
-    left: 15.77rem;
+    top: .78rem;
+    left: 17.57rem;
   }
 
   .lot-10 {
-    top: .6rem;
-    left: 16.77rem;
+    top: .78rem;
+    left: 18.77rem;
   }
 
   .smoking {
-    top: 14.3rem;
-    left: 8.8rem;
+    top: 17rem;
+    left: 9.29rem;
   }
 }
 

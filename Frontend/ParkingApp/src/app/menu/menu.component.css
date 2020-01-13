@@ -14,3 +14,7 @@ img {
 .user, a {
   cursor: pointer;
 }
+
+.bg-blue {
+  background-color: #3C99DC;
+}

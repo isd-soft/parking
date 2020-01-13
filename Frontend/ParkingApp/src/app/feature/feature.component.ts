@@ -28,6 +28,8 @@ export class FeatureComponent implements OnInit, OnDestroy {
 
   updateSubscription: Subscription;
 
+  iterator = 0;
+
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
               private router: Router) { }
@@ -49,7 +51,7 @@ export class FeatureComponent implements OnInit, OnDestroy {
     this.updateSubscription = interval(1000).subscribe(
       () => {
         this.loadData();
-        console.log('try');
+        console.log('loadData: ' + (++this.iterator));
       }
     );
   }

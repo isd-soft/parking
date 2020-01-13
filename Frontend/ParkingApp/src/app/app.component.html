@@ -1,10 +1,10 @@
-<div class="container">
+<div class="container p-0">
   <app-menu  *ngIf="userLogged"></app-menu>
   <router-outlet  *ngIf="userLogged"></router-outlet>
   <app-login-form *ngIf="!userLogged" (userLoginEvent)="userLogged = true"></app-login-form>
-  <footer class="fixed-bottom blockquote-footer">
-    <cite>ParKing Project</cite>
-    <cite  class="d-block">by ISD Internship Team</cite>
+  <footer class="fixed-bottom blockquote-footer text-left">
+    <cite>ParKing Project </cite>
+    <cite>by ISD Internship Team</cite>
   </footer>
 </div>
 

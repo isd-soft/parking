@@ -1,3 +1,19 @@
+.green {
+  background-color: #2DF726;
+}
+
+.red {
+  background-color: #FF4038;
+}
+
+.grey {
+  background-color: grey;
+}
+
+.refresh {
+  background-color: #3C99DC;
+}
+
 img {
   width: 42rem;
 }
@@ -8,87 +24,94 @@ img {
 
 .lot-side {
   position: absolute;
-  width: 4.3rem;
-  height: 1.9rem;
+  width: 5.1rem;
+  height: 2.3rem;
+  cursor: pointer;
+}
+
+.lot-side:hover, .lot-top:hover {
+  opacity: .75;
 }
 
 .lot-top {
   position: absolute;
-  width: 1.6rem;
-  height: 3.6rem;
+  width: 2.4rem;
+  height: 5.2rem;
+  cursor: pointer;
 }
 
 .lot-1 {
-  top: 23.75rem;
-  left: 16.9rem;
+  top: 26.89rem;
+  left: 15.09rem;
 }
 
 .lot-2 {
-  top: 25.8rem;
-  left: 16.9rem;
+  top: 29.28rem;
+  left: 15.09rem;
 }
 
 .lot-3 {
-  top: 27.9rem;
-  left: 16.9rem;
+  top: 31.7rem;
+  left: 15.09rem;
 }
 
 .lot-4 {
-  top: 1.1rem;
-  left: 17.4rem;
+  top: 0.5rem;
+  left: 34.46rem;
 }
 
 .lot-5 {
-  top: 1.1rem;
-  left: 19.13rem;
+  top: 0.5rem;
+  left: 36.85rem;
 }
 
 .lot-6 {
-  top: 1.1rem;
-  left: 20.84rem;
+  top: 0.5rem;
+  left: 39.26rem;
 }
 
 .lot-7 {
-  top: 1.1rem;
-  left: 22.5rem;
+  top: 0.5rem;
+  left: 41.7rem;
 }
 
 .lot-8 {
-  top: 1.1rem;
-  left: 24.28rem;
+  top: 0.5rem;
+  left: 44.1rem;
 }
 
 .lot-9 {
-  top: 1.1rem;
-  left: 25.96rem;
+  top: 0.5rem;
+  left: 46.55rem;
 }
 
 .lot-10 {
-  top: 1.1rem;
-  left: 27.68rem;
+  top: 0.5rem;
+  left: 49rem;
 }
 
 .smoking {
   position: absolute;
-  top: 29.4rem;
-  left: 29.5rem;
+  top: 33.4rem;
+  left: 30rem;
 }
 
 .backDoor {
   position: absolute;
-  bottom: 2rem;
-  left: 14rem;
+  bottom: 3rem;
+  left: 15rem;
+  font-size: 1.5rem;
 }
 
 @media (max-width: 1199px) {
   .lot-side {
-    width: 4.31rem;
-    height: 1.91rem;
+    width: 5.15rem;
+    height: 2.4rem;
   }
 
   .lot-top {
-    width: 1.6rem;
-    height: 3.6rem;
+    width: 2rem;
+    height: 4.35rem;
   }
 
   .lot-1 {
@@ -102,6 +125,42 @@ img {
 
   .lot-3 {
     left: 11.23rem;
+    top: 27.9rem;
+  }
+
+  .lot-4 {
+    top: 1.34rem;
+    left: 27.8rem;
+  }
+
+  .lot-5 {
+    top: 1.34rem;
+    left: 29.9rem;
+  }
+
+  .lot-6 {
+    top: 1.34rem;
+    left: 31.9rem;
+  }
+
+  .lot-7 {
+    top: 1.34rem;
+    left: 33.9rem;
+  }
+
+  .lot-8 {
+    top: 1.34rem;
+    left: 36rem;
+  }
+
+  .lot-9 {
+    top: 1.34rem;
+    left: 38.1rem;
+  }
+
+  .lot-10 {
+    top: 1.34rem;
+    left: 40.15rem;
   }
 
   .smoking {
@@ -127,6 +186,41 @@ img {
 
   .lot-3 {
     left: 4.15rem;
+  }
+
+  .lot-4 {
+    top: 1.34rem;
+    left: 20.6rem;
+  }
+
+  .lot-5 {
+    top: 1.34rem;
+    left: 22.7rem;
+  }
+
+  .lot-6 {
+    top: 1.34rem;
+    left: 24.8rem;
+  }
+
+  .lot-7 {
+    top: 1.34rem;
+    left: 26.8rem;
+  }
+
+  .lot-8 {
+    top: 1.34rem;
+    left: 28.9rem;
+  }
+
+  .lot-9 {
+    top: 1.34rem;
+    left: 30.95rem;
+  }
+
+  .lot-10 {
+    top: 1.34rem;
+    left: 33rem;
   }
 
   .smoking {
@@ -219,44 +313,81 @@ img {
 
   .backDoor {
     left: 1.4rem;
-    font-size: .5rem;
-    bottom: 1rem;
+    font-size: .8rem;
+    bottom: 2rem;
   }
 }
 
-@media (max-width: 395px) {
+@media (max-width: 394px) {
   img {
-    width: 20.5rem;
+    width: 24.5rem;
   }
 
   .lot-side {
-    width: 2.15rem;
-    height: .93rem;
+    width: 3.05rem;
+    height: 1.4rem;
   }
 
   .lot-top {
-    width: 1.6rem;
-    height: 3.6rem;
+    width: 1.4rem;
+    height: 3rem;
   }
 
   .lot-1 {
-    top: 12.6rem;
-    left: 2.65rem;
+    top: 15.65rem;
+    left: 0.25rem;
   }
 
   .lot-2 {
-    top: 13.61rem;
-    left: 2.65rem;
+    top: 17.04rem;
+    left: 0.25rem;
   }
 
   .lot-3 {
-    top: 14.60rem;
-    left: 2.65rem;
+    top: 18.5rem;
+    left: 0.25rem;
+  }
+
+  .lot-4 {
+    top: .3rem;
+    left: 11.55rem;
+  }
+
+  .lot-5 {
+    top: .3rem;
+    left: 12.95rem;
+  }
+
+  .lot-6 {
+    top: .3rem;
+    left: 14.35rem;
+  }
+
+  .lot-7 {
+    top: .3rem;
+    left: 15.75rem;
+  }
+
+  .lot-8 {
+    top: .3rem;
+    left: 17.15rem;
+  }
+
+  .lot-9 {
+    top: .3rem;
+    left: 18.56rem;
+    width: 1.44rem;
+  }
+
+  .lot-10 {
+    top: .3rem;
+    left: 20.03rem;
+    width: 1.44rem;
   }
 
   .smoking {
-    top: 14.3rem;
-    left: 8.8rem;
+    top: 19.7rem;
+    left: 9.1rem;
   }
 }
 

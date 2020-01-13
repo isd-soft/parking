@@ -5,14 +5,15 @@
 .refresh {
   min-width: 50%;
   margin-top: 20px;
+  background-color: #3C99DC;
 }
 
 .green {
-  background-color: #20b600;
+  background-color: #2DF726;
 }
 
 .red {
-  background-color: #fb0006;
+  background-color: #FF4038;
 }
 
 .grey {
