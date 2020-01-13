@@ -39,7 +39,7 @@ public class ArduinoController {
 
             //save new statistics to database
             StatsRow statsRow = StatsRow.builder()//.id(UUID.randomUUID())
-                    .lotId(parkingLot.getId())
+                    .lotNumber(parkingLot.getNumber())
                     .status(parkingLot.getStatus())
                     .updatedAt(new Date(System.currentTimeMillis())).build();
 
@@ -74,7 +74,7 @@ public class ArduinoController {
 
             //save new statistics to database
             StatsRow statsRow = StatsRow.builder()//.id(UUID.randomUUID())
-                    .lotId(parkingLot.getId())
+                    .lotNumber(parkingLot.getNumber())
                     .status(parkingLot.getStatus())
                     .updatedAt(new Date(System.currentTimeMillis())).build();
 
