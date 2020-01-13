@@ -2,6 +2,7 @@ package com.isd.parking;
 
 import com.isd.parking.service.StatsService;
 import com.isd.parking.sheduller.ScheduleStatisticsDeleter;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,11 +16,8 @@ import static org.mockito.Mockito.mock;
 @EnableScheduling
 @Configuration
 @ConditionalOnProperty(name = "spring.enable.scheduling")
+@Slf4j
 public class ScheduleTest {
-
-
-    private static final Logger LOG = LoggerFactory.getLogger(ScheduleStatisticsDeleter.class);
-
 
     @Test
     @Scheduled(fixedDelay = 5000)

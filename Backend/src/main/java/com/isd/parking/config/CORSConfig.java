@@ -5,22 +5,19 @@
  */
 package com.isd.parking.config;
 
-import com.isd.parking.controller.ArduinoController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@Slf4j
 public class CORSConfig implements WebMvcConfigurer {
-
-    private static final Logger LOG = LoggerFactory.getLogger(CORSConfig.class);
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
 
-        LOG.info("Call from front");
+        log.info("Call from front");
 
         registry.addMapping("/**")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")

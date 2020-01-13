@@ -3,6 +3,7 @@ package com.isd.parking.controller;
 import com.isd.parking.exception.ResourceNotFoundException;
 import com.isd.parking.model.ParkingLot;
 import com.isd.parking.service.ParkingLotService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController("/")
+@Slf4j
 public class ParkingLotController {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ParkingLotController.class);
 
     @Autowired
     private ParkingLotService parkingLotService;
@@ -24,7 +24,7 @@ public class ParkingLotController {
     @GetMapping("parking")
     public List<ParkingLot> getAllParkingLots() {
 
-        LOG.info("Controller update parking lot executed...");
+        log.info("Controller update parking lot executed...");
 
         return parkingLotService.listAll();
     }
@@ -33,7 +33,7 @@ public class ParkingLotController {
     public ResponseEntity<ParkingLot> getParkingLotById(@PathVariable("id") Long parkingLotId)
             throws ResourceNotFoundException {
 
-        LOG.info("Controller get parking lot by id executed...");
+        log.info("Controller get parking lot by id executed...");
 
         ParkingLot parkingLot = parkingLotService.findById(parkingLotId)
                 .orElseThrow(() -> new ResourceNotFoundException("Parking Lot not found for this id :: " + parkingLotId));

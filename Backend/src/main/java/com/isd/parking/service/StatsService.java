@@ -2,6 +2,7 @@ package com.isd.parking.service;
 
 import com.isd.parking.model.StatsRow;
 import com.isd.parking.repository.StatsRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,23 +12,22 @@ import java.util.Calendar;
 import java.util.List;
 
 @Service
+@Slf4j
 public class StatsService {
-
-    private static final Logger LOG = LoggerFactory.getLogger(StatsService.class);
 
     @Autowired
     private StatsRepo statsRepo;
 
     public List<StatsRow> listAll() {
 
-        LOG.info("Service get statistics list executed...");
+        log.info("Service get statistics list executed...");
 
         return statsRepo.findAll();
     }
 
     public void deleteStatsOlderThanWeek() {
 
-        LOG.info("Service delete statistics older than one week executed...");
+        log.info("Service delete statistics older than one week executed...");
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -7);
@@ -40,7 +40,7 @@ public class StatsService {
 
     public StatsRow save(StatsRow statsRow) {
 
-        LOG.info("Service save statistics event executed...");
+        log.info("Service save statistics event executed...");
 
         return statsRepo.save(statsRow);
     }
