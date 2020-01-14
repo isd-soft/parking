@@ -9,14 +9,6 @@ const uint16_t websockets_server_port = 8080;           // Enter server port
 
 using namespace websockets;
 
-// defines pins numbers
-const int trigPin = 2;
-const int echoPin = 5;
-
-// defines variables
-long duration;
-int distance;
-
 boolean isLotFree = false;                                              // boolean variable to define if the status of parking lot was changed or not
 
 WebsocketsClient client;
@@ -30,10 +22,24 @@ String status_unknown = "UNKNOWN";
 char *security_token = "4a0a8679643673d083b23f52c21f27cac2b03fa2";      //some security token to verify connection ({SHA1}"arduino")
 
 
+long readUltrasonicDistance(int triggerPin, int echoPin)
+{
+  pinMode(triggerPin, OUTPUT);  // Clear the trigger
+  digitalWrite(triggerPin, LOW);
+  delayMicroseconds(2);
+  // Sets the trigger pin to HIGH state for 10 microseconds
+  digitalWrite(triggerPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(triggerPin, LOW);
+  pinMode(echoPin, INPUT);
+  // Reads the echo pin, and returns the sound wave travel time in microseconds
+  return pulseIn(echoPin, HIGH);
+}
+
 void setup() {
-    pinMode(trigPin, OUTPUT);   // Sets the trigPin as an Output
-    pinMode(echoPin, INPUT);    // Sets the echoPin as an Input
     Serial.begin(9600);         // Starts the serial communication
+    pinMode(13, OUTPUT);
+
 
     // Connect to wifi
     WiFi.begin(ssid, password);
@@ -68,34 +74,20 @@ void setup() {
 }
 
 void loop() {
-    // Clears the trigPin
-    digitalWrite(trigPin, LOW);
-    delayMicroseconds(2);
-
-    // Sets the trigPin on HIGH state for 10 micro seconds
-    digitalWrite(trigPin, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(trigPin, LOW);
-
-    // Reads the echoPin, returns the sound wave travel time in microseconds
-    duration = pulseIn(echoPin, HIGH);
-
-    // Calculating the distance
-    distance = duration * 0.034 / 2;
-
-    // converting int to char*
-    //char buf[16]; // need a buffer for that
-    //sprintf(buf, "%d", distance);
-    //const char * p = buf;
+    Serial.println(0.01723 * readUltrasonicDistance(8, 8));
 
     char *msg = "{\"mBody\":\"Arduino data\", \"id\":\"";
 
-    if (distance > 200 isLotFree == false) {
+  if (0.01723 * readUltrasonicDistance(8, 8) > 100  && isLotFree == false) {
+        digitalWrite(13, HIGH);
+        Serial.println("free");
         client.send(msg + test_lot_number + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + security_token + String("\"}"));
         isLotFree = true;
     } 
 
-    if (distance < 200 && iisLotFree == true){ 
+    if (0.01723 * readUltrasonicDistance(8, 8) < 100 && isLotFree == true) {
+        digitalWrite(13, LOW);
+        Serial.println("occupied");
         client.send(msg + test_lot_number + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + security_token + String("\"}"));
         isLotFree = false;
     }
