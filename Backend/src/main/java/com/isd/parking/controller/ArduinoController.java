@@ -3,6 +3,7 @@ package com.isd.parking.controller;
 import com.isd.parking.model.ParkingLot;
 import com.isd.parking.model.StatisticsRecord;
 import com.isd.parking.model.enums.ParkingLotStatus;
+import com.isd.parking.service.ParkingLotLocalService;
 import com.isd.parking.service.ParkingLotService;
 import com.isd.parking.service.StatisticsService;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,10 @@ public class ArduinoController {
 
     @Autowired
     private ParkingLotService parkingLotService;
+
+    //For local repository uncomment this and comment parkingLotService above
+    /*@Autowired
+    private ParkingLotLocalService parkingLotService;*/
 
     @Autowired
     private StatisticsService statisticsService;
@@ -58,6 +63,7 @@ public class ArduinoController {
     }
 
     /*
+    alternative fallback method for updating data
     not working via Postman (required parameter not present) (fixed)
      */
 

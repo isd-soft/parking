@@ -16,7 +16,6 @@ public class StatisticsController {
     @Autowired
     private StatisticsService statisticsService;
 
-
     @GetMapping("/statistics")
     public List<StatisticsRecord> getAllStats() {
         log.info("Controller get all statistics executed...");

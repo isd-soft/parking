@@ -2,6 +2,7 @@ package com.isd.parking.controller;
 
 import com.isd.parking.exception.ResourceNotFoundException;
 import com.isd.parking.model.ParkingLot;
+import com.isd.parking.service.ParkingLotLocalService;
 import com.isd.parking.service.ParkingLotService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,10 @@ public class ParkingLotController {
 
     @Autowired
     private ParkingLotService parkingLotService;
+
+    //For local repository uncomment this and comment parkingLotService above
+    /*@Autowired
+    private ParkingLotLocalService parkingLotService;*/
 
     @GetMapping("parking")
     public List<ParkingLot> getAllParkingLots() {

@@ -20,7 +20,7 @@ import java.util.Optional;
 @Slf4j
 public class ArduinoWebSocketHandler extends TextWebSocketHandler {
 
-    private final String securityToken = "4a0a8679643673d083b23f52c21f27cac2b03fa2";
+    private final String securityToken = "4a0a8679643673d083b23f52c21f27cac2b03fa2";           //{SHA1}arduino
 
     @Autowired
     private ParkingLotService parkingLotService;
