@@ -14,7 +14,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StatsRow {
+public class StatisticsRecord {
 
     @Id
     @Column(name = "id")

@@ -1,10 +1,10 @@
 package com.isd.parking.controller;
 
 import com.isd.parking.model.ParkingLot;
-import com.isd.parking.model.StatsRow;
+import com.isd.parking.model.StatisticsRecord;
 import com.isd.parking.model.enums.ParkingLotStatus;
 import com.isd.parking.service.ParkingLotService;
-import com.isd.parking.service.StatsService;
+import com.isd.parking.service.StatisticsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class ArduinoController {
     private ParkingLotService parkingLotService;
 
     @Autowired
-    private StatsService statsService;
+    private StatisticsService statisticsService;
 
     @PutMapping("/arduino")
     @ResponseStatus(HttpStatus.OK)
@@ -33,27 +33,32 @@ public class ArduinoController {
         Optional<ParkingLot> parkingLotOptional = parkingLotService.findById(parkingLot.getId());
 
         parkingLotOptional.ifPresent(updatingParkingLot -> {
+
+            log.info("Parking lot found in database: " + updatingParkingLot);
+
             updatingParkingLot.setStatus(parkingLot.getStatus());
             updatingParkingLot.setUpdatedAt(new Date(System.currentTimeMillis()));
+
+            log.info("Updated parking lot: " + updatingParkingLot);
+
             parkingLotService.save(updatingParkingLot);
 
             //save new statistics to database
-            StatsRow statsRow = StatsRow.builder()//.id(UUID.randomUUID())
-                    .lotNumber(parkingLot.getNumber())
-                    .status(parkingLot.getStatus())
+            StatisticsRecord statisticsRecord = StatisticsRecord.builder()//.id(UUID.randomUUID())
+                    .lotNumber(updatingParkingLot.getNumber())
+                    .status(updatingParkingLot.getStatus())
                     .updatedAt(new Date(System.currentTimeMillis())).build();
+
+            log.info("Statistics record: " + statisticsRecord);
 
             log.info("Controller update statistics executed...");
 
-            statsService.save(statsRow);
+            statisticsService.save(statisticsRecord);
         });
     }
 
-
-
-
     /*
-    not working via Postman (required parameter not present)
+    not working via Postman (required parameter not present) (fixed)
      */
 
     @PutMapping("/arduino/update")
@@ -67,20 +72,26 @@ public class ArduinoController {
 
         parkingLotOptional.ifPresent(parkingLot -> {
 
+            log.info("Parking lot found in database: " + parkingLot);
+
             parkingLot.setStatus(parkingLotStatus);
             parkingLot.setUpdatedAt(new Date(System.currentTimeMillis()));
+
+            log.info("Updated parking lot: " + parkingLotStatus);
 
             parkingLotService.save(parkingLot);
 
             //save new statistics to database
-            StatsRow statsRow = StatsRow.builder()//.id(UUID.randomUUID())
+            StatisticsRecord statisticsRecord = StatisticsRecord.builder()//.id(UUID.randomUUID())
                     .lotNumber(parkingLot.getNumber())
                     .status(parkingLot.getStatus())
                     .updatedAt(new Date(System.currentTimeMillis())).build();
 
+            log.info("Statistics record: " + statisticsRecord);
+
             log.info("Controller update statistics executed...");
 
-            statsService.save(statsRow);
+            statisticsService.save(statisticsRecord);
         });
     }
 }

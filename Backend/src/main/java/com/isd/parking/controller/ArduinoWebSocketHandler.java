@@ -1,10 +1,10 @@
 package com.isd.parking.controller;
 
 import com.isd.parking.model.ParkingLot;
-import com.isd.parking.model.StatsRow;
+import com.isd.parking.model.StatisticsRecord;
 import com.isd.parking.model.enums.ParkingLotStatus;
 import com.isd.parking.service.ParkingLotService;
-import com.isd.parking.service.StatsService;
+import com.isd.parking.service.StatisticsService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class ArduinoWebSocketHandler extends TextWebSocketHandler {
     private ParkingLotService parkingLotService;
 
     @Autowired
-    private StatsService statsService;
+    private StatisticsService statisticsService;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
@@ -70,20 +70,26 @@ public class ArduinoWebSocketHandler extends TextWebSocketHandler {
             //if lot with this number exists in database
             parkingLotOptional.ifPresent(parkingLot -> {
 
+                log.info("Parking lot found in database: " + parkingLot);
+
                 parkingLot.setStatus(ParkingLotStatus.valueOf(parkingLotStatus));       //get enum value from string
                 parkingLot.setUpdatedAt(new Date(System.currentTimeMillis()));
+
+                log.info("Updated parking lot: " + parkingLot);
 
                 parkingLotService.save(parkingLot);
 
                 //save new statistics to database
-                StatsRow statsRow = StatsRow.builder()//.id(UUID.randomUUID())
+                StatisticsRecord statisticsRecord = StatisticsRecord.builder()//.id(UUID.randomUUID())
                         .lotNumber(parkingLot.getNumber())
                         .status(parkingLot.getStatus())
                         .updatedAt(new Date(System.currentTimeMillis())).build();
 
+                log.info("Statistics record: " + statisticsRecord);
+
                 log.info("Controller update statistics executed...");
 
-                statsService.save(statsRow);
+                statisticsService.save(statisticsRecord);
             });
         }
     }

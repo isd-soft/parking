@@ -1,6 +1,6 @@
 package com.isd.parking.repository;
 
-import com.isd.parking.model.StatsRow;
+import com.isd.parking.model.StatisticsRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 
 @Repository
-public interface StatsRepo extends JpaRepository<StatsRow, Long> {
+public interface StatisticsRepo extends JpaRepository<StatisticsRecord, Long> {
 
     @Modifying
     @Transactional

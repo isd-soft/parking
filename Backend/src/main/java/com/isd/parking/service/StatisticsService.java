@@ -1,7 +1,7 @@
 package com.isd.parking.service;
 
-import com.isd.parking.model.StatsRow;
-import com.isd.parking.repository.StatsRepo;
+import com.isd.parking.model.StatisticsRecord;
+import com.isd.parking.repository.StatisticsRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,14 +12,16 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class StatsService {
+public class StatisticsService {
 
     @Autowired
-    private StatsRepo statsRepo;
+    private StatisticsRepo statisticsRepo;
 
-    public List<StatsRow> listAll() {
+    public List<StatisticsRecord> listAll() {
+
         log.info("Service get statistics list executed...");
-        return statsRepo.findAll();
+
+        return statisticsRepo.findAll();
     }
 
     @Transactional
@@ -27,16 +29,19 @@ public class StatsService {
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -7);
-
         java.sql.Date oneWeek = new java.sql.Date(cal.getTimeInMillis());
+
         log.info("Service delete statistics older than one week executed...");
-        statsRepo.removeOlderThan(oneWeek);
+
+        statisticsRepo.removeOlderThan(oneWeek);
 
     }
 
     @Transactional
-    public StatsRow save(StatsRow statsRow) {
+    public StatisticsRecord save(StatisticsRecord statisticsRecord) {
+
         log.info("Service save statistics event executed...");
-        return statsRepo.save(statsRow);
+
+        return statisticsRepo.save(statisticsRecord);
     }
 }

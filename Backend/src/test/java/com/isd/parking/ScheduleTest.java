@@ -1,8 +1,9 @@
 package com.isd.parking;
 
-import com.isd.parking.service.StatsService;
+import com.isd.parking.service.StatisticsService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -19,10 +20,11 @@ public class ScheduleTest {
     @Test
     @Scheduled(fixedDelay = 5000)
     public void scheduleFixedDelayTask() {
-        StatsService statsService = mock(StatsService.class);
+        StatisticsService statisticsService = mock(StatisticsService.class);
 
-        System.out.println(
-                "Fixed delay task - " + System.currentTimeMillis() / 1000);
-        statsService.deleteStatsOlderThanWeek();
+        log.info(
+                "Fixed delay task executing - " + System.currentTimeMillis() / 1000);
+
+        statisticsService.deleteStatsOlderThanWeek();
     }
 }
