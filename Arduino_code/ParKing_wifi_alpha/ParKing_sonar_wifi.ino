@@ -90,12 +90,12 @@ void loop() {
 
     char *msg = "{\"mBody\":\"Arduino data\", \"id\":\"";
 
-    if (distance > 200) {
+    if (distance > 200 isLotFree == false) {
         client.send(msg + test_lot_number + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + security_token + String("\"}"));
         isLotFree = true;
     } 
 
-    if (distance < 200 && isLotFree){ 
+    if (distance < 200 && iisLotFree == true){ 
         client.send(msg + test_lot_number + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + security_token + String("\"}"));
         isLotFree = false;
     }
