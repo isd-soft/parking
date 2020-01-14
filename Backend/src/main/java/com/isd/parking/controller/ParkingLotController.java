@@ -20,7 +20,7 @@ public class ParkingLotController {
     @Autowired
     private ParkingLotService parkingLotService;
 
-    //For local repository uncomment this and comment parkingLotService above
+    //For using local repository uncomment this and comment parkingLotService above
     /*@Autowired
     private ParkingLotLocalService parkingLotService;*/
 

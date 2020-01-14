@@ -1,7 +1,7 @@
 package com.isd.parking.service;
 
 import com.isd.parking.model.StatisticsRecord;
-import com.isd.parking.repository.StatisticsRepo;
+import com.isd.parking.repository.StatisticsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,13 +15,13 @@ import java.util.List;
 public class StatisticsService {
 
     @Autowired
-    private StatisticsRepo statisticsRepo;
+    private StatisticsRepository statisticsRepository;
 
     public List<StatisticsRecord> listAll() {
 
         log.info("Service get statistics list executed...");
 
-        return statisticsRepo.findAll();
+        return statisticsRepository.findAll();
     }
 
     @Transactional
@@ -33,7 +33,7 @@ public class StatisticsService {
 
         log.info("Service delete statistics older than one week executed...");
 
-        statisticsRepo.removeOlderThan(oneWeek);
+        statisticsRepository.removeOlderThan(oneWeek);
 
     }
 
@@ -42,6 +42,6 @@ public class StatisticsService {
 
         log.info("Service save statistics event executed...");
 
-        return statisticsRepo.save(statisticsRecord);
+        return statisticsRepository.save(statisticsRecord);
     }
 }

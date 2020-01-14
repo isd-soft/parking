@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 
 @Repository
-public interface StatisticsRepo extends JpaRepository<StatisticsRecord, Long> {
+public interface StatisticsRepository extends JpaRepository<StatisticsRecord, Long> {
 
     @Modifying
     @Transactional

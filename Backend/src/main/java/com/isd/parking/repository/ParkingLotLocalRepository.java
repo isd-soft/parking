@@ -10,7 +10,7 @@ import java.util.*;
 
 @Repository
 @Slf4j
-public class ParkingLotLocalRepo {
+public class ParkingLotLocalRepository {
 
     //Local in-memory storage of parking lots
     private HashMap<Long, ParkingLot> parkingMap = new HashMap<>();
@@ -27,7 +27,7 @@ public class ParkingLotLocalRepo {
         return Optional.ofNullable(parkingLot);
     }
 
-    public ParkingLotLocalRepo() {
+    public ParkingLotLocalRepository() {
         initParkingMap();
     }
 

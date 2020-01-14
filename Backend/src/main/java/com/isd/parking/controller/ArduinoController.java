@@ -22,7 +22,7 @@ public class ArduinoController {
     @Autowired
     private ParkingLotService parkingLotService;
 
-    //For local repository uncomment this and comment parkingLotService above
+    //For using local repository uncomment this and comment parkingLotService above
     /*@Autowired
     private ParkingLotLocalService parkingLotService;*/
 
@@ -42,7 +42,7 @@ public class ArduinoController {
             log.info("Parking lot found in database: " + updatingParkingLot);
 
             updatingParkingLot.setStatus(parkingLot.getStatus());
-            updatingParkingLot.setUpdatedAt(new Date(System.currentTimeMillis()));
+            updatingParkingLot.setUpdatedNow();
 
             log.info("Updated parking lot: " + updatingParkingLot);
 
@@ -81,7 +81,7 @@ public class ArduinoController {
             log.info("Parking lot found in database: " + parkingLot);
 
             parkingLot.setStatus(parkingLotStatus);
-            parkingLot.setUpdatedAt(new Date(System.currentTimeMillis()));
+            parkingLot.setUpdatedNow();
 
             log.info("Updated parking lot: " + parkingLotStatus);
 

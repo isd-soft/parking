@@ -25,6 +25,10 @@ public class ArduinoWebSocketHandler extends TextWebSocketHandler {
     @Autowired
     private ParkingLotService parkingLotService;
 
+    //For using local repository uncomment this and comment parkingLotService above
+    /*@Autowired
+    private ParkingLotLocalService parkingLotService;*/
+
     @Autowired
     private StatisticsService statisticsService;
 
@@ -73,7 +77,7 @@ public class ArduinoWebSocketHandler extends TextWebSocketHandler {
                 log.info("Parking lot found in database: " + parkingLot);
 
                 parkingLot.setStatus(ParkingLotStatus.valueOf(parkingLotStatus));       //get enum value from string
-                parkingLot.setUpdatedAt(new Date(System.currentTimeMillis()));
+                parkingLot.setUpdatedNow();
 
                 log.info("Updated parking lot: " + parkingLot);
 
