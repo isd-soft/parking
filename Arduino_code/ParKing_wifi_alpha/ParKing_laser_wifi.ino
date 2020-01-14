@@ -25,67 +25,67 @@ String status_unknown = "UNKNOWN";
 char *security_token = "4a0a8679643673d083b23f52c21f27cac2b03fa2";      //some security token to verify connection ({SHA1}"arduino")
 
 void setup() {
-    Serial.begin(9600);
-    Serial.println("Laser Module Test");
-    pinMode(DETECT, INPUT);         //define detect input pin
-    pinMode(ACTION, OUTPUT);        //define ACTION output pin
+  Serial.begin(9600);
+  Serial.println("Laser Module Test");
+  pinMode(DETECT, INPUT);         //define detect input pin
+  pinMode(ACTION, OUTPUT);        //define ACTION output pin
 
-    / Connect to wifi
-    WiFi.begin(ssid, password);
+  // Connect to wifi
+  WiFi.begin(ssid, password);
 
-    // Wait some time to connect to wifi
-    for (int i = 0; i < 10 && WiFi.status() != WL_CONNECTED; i++) {
-        Serial.print(".");
-        delay(1000);
-    }
+  // Wait some time to connect to wifi
+  for (int i = 0; i < 10 && WiFi.status() != WL_CONNECTED; i++) {
+    Serial.print(".");
+    delay(1000);
+  }
 
-    // Check if connected to wifi
-    if (WiFi.status() != WL_CONNECTED) {
-        Serial.println("No Wifi!");
-        return;
-    }
+  // Check if connected to wifi
+  if (WiFi.status() != WL_CONNECTED) {
+    Serial.println("No Wifi!");
+    return;
+  }
 
-    Serial.println("Connected to Wifi, Connecting to server.");
-    // try to connect to Websockets server
-    bool connected = client.connect(websockets_server_host, websockets_server_port, "/arduino");
-    if (connected) {
-        Serial.println("Connected!");
+  Serial.println("Connected to Wifi, Connecting to server.");
+  // try to connect to Websockets server
+  bool connected = client.connect(websockets_server_host, websockets_server_port, "/arduino");
+  if (connected) {
+    Serial.println("Connected!");
 
-    } else {
-        Serial.println("Not Connected!");
-    }
+  } else {
+    Serial.println("Not Connected!");
+  }
 
-    // run callback when messages are received
-    client.onMessage([&](WebsocketsMessage message) {
-        Serial.print("Got Message: ");
-        Serial.println(message.data());
-    });
+  // run callback when messages are received
+  client.onMessage([&](WebsocketsMessage message) {
+    Serial.print("Got Message: ");
+    Serial.println(message.data());
+  });
 }
 
 void loop() {
 
-    int detected = digitalRead(DETECT);     // read Laser sensor
-    char *msg = "{\"mBody\":\"Arduino data\", \"id\":\"";
+  int detected = digitalRead(DETECT);     // read Laser sensor
+  char *msg = "{\"mBody\":\"Arduino data\", \"id\":\"";
 
 
-    if (detected == HIGH) {
-        digitalWrite(ACTION, HIGH);         // set the buzzer ON
-        Serial.println("Detected!");
-        isLotFree = true;
-        client.send(msg + test_lot_number + "\", \"status\":\"" + status_free + "\", \"token\":\"" + security_token + "\"}");
-    } 
-    
-    if (detected == LOW && isLotFree) {
-        digitalWrite(ACTION, LOW);          // Set the buzzer OFF
-        Serial.println("No laser");
-        client.send(msg + test_lot_number + "\", \"status\":\"" + status_occupied + "\", \"token\":\"" + security_token + "\"}");
-        isLotFree = false;
-    }
+  if (detected == HIGH) {
+    digitalWrite(ACTION, HIGH);         // set the buzzer ON
+    Serial.println("Detected!");
+    isLotFree = true;
+    client.send(msg + test_lot_number + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + security_token + String("\"}"));
+  }
 
-    // let the websockets client check for incoming messages
-    if (client.available()) {
-        client.poll();
-    }
+  if (detected == LOW && isLotFree) {
+    digitalWrite(ACTION, LOW);          // Set the buzzer OFF
+    Serial.println("No laser");
+    client.send(msg + test_lot_number + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + security_token + String("\"}"));
+    isLotFree = false;
+  }
 
-    delay(200);
+  // let the websockets client check for incoming messages
+  if (client.available()) {
+    client.poll();
+  }
+
+  delay(200);
 }
