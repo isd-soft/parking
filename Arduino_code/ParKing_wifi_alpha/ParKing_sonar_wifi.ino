@@ -91,12 +91,12 @@ void loop() {
     char *msg = "{\"mBody\":\"Arduino data\", \"id\":\"";
 
     if (distance > 200) {
-        client.send(msg + test_lot_number + "\", \"status\":\"" + status_free + "\", \"token\":\"" + security_token + "\"}");
+        client.send(msg + test_lot_number + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + security_token + String("\"}"));
         isLotFree = true;
     } 
 
     if (distance < 200 && isLotFree){ 
-        client.send(msg + test_lot_number + "\", \"status\":\"" + status_occupied + "\", \"token\":\"" + security_token + "\"}");
+        client.send(msg + test_lot_number + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + security_token + String("\"}"));
         isLotFree = false;
     }
 
