@@ -68,14 +68,14 @@ void loop() {
   char *msg = "{\"mBody\":\"Arduino data\", \"id\":\"";
 
 
-  if (detected == HIGH) {
+  if (detected == HIGH && isLotFree == false) {
     digitalWrite(ACTION, HIGH);         // set the buzzer ON
     Serial.println("Detected!");
     isLotFree = true;
     client.send(msg + test_lot_number + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + security_token + String("\"}"));
   }
 
-  if (detected == LOW && isLotFree) {
+  if (detected == LOW && isLotFree == true) {
     digitalWrite(ACTION, LOW);          // Set the buzzer OFF
     Serial.println("No laser");
     client.send(msg + test_lot_number + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + security_token + String("\"}"));
