@@ -1,4 +1,4 @@
-.background {
+/* .background {
   background-color: #0A8EFF;
 }
 
@@ -12,7 +12,7 @@
 
 .grey {
   background-color: grey;
-}
+} */
 
 .refresh {
   /* background-color: #3C99DC; */
@@ -50,6 +50,24 @@ span {
   background-position: center;
 }
 
+.car-lost {
+  background-image: url("../../assets/img/carvblue-lost.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.car-free-side {
+  background-image: url("../../assets/img/carvblue-free.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.car-free-top {
+  background-image: url("../../assets/img/carblue-free.png");
+  background-size: cover;
+  background-position: center;
+}
+
 .container {
   position: relative;
 }
@@ -61,7 +79,7 @@ span {
 }
 
 .lot-number-side {
-
+  line-height: 1.8rem;
 }
 
 .lot-side {
