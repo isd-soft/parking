@@ -4,6 +4,7 @@ import { Subscription, interval } from 'rxjs';
 import { DataService } from 'src/app/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-feature2',
   templateUrl: './feature2.component.html',
@@ -23,12 +24,12 @@ export class Feature2Component implements OnInit, OnDestroy {
 
   dataLoaded = false;
 
-
   message = 'Please wait...';
 
   updateSubscription: Subscription;
 
-  iterator = 0;
+  loadDataCounter = 0;
+
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
@@ -39,10 +40,9 @@ export class Feature2Component implements OnInit, OnDestroy {
 
     this.processUrlParams();
 
-    this.updateSubscription = interval(1000).subscribe(
+    this.updateSubscription = interval(5000).subscribe(
       () => {
         this.loadData();
-        console.log('loadData: ' + (++this.iterator));
       }
     );
   }
@@ -58,12 +58,23 @@ export class Feature2Component implements OnInit, OnDestroy {
           this.parkingLots = data.sort((a, b) => (a.number > b.number) ? 1 : (a.number < b.number ? -1 : 0));
           this.dataLoaded = true;
           this.message = '';
+
         } else {
           this.message = 'No data found, please contact support';
         }
       },
       error => {
-        this.noData = new Array<number>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        const subscribe: Subscription = interval(10000).subscribe(
+          () => {
+            if (this.loadDataCounter <= 5) {
+              this.loadData();
+            } else {
+              subscribe.unsubscribe();
+              this.updateSubscription.unsubscribe();
+              this.message = 'Can\'t connect to server. Please contact support';
+            }
+          }
+        );
       }
     );
   }

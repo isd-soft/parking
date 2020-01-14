@@ -3,17 +3,24 @@
 }
 
 .refresh {
-  min-width: 50%;
-  margin-top: 20px;
-  background-color: #3C99DC;
+  /* background-color: #3C99DC; */
+  color: #fff;
+  border-color: #fff;
+  background-color: #0A8EFF;
+}
+
+.refresh:hover {
+  color: #0A8EFF;
+  background-color: #fff;
+  border-color: #fff;
 }
 
 .green {
-  background-color: #2DF726;
+  background-color: #0aff7c;
 }
 
 .red {
-  background-color: #FF4038;
+  background-color: #ff640a;
 }
 
 .grey {
@@ -26,4 +33,8 @@
 
 .lot {
   cursor: unset;
+}
+
+span {
+  color: #D1E7FA;
 }

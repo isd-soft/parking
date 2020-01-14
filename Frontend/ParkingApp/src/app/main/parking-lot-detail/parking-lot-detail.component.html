@@ -1,4 +1,4 @@
-<h2>Parking lot details</h2>
+<h2 class="text-light">Parking lot details</h2>
 <div *ngIf="parkingLot != null">
 
   <div class="btn lot col-sm-12 "  [ngClass]="{'green': parkingLot.status === 'FREE', 'red' : parkingLot.status === 'OCCUPIED', 'grey' : parkingLot.status === 'UNKNOWN'}">
@@ -19,8 +19,8 @@
   </div>
 </div>
 
-<div class="error" [hidden]="parkingLot != null">Something went wrong, please click on Refresh button</div>
+<div class="error text-light" [hidden]="parkingLot != null">Something went wrong, please click on Refresh button</div>
 
 <div class="row justify-content-center" >
-  <div class="btn btn-info refresh" (click)="goBack()">Back</div>
+  <div class="btn btn-info refresh w-50" (click)="goBack()">Back</div>
 </div>

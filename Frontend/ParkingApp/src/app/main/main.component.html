@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center" >
-  <div class="btn refresh text-light" (click)="refresh()">Refresh</div>
+  <div class="btn refresh mt-3 mb-4" (click)="refresh()">Refresh</div>
 </div>
 
 <app-parking-lot-detail *ngIf="action === 'view'" [parkingLot]="selectedParkingLot" (goBackEvent)="refresh()"></app-parking-lot-detail>

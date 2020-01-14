@@ -6,7 +6,7 @@
     <input class="form-control" id="dataBegin" type="date" [(ngModel)]="startDate" (change)="filterData()"/><br>
     <label for="dateEnd">End date:</label>
     <input class="form-control" id="dateEnd" type="date" [(ngModel)]="endDate" (change)="filterData()"/>
-    <div class="btn btn-info" (click)="loadData()">Reset</div>
+    <div class="btn refresh" (click)="loadData()">Reset</div>
   </div>
   <div class="id col-6">
     <label for="lotNumber">Lot number</label>

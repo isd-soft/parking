@@ -1,63 +1,103 @@
-<div class="d-flex justify-content-center" >
-  <div class="btn refresh text-light mt-3 mb-4 w-50" (click)="refresh()">Refresh</div>
-</div>
-
-<div class="bg-warning pg-5" *ngIf="message">{{message}}</div>
-
-<app-parking-lot-detail *ngIf="action === 'view'" [parkingLot]="selectedParkingLot" (goBackEvent)="refresh()"></app-parking-lot-detail>
-
-<div *ngIf='dataLoaded'>
-  <div class="container p-0 text-center" *ngIf="action !== 'view'">
-    <img src="assets/img/isd-parking-layout2.png" alt="layout">
-    <!-- side lots -->
-    <div class="lot-side lot-1 border-top border-left border-bottom border-secondary" [ngClass]="{'green': parkingLots[0].status === 'FREE',
-                                            'red' : parkingLots[0].status === 'OCCUPIED',
-                                            'grey' : parkingLots[0].status === 'UNKNOWN'}"
-                                            (click)="showDetails(parkingLots[0].id)"></div>
-    <div class="lot-side lot-2 border-top border-left border-bottom border-secondary" [ngClass]="{'green': parkingLots[1].status === 'FREE',
-                                            'red' : parkingLots[1].status === 'OCCUPIED',
-                                            'grey' : parkingLots[1].status === 'UNKNOWN'}"
-                                            (click)="showDetails(parkingLots[1].id)"></div>
-    <div class="lot-side lot-3 border-top border-left border-bottom border-secondary" [ngClass]="{'green': parkingLots[2].status === 'FREE',
-                                          'red' : parkingLots[2].status === 'OCCUPIED',
-                                          'grey' : parkingLots[2].status === 'UNKNOWN'}"
-                                          (click)="showDetails(parkingLots[2].id)"></div>
-
-    <!-- upper lots -->
-    <div class="lot-top lot-4 border-top border-left border-right border-secondary" [ngClass]="{'green': parkingLots[3].status === 'FREE',
-                                           'red' : parkingLots[3].status === 'OCCUPIED',
-                                           'grey' : parkingLots[3].status === 'UNKNOWN'}"
-                                           (click)="showDetails(parkingLots[3].id)"></div>
-    <div class="lot-top lot-5 border-top border-left border-right border-secondary" [ngClass]="{'green': parkingLots[4].status === 'FREE',
-                                           'red' : parkingLots[4].status === 'OCCUPIED',
-                                           'grey' : parkingLots[4].status === 'UNKNOWN'}"
-                                           (click)="showDetails(parkingLots[4].id)"></div>
-    <div class="lot-top lot-6 border-top border-left border-right border-secondary" [ngClass]="{'green': parkingLots[5].status === 'FREE',
-                                           'red' : parkingLots[5].status === 'OCCUPIED',
-                                           'grey' : parkingLots[5].status === 'UNKNOWN'}"
-                                           (click)="showDetails(parkingLots[5].id)"></div>
-    <div class="lot-top lot-7 border-top border-left border-right border-secondary" [ngClass]="{'green': parkingLots[6].status === 'FREE',
-                                           'red' : parkingLots[6].status === 'OCCUPIED',
-                                           'grey' : parkingLots[6].status === 'UNKNOWN'}"
-                                           (click)="showDetails(parkingLots[6].id)"></div>
-    <div class="lot-top lot-8 border-top border-left border-right border-secondary" [ngClass]="{'green': parkingLots[7].status === 'FREE',
-                                           'red' : parkingLots[7].status === 'OCCUPIED',
-                                           'grey' : parkingLots[7].status === 'UNKNOWN'}"
-                                           (click)="showDetails(parkingLots[7].id)"></div>
-    <div class="lot-top lot-9 border-top border-left border-right border-secondary" [ngClass]="{'green': parkingLots[8].status === 'FREE',
-                                           'red' : parkingLots[8].status === 'OCCUPIED',
-                                           'grey' : parkingLots[8].status === 'UNKNOWN'}"
-                                           (click)="showDetails(parkingLots[8].id)"></div>
-    <div class="lot-top lot-10 border-top border-left border-right border-secondary" [ngClass]="{'green': parkingLots[9].status === 'FREE',
-                                           'red' : parkingLots[9].status === 'OCCUPIED',
-                                           'grey' : parkingLots[9].status === 'UNKNOWN'}"
-                                           (click)="showDetails(parkingLots[9].id)"></div>
-
-    <div class="smoking text-secondary"><i class="fas fa-smoking"></i></div>
-    <div class="backDoor">
-      <div class="display-5">ISD </div>
-      <div class="display-5">Back Door</div>
-    </div>
+ <div class="background">
+  <div class="d-flex justify-content-center" >
+    <div class="btn btn-outline-info refresh mt-3 mb-4 w-50" (click)="refresh()">Refresh</div>
   </div>
 
+  <div class="bg-warning pg-5 display-4 d-flex justify-content-center text-center" *ngIf="message">{{message}}</div>
+
+  <app-parking-lot-detail *ngIf="action === 'view'" [parkingLot]="selectedParkingLot" (goBackEvent)="refresh()"></app-parking-lot-detail>
+
+  <div>
+    <div class="container p-0 text-center" *ngIf="action !== 'view' ">
+      <img src="assets/img/isd-parking-layout-blue.png" alt="layout">
+      <div *ngIf='!dataLoaded'>
+        <div class="lot-side lot-1 grey border-top border-left border-bottom border-primary"></div>
+        <div class="lot-side lot-2 grey border-top border-left border-bottom border-primary"></div>
+        <div class="lot-side lot-3 grey border-top border-left border-bottom border-primary"></div>
+        <div class="lot-top lot-4 grey border-top border-left border-right border-primary"></div>
+        <div class="lot-top lot-5 grey border-top border-left border-right border-primary"></div>
+        <div class="lot-top lot-6 grey border-top border-left border-right border-primary"></div>
+        <div class="lot-top lot-7 grey border-top border-left border-right border-primary"></div>
+        <div class="lot-top lot-8 grey border-top border-left border-right border-primary"></div>
+        <div class="lot-top lot-9 grey border-top border-left border-right border-primary"></div>
+        <div class="lot-top lot-10 grey border-top border-left border-right border-primary"></div>
+        <div class="smoking text-secondary"><i class="fas fa-smoking"></i></div>
+        <div class="backDoor">
+          <div class="display-5">ISD </div>
+          <div class="display-5">Back Door</div>
+        </div>
+      </div>
+      <div *ngIf='dataLoaded'>
+        <!-- side lots -->
+        <div class="lot-side lot-1"
+        [ngClass]="{'carv' : parkingLots[0].status === 'OCCUPIED',
+        'grey' : (parkingLots[0].status === 'UNKNOWN')}"
+        (click)="showDetails(parkingLots[0].id)">
+        <span class="lot-number-side" *ngIf="parkingLots[0].status === 'FREE'">{{'L' + (parkingLots[0].number < 10 ? 0 : '') + parkingLots[0].number}}</span>
+      </div>
+      <div class="lot-side lot-2"
+        [ngClass]="{'carv' : parkingLots[1].status === 'OCCUPIED',
+          'grey' : parkingLots[1].status === 'UNKNOWN'}"
+          (click)="showDetails(parkingLots[1].id)">
+          <span class="lot-number-side" *ngIf="parkingLots[1].status === 'FREE'">{{'L' + (parkingLots[1].number < 10 ? 0 : '') + parkingLots[1].number}}</span>
+      </div>
+      <div class="lot-side lot-3"
+        [ngClass]="{'carv' : parkingLots[2].status === 'OCCUPIED',
+          'grey' : parkingLots[2].status === 'UNKNOWN'}"
+          (click)="showDetails(parkingLots[2].id)">
+          <span class="lot-number-side" *ngIf="parkingLots[2].status === 'FREE'">{{'L' + (parkingLots[2].number < 10 ? 0 : '') + parkingLots[2].number}}</span>
+      </div>
+
+      <!-- upper lots -->
+      <div class="lot-top lot-4"
+        [ngClass]="{'car' : parkingLots[3].status === 'OCCUPIED',
+          'grey' : parkingLots[3].status === 'UNKNOWN'}"
+          (click)="showDetails(parkingLots[3].id)">
+          <span class="lot-number-top" *ngIf="parkingLots[3].status === 'FREE'">{{'L' + (parkingLots[3].number < 10 ? 0 : '') + parkingLots[3].number}}</span>
+      </div>
+      <div class="lot-top lot-5"
+        [ngClass]="{'car' : parkingLots[4].status === 'OCCUPIED',
+          'grey' : parkingLots[4].status === 'UNKNOWN'}"
+          (click)="showDetails(parkingLots[4].id)">
+          <span class="lot-number-top" *ngIf="parkingLots[4].status === 'FREE'">{{'L' + (parkingLots[4].number < 10 ? 0 : '') + parkingLots[4].number}}</span>
+      </div>
+      <div class="lot-top lot-6"
+        [ngClass]="{'car' : parkingLots[5].status === 'OCCUPIED',
+          'grey' : parkingLots[5].status === 'UNKNOWN'}"
+          (click)="showDetails(parkingLots[5].id)">
+          <span class="lot-number-top" *ngIf="parkingLots[5].status === 'FREE'">{{'L' + (parkingLots[5].number < 10 ? 0 : '') + parkingLots[5].number}}</span>
+      </div>
+      <div class="lot-top lot-7"
+        [ngClass]="{'car' : parkingLots[6].status === 'OCCUPIED',
+          'grey' : parkingLots[6].status === 'UNKNOWN'}"
+          (click)="showDetails(parkingLots[6].id)">
+          <span class="lot-number-top" *ngIf="parkingLots[6].status === 'FREE'">{{'L' + (parkingLots[6].number < 10 ? 0 : '') + parkingLots[6].number}}</span>
+      </div>
+      <div class="lot-top lot-8"
+        [ngClass]="{'car' : parkingLots[7].status === 'OCCUPIED',
+          'grey' : parkingLots[7].status === 'UNKNOWN'}"
+          (click)="showDetails(parkingLots[7].id)">
+          <span class="lot-number-top" *ngIf="parkingLots[7].status === 'FREE'">{{'L' + (parkingLots[7].number < 10 ? 0 : '') + parkingLots[7].number}}</span>
+      </div>
+      <div class="lot-top lot-9"
+        [ngClass]="{'car' : parkingLots[8].status === 'OCCUPIED',
+          'grey' : parkingLots[8].status === 'UNKNOWN'}"
+          (click)="showDetails(parkingLots[8].id)">
+          <span class="lot-number-top" *ngIf="parkingLots[8].status === 'FREE'">{{'L' + (parkingLots[8].number < 10 ? 0 : '') + parkingLots[8].number}}</span>
+      </div>
+      <div class="lot-top lot-10"
+        [ngClass]="{'car' : parkingLots[9].status === 'OCCUPIED',
+          'grey' : parkingLots[9].status === 'UNKNOWN'}"
+          (click)="showDetails(parkingLots[9].id)">
+          <span class="lot-number-top" *ngIf="parkingLots[9].status === 'FREE'">{{'L' + (parkingLots[9].number < 10 ? 0 : ' ') + parkingLots[9].number}}</span>
+      </div>
+
+        <div class="smoking text-secondary"><i class="fas fa-smoking"></i></div>
+        <div class="backDoor">
+          <div class="display-5">ISD </div>
+          <div class="display-5">Back Door</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -3,8 +3,22 @@
   margin-bottom: 1rem;
 }
 
+.refresh {
+  width: 50%;
+  color: #D1E7FA;
+  border-color: #D1E7FA;
+  background-color: #0A8EFF;
+}
+
+.refresh:hover {
+  color: #0A8EFF;
+  background-color: #D1E7FA;
+  border-color: #D1E7FA;
+}
+
 .table {
   box-sizing: content-box;
+  color: #D1E7FA;
 }
 
 td, th {

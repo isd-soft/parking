@@ -1,16 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DataService } from '../data.service';
-import { ParkingLot } from '../Model/ParkingLot';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ParkingLot } from 'src/app/Model/ParkingLot';
 import { Subscription, interval } from 'rxjs';
+import { DataService } from 'src/app/data.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-feature',
-  templateUrl: './feature.component.html',
-  styleUrls: ['./feature.component.css']
+  selector: 'app-parking-layout',
+  templateUrl: './parking-layout.component.html',
+  styleUrls: ['./parking-layout.component.css']
 })
-export class FeatureComponent implements OnInit, OnDestroy {
-
+export class ParkingLayoutComponent implements OnInit, OnDestroy {
 
   noData: Array<number>;
 
@@ -88,14 +87,13 @@ export class FeatureComponent implements OnInit, OnDestroy {
 
   refresh() {
     this.loadData();
-    this.router.navigate(['test']);
+    this.router.navigate(['layout']);
   }
 
   showDetails(id: number) {
-    this.router.navigate(['test'], {queryParams : {id , action : 'view'}});
+    this.router.navigate(['layout'], {queryParams : {id , action : 'view'}});
     this.selectedParkingLot = this.parkingLots.find(pl => pl.id === id);
     this.processUrlParams();
   }
-
 
 }

@@ -1,9 +1,9 @@
 .green {
-  background-color: #20b600;
+  background-color: #0aff7c;
 }
 
 .red {
-  background-color: #fd0006;
+  background-color: #ff640a;
 }
 
 .grey {
@@ -32,8 +32,14 @@
 }
 
 .refresh {
-  min-width: 50%;
-  margin-top: 20px;
-  margin-bottom: 30px;
-  background-color: #3C99DC;
+  width: 50%;
+  color: #fff;
+  border-color: #fff;
+  background-color: #0A8EFF;
+}
+
+.refresh:hover {
+  color: #0A8EFF;
+  background-color: #fff;
+  border-color: #fff;
 }
