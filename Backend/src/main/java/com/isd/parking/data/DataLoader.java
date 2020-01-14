@@ -33,7 +33,8 @@ public class DataLoader implements ApplicationRunner {
 
         //initiate parking lots in database
         for (int i = 1; i <= ParkingNumber.totalParkingLotsNumber; i++) {
-            parkingLotRepository.save(new ParkingLot((long) i, i, date, ParkingLotStatus.UNKNOWN));
+            //an fallback method to load initial data
+            //parkingLotRepository.save(new ParkingLot((long) i, i, date, ParkingLotStatus.UNKNOWN));
         }
     }
 
@@ -45,7 +46,7 @@ public class DataLoader implements ApplicationRunner {
             Date date = new Date(System.currentTimeMillis());
 
             for (int i = 1; i <= ParkingNumber.totalParkingLotsNumber; i++) {
-                parkingLotRepository.save(new ParkingLot((long) i, i, date, ParkingLotStatus.UNKNOWN));
+                parkingLotRepository.save(new ParkingLot((long) i, i, date, ParkingLotStatus.FREE));
             }
 
             // fetch all parking lots
