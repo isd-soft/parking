@@ -19,6 +19,7 @@ import { ParkingLayoutComponent } from './main/parking-layout/parking-layout.com
 
 const routes: Routes = [
   {path : 'test', component : FeatureComponent},
+  {path : 'test2', component : Feature2Component},
   {path : 'layout', component : ParkingLayoutComponent},
   {path : 'stats', component : StatisticsComponent, resolve : {stats : PrefetchStatsService, parkingLots : PrefetchParkingLotsService}},
   {path : '', component : MainComponent},

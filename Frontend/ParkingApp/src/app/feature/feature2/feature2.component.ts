@@ -12,9 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class Feature2Component implements OnInit, OnDestroy {
 
-  noData: Array<number>;
-
-  otherParkingLots: Array<number>;
+  numberOfParkingLots: Array<number> = new Array<number>(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 
   parkingLots: Array<ParkingLot>;
 
@@ -27,6 +25,8 @@ export class Feature2Component implements OnInit, OnDestroy {
   message = 'Please wait...';
 
   updateSubscription: Subscription;
+
+  connectionLostSubscription: Subscription;
 
   loadDataCounter = 0;
 
@@ -59,17 +59,31 @@ export class Feature2Component implements OnInit, OnDestroy {
           this.dataLoaded = true;
           this.message = '';
 
+          if (this.parkingLots.length < 10) {
+            for (let i = 1; i <= 10; i++) {
+              const pl = new ParkingLot();
+              if (!this.parkingLots.find(lot => lot.number === i)) {
+                pl.number = i;
+                this.parkingLots.push(pl);
+              }
+            }
+          }
+
+          if (this.connectionLostSubscription) {
+            this.connectionLostSubscription.unsubscribe();
+          }
         } else {
           this.message = 'No data found, please contact support';
         }
       },
       error => {
-        const subscribe: Subscription = interval(10000).subscribe(
+        this.message = 'Please wait...';
+        this.connectionLostSubscription = interval(5000).subscribe(
           () => {
             if (this.loadDataCounter <= 5) {
               this.loadData();
             } else {
-              subscribe.unsubscribe();
+              this.connectionLostSubscription.unsubscribe();
               this.updateSubscription.unsubscribe();
               this.message = 'Can\'t connect to server. Please contact support';
             }
@@ -88,13 +102,14 @@ export class Feature2Component implements OnInit, OnDestroy {
 
   refresh() {
     this.loadData();
-    this.router.navigate(['test2']);
+    this.router.navigate(['test']);
   }
 
   showDetails(id: number) {
-    this.router.navigate(['test2'], {queryParams : {id , action : 'view'}});
+    this.router.navigate(['test'], {queryParams : {id , action : 'view'}});
     this.selectedParkingLot = this.parkingLots.find(pl => pl.id === id);
     this.processUrlParams();
   }
+
 
 }

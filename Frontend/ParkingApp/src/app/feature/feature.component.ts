@@ -57,9 +57,20 @@ export class FeatureComponent implements OnInit, OnDestroy {
     this.dataService.getAllParkingLots().subscribe(
       data => {
         if (data.length !== 0) {
-          this.parkingLots = data.sort((a, b) => (a.number > b.number) ? 1 : (a.number < b.number ? -1 : 0));
+          this.parkingLots = data;
           this.dataLoaded = true;
           this.message = '';
+
+          if (this.parkingLots.length < 10) {
+            for (let i = 1; i <= 10; i++) {
+              const pl = new ParkingLot();
+              if (!this.parkingLots.find(lot => lot.number === i)) {
+                pl.number = i;
+                this.parkingLots.push(pl);
+              }
+            }
+          }
+          this.parkingLots.sort((a, b) => (a.number > b.number) ? 1 : (a.number < b.number ? -1 : 0));
           if (this.connectionLostSubscription) {
             this.connectionLostSubscription.unsubscribe();
           }
