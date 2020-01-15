@@ -2,16 +2,25 @@
 
 #include <WiFi.h>
 
+#define trigger1 2 // Trigger Pin
+#define echo1 5 // Echo Pin
+
 const char *ssid = "Inther";                            //Enter SSID
 const char *password = "inth3rmoldova";                 //Enter Password
-const char *websockets_server_host = "172.17.41.30";    //Enter server address
+const char *websockets_server_host = "172.17.41.101";    //Enter server address
 const uint16_t websockets_server_port = 8080;           // Enter server port
 
+
+int inRange = 45; //Wide Range First sight of Target
+int TargetRange = 12; //Minimal Parking Range to Target
+const int NoiseReject = 40; //Percentage of reading closeness for rejection filter
+long duration, distance, lastDuration, unfiltered, Sonar, RawSonar;
+const unsigned int maxDuration = 11650; // around 200 cm, the sensor gets flaky at greater distances.
+const long speed_of_sound = 29.1;    // speed of sound microseconds per centimeter
+boolean isLotFree = false;          // boolean variable to define if the status of parking lot was changed or not
+
 using namespace websockets;
-
-boolean isLotFree = false;                                              // boolean variable to define if the status of parking lot was changed or not
-
-WebsocketsClient client;
+ WebsocketsClient client;
 
 int test_lot_number = 1;                                                //hardcoded test number
 
@@ -21,27 +30,12 @@ String status_unknown = "UNKNOWN";
 
 char *security_token = "4a0a8679643673d083b23f52c21f27cac2b03fa2";      //some security token to verify connection ({SHA1}"arduino")
 
-
-long readUltrasonicDistance(int triggerPin, int echoPin)
-{
-  pinMode(triggerPin, OUTPUT);  // Clear the trigger
-  digitalWrite(triggerPin, LOW);
-  delayMicroseconds(2);
-  // Sets the trigger pin to HIGH state for 10 microseconds
-  digitalWrite(triggerPin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(triggerPin, LOW);
-  pinMode(echoPin, INPUT);
-  // Reads the echo pin, and returns the sound wave travel time in microseconds
-  return pulseIn(echoPin, HIGH);
-}
-
 void setup() {
-    Serial.begin(9600);         // Starts the serial communication
-    pinMode(13, OUTPUT);
-
-
-    // Connect to wifi
+  Serial.begin(9600);
+  //Sensor Connections
+  pinMode(trigger1, OUTPUT);
+  pinMode(echo1, INPUT);
+  // Connect to wifi
     WiFi.begin(ssid, password);
 
     // Wait some time to connect to wifi
@@ -58,7 +52,7 @@ void setup() {
 
     Serial.println("Connected to Wifi, Connecting to server.");
     // try to connect to Websockets server
-    bool connected = client.connect(websockets_server_host, websockets_server_port, "/arduino");
+    bool connected = client.connect(websockets_server_host, websockets_server_port, "/test");
     if (connected) {
         Serial.println("Connected!");
 
@@ -74,28 +68,66 @@ void setup() {
 }
 
 void loop() {
-    Serial.println(0.01723 * readUltrasonicDistance(8, 8));
+  SingleSonar();
+  ////// PRINT FOR PROOF CHECKING //////
+  //  Serial.print("Filtered Sonar = ");
+   //Serial.println(Sonar);
+  //  Serial.print(" cm, ");
+  //  Serial.print("Unfiltered Sonar = ");
+  //  Serial.print(RawSonar);
+  //  Serial.print(" cm");
+  //  Serial.println();
+  ////// END OF PRINT-CHECK //////
+char *msg = "{\"mBody\":\"Arduino data\", \"id\":\"";
+  
+  if (Sonar >= 20 && isLotFree == false) {
+    Serial.println("Lot is free!");
+    Serial.println(Sonar);
+    client.send(msg + String(test_lot_number) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + security_token + String("\"}"));
+    isLotFree = true;
+  }
 
-    char *msg = "{\"mBody\":\"Arduino data\", \"id\":\"";
+  if (Sonar < 20 && isLotFree == true) {
+    Serial.println("Lot is occupied!");
+    Serial.println(Sonar);
+    client.send(msg + String(test_lot_number) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + security_token + String("\"}"));
+    isLotFree = false;
+  }
 
-  if (0.01723 * readUltrasonicDistance(8, 8) > 100  && isLotFree == false) {
-        digitalWrite(13, HIGH);
-        Serial.println("free");
-        client.send(msg + test_lot_number + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + security_token + String("\"}"));
-        isLotFree = true;
-    } 
-
-    if (0.01723 * readUltrasonicDistance(8, 8) < 100 && isLotFree == true) {
-        digitalWrite(13, LOW);
-        Serial.println("occupied");
-        client.send(msg + test_lot_number + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + security_token + String("\"}"));
-        isLotFree = false;
-    }
-
-    // let the websockets client check for incoming messages
+  // let the websockets client check for incoming messages
     if (client.available()) {
         client.poll();
     }
 
     delay(500);
+}
+
+void SonarSensor(int trigPin, int echoPin) {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  unfiltered = (duration / 2) / speed_of_sound; //Stores preliminary reading to compare
+  if (duration <= 8) duration = ((inRange + 1) * speed_of_sound * 2);
+  //Rejects very low readings, kicks readout to outside detection range
+  if (lastDuration == 0) lastDuration = duration;
+  //Compensation parameters for intial start-up
+  if (duration > (5 * maxDuration)) duration = lastDuration;
+  //Rejects any reading defined to be out of sensor capacity (>1000)
+  //Sets the fault reading to the last known "successful" reading
+  if (duration > maxDuration) duration = maxDuration;
+  //Caps Reading output at defined maximum distance (~200)
+  if ((duration - lastDuration) < ((-1) * (NoiseReject / 100) * lastDuration)) {
+    distance = (lastDuration / 2) / speed_of_sound; //Noise filter for low range drops
+  }
+  distance = (duration / 2) / speed_of_sound;
+  lastDuration = duration; //Stores "successful" reading for filter compensation
+}
+void SingleSonar() {
+  SonarSensor(trigger1, echo1);
+  Sonar = distance;
+  RawSonar = unfiltered;
+  delay(50); //Delay 50ms before next reading.
 }
