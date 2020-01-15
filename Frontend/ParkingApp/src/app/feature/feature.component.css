@@ -1,21 +1,4 @@
-/* .background {
-  background-color: #0A8EFF;
-}
-
-.green {
-  background-color: #2DF726;
-}
-
-.red {
-  background-color: #FF4038;
-}
-
-.grey {
-  background-color: grey;
-} */
-
 .refresh {
-  /* background-color: #3C99DC; */
   color: #D1E7FA;
   border-color: #D1E7FA;
   background-color: #0A8EFF;
@@ -36,36 +19,33 @@ span {
   font-size: 22px;
 }
 
-.carv {
-  /* width: 5.1rem;
-  height: 2.3rem; */
-  background-image: url("../../assets/img/carvblue.png");
+.car-icon {
   background-size: cover;
   background-position: center;
 }
 
-.car {
-  background-image: url("../../assets/img/carblue.png");
-  background-size: cover;
-  background-position: center;
+.car-occupied-side {
+  background-image: url("../../assets/img/car-side-blue.png");
 }
 
-.car-lost {
-  background-image: url("../../assets/img/carvblue-lost.png");
-  background-size: cover;
-  background-position: center;
+.car-occupied-top {
+  background-image: url("../../assets/img/car-top-blue.png");
+}
+
+.car-lost-side {
+  background-image: url("../../assets/img/car-side-blue-lost.png");
+}
+
+.car-lost-top {
+  background-image: url("../../assets/img/car-top-blue-lost.png");
 }
 
 .car-free-side {
-  background-image: url("../../assets/img/carvblue-free.png");
-  background-size: cover;
-  background-position: center;
+  background-image: url("../../assets/img/car-side-blue-free-border.png");
 }
 
 .car-free-top {
-  background-image: url("../../assets/img/carblue-free.png");
-  background-size: cover;
-  background-position: center;
+  background-image: url("../../assets/img/car-top-blue-free-border.png");
 }
 
 .container {
@@ -79,7 +59,7 @@ span {
 }
 
 .lot-number-side {
-  line-height: 1.8rem;
+  line-height: 1.9rem;
 }
 
 .lot-side {
@@ -99,7 +79,7 @@ span {
 .lot-top {
   position: absolute;
   width: 1.9rem;
-  height: 4.2rem;
+  height: 4.35rem;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -132,7 +112,7 @@ span {
 
 .lot-6 {
   top: 0.8rem;
-  left: 41.08rem;
+  left: 41.05rem;
 }
 
 .lot-7 {
@@ -175,131 +155,132 @@ span {
 
 @media (max-width: 1199px) {
   .lot-side {
-    width: 5.15rem;
-    height: 2.4rem;
+    width: 4.2rem;
+    height: 1.93rem;
   }
 
-  .lot-top {
-    width: 2rem;
+  /* .lot-top {
+    width: 1.93rem;
     height: 4.35rem;
-  }
+  } */
 
   .lot-1 {
-    left: 11.23rem;
+    left: 9.6rem;
+    top: 21.25rem;
   }
 
   .lot-2 {
-    height: 1.92rem;
-    left: 11.23rem;
+    top: 23.35rem;
+    left: 9.6rem;
   }
 
   .lot-3 {
-    left: 11.23rem;
-    top: 27.9rem;
+    left: 9.6rem;
   }
 
   .lot-4 {
-    top: 1.34rem;
-    left: 27.8rem;
+    top: .8rem;
+    left: 31.2rem;
   }
 
   .lot-5 {
-    top: 1.34rem;
-    left: 29.9rem;
+    top: .8rem;
+    left: 33.37rem;
   }
 
   .lot-6 {
-    top: 1.34rem;
-    left: 31.9rem;
+    top: .8rem;
+    left: 35.45rem;
   }
 
   .lot-7 {
-    top: 1.34rem;
-    left: 33.9rem;
+    top: .8rem;
+    left: 37.55rem;
   }
 
   .lot-8 {
-    top: 1.34rem;
-    left: 36rem;
+    top: .8rem;
+    left: 39.7rem;
   }
 
   .lot-9 {
-    top: 1.34rem;
-    left: 38.1rem;
+    top: .8rem;
+    left: 41.8rem;
   }
 
   .lot-10 {
-    top: 1.34rem;
-    left: 40.15rem;
+    top: .8rem;
+    left: 43.9rem;
   }
 
   .smoking {
-    top: 29.4rem;
-    left: 23.9rem;
+    top: 31.4rem;
+    left: 22.6rem;
   }
 
   .backDoor {
-    left: 9rem;
+    left: 8.9rem;
   }
 }
 
 @media (max-width: 991px) {
   .lot-1 {
-    left: 4.15rem;
-    top: 23.78rem;
+    left: 2.15rem;
+    top: 21.22rem;
   }
 
   .lot-2 {
-    left: 4.15rem;
-    top: 25.84rem;
+    left: 2.15rem;
+    top: 23.35rem;
   }
 
   .lot-3 {
-    left: 4.15rem;
+    left: 2.15rem;
+    top: 25.47rem;
   }
 
   .lot-4 {
-    top: 1.34rem;
-    left: 20.6rem;
+    top: .7rem;
+    left: 23.7rem;
   }
 
   .lot-5 {
-    top: 1.34rem;
-    left: 22.7rem;
+    top: .7rem;
+    left: 25.88rem;
   }
 
   .lot-6 {
-    top: 1.34rem;
-    left: 24.8rem;
+    top: .7rem;
+    left: 27.95rem;
   }
 
   .lot-7 {
-    top: 1.34rem;
-    left: 26.8rem;
+    top: .7rem;
+    left: 30.08rem;
   }
 
   .lot-8 {
-    top: 1.34rem;
-    left: 28.9rem;
+    top: .7rem;
+    left: 32.18rem;
   }
 
   .lot-9 {
-    top: 1.34rem;
-    left: 30.95rem;
+    top: .7rem;
+    left: 34.35rem;
   }
 
   .lot-10 {
-    top: 1.34rem;
-    left: 33rem;
+    top: .7rem;
+    left: 36.45rem;
   }
 
   .smoking {
-    top: 29.4rem;
-    left: 16.9rem;
+    top: 31.4rem;
+    left: 15.15rem;
   }
 
   .backDoor {
-    left: 1rem;
+    left: 1.45rem;
   }
 }
 
@@ -310,69 +291,159 @@ span {
 
   .lot-side {
     width: 3.25rem;
-    height: 1.45rem;
+    height: 1.4rem;
   }
 
   .lot-top {
-    width: 1.6rem;
-    height: 3.6rem;
+    width: 1.4rem;
+    height: 3.3rem;
+  }
+
+  .lot-number-side {
+    line-height: 1.3rem;
+    font-size: 18px;
+  }
+
+  .lot-number-top {
+    font-size: 17px;
   }
 
   .lot-1 {
-    top: 19.05rem;
-    left: 3.3rem;
+    top: 15.7rem;
+    left: 1.85rem;
   }
 
   .lot-2 {
-    top: 20.55rem;
-    left: 3.3rem;
+    top: 17.24rem;
+    left: 1.85rem;
   }
 
   .lot-3 {
-    top: 22.05rem;
-    left: 3.3rem;
+    top: 18.8rem;
+    left: 1.85rem;
+  }
+
+  .lot-4 {
+    top: .5rem;
+    left: 17.8rem;
+  }
+
+  .lot-5 {
+    top: .5rem;
+    left: 19.37rem;
+  }
+
+  .lot-6 {
+    top: .5rem;
+    left: 20.93rem;
+  }
+
+  .lot-7 {
+    top: .5rem;
+    left: 22.48rem;
+  }
+
+  .lot-8 {
+    top: .5rem;
+    left: 24.06rem;
+  }
+
+  .lot-9 {
+    top: .5rem;
+    left: 25.62rem;
+  }
+
+  .lot-10 {
+    top: .5rem;
+    left: 27.18rem;
   }
 
   .smoking {
-    top: 21.4rem;
-    left: 12.5rem;
+    top: 23rem;
+    left: 11.4rem;
+    font-size: smaller;
   }
 
   .backDoor {
-    left: 1rem;
-    font-size: .8rem;
-    bottom: 1.5rem;
+    left: 1.3rem;
+    font-size: 1.1rem;
+    bottom: .7rem;
   }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 414px) {
   img {
-    width: 22rem;
+    width: 25.5rem;
   }
 
   .lot-side {
-    width: 2.25rem;
-    height: .95rem;
+    width: 2.6rem;
+    height: 1.14rem;
   }
 
   .lot-top {
-    width: 1.6rem;
-    height: 3.6rem;
+    width: 1.18rem;
+    height: 2.8rem;
+  }
+
+  .lot-number-side {
+    line-height: 1.1rem;
+    font-size: 15px;
+  }
+
+  .lot-number-top {
+    font-size: 15px;
+    line-height: initial;
   }
 
   .lot-1 {
-    top: 12.46rem;
-    left: 3.05rem;
+    top: 12.9rem;
+    left: 0.5rem;
   }
 
   .lot-2 {
-    top: 13.53rem;
-    left: 3.05rem;
+    top: 14.18rem;
+    left: 0.5rem;
   }
 
   .lot-3 {
-    top: 14.6rem;
-    left: 3.05rem;
+    top: 15.45rem;
+    left: 0.5rem;
+  }
+
+  .lot-4 {
+    top: .4rem;
+    left: 13.6rem;
+  }
+
+  .lot-5 {
+    top: .4rem;
+    left: 14.94rem;
+  }
+
+  .lot-6 {
+    top: .4rem;
+    left: 16.22rem;
+  }
+
+  .lot-7 {
+    top: .4rem;
+    left: 17.48rem;
+  }
+
+  .lot-8 {
+    top: .4rem;
+    left: 18.8rem;
+  }
+
+  .lot-9 {
+    top: .4rem;
+    left: 20.1rem;
+  }
+
+  .lot-10 {
+    top: .4rem;
+    left: 21.37rem;
   }
 
   .smoking {
@@ -382,82 +453,95 @@ span {
   }
 
   .backDoor {
-    left: 1.4rem;
-    font-size: .8rem;
-    bottom: 2rem;
+    left: 0.3rem;
+    font-size: .9rem;
+    bottom: .5rem;
+
   }
 }
 
 @media (max-width: 394px) {
+.title {
+  font-size: 2.5rem;
+}
+
   img {
     width: 24.5rem;
   }
 
   .lot-side {
-    width: 3.05rem;
-    height: 1.4rem;
+    width: 2.45rem;
+    height: 1.05rem;
   }
 
   .lot-top {
-    width: 1.4rem;
-    height: 3rem;
+    width: 1.1rem;
+    height: 2.45rem;
+  }
+
+  .lot-number-top {
+    font-size: 15px;
   }
 
   .lot-1 {
-    top: 15.65rem;
-    left: 0.3rem;
+    top: 12.45rem;
+    left: 0.4rem;
   }
 
   .lot-2 {
-    top: 17.04rem;
-    left: 0.3rem;
+    top: 13.67rem;
+    left: 0.4rem;
   }
 
   .lot-3 {
-    top: 18.5rem;
-    left: 0.3rem;
+    top: 14.906rem;
+    left: 0.4rem;
   }
 
   .lot-4 {
-    top: .3rem;
-    left: 11.66rem;
+    top: .4rem;
+    left: 13rem;
   }
 
   .lot-5 {
-    top: .3rem;
-    left: 12.95rem;
+    top: .4rem;
+    left: 14.25rem;
   }
 
   .lot-6 {
-    top: .3rem;
-    left: 14.4rem;
+    top: .4rem;
+    left: 15.5rem;
   }
 
   .lot-7 {
-    top: .3rem;
-    left: 15.8rem;
+    top: .4rem;
+    left: 16.7rem;
   }
 
   .lot-8 {
-    top: .3rem;
-    left: 17.2rem;
+    top: .4rem;
+    left: 17.95rem;
   }
 
   .lot-9 {
-    top: .3rem;
-    left: 18.6rem;
-    width: 1.44rem;
+    top: .4rem;
+    left: 19.2rem;
   }
 
   .lot-10 {
-    top: .3rem;
-    left: 20.03rem;
-    width: 1.44rem;
+    top: .4rem;
+    left: 20.41rem;
   }
 
   .smoking {
-    top: 19.7rem;
-    left: 9.1rem;
+    top: 18.5rem;
+    left: 7.95rem;
+  }
+
+  .backDoor {
+    left: 0.1rem;
+    font-size: .9rem;
+    bottom: .4rem;
   }
 
   span {
@@ -467,39 +551,90 @@ span {
 
 @media (max-width: 375px) {
   img {
-    width: 20.5rem;
+    width: 23rem;
   }
 
   .lot-side {
-    width: 2.15rem;
-    height: .93rem;
+    width: 2.4rem;
+    height: 1.05rem;
   }
 
   .lot-top {
-    width: 1.6rem;
-    height: 3.6rem;
+    width: 1.05rem;
+    height: 2.45rem;
+  }
+
+  .lot-number-top {
+    font-size: 13px;
+    line-height: unset;
+  }
+
+  .lot-number-side {
+    font-size: 13px;
   }
 
   .lot-1 {
-    top: 12.6rem;
-    left: 2.5rem;
+    top: 11.6rem;
+    left: 0.55rem;
   }
 
   .lot-2 {
-    top: 13.61rem;
-    left: 2.5rem;
+    top: 12.79rem;
+    left: 0.55rem;
   }
 
   .lot-3 {
-    top: 14.60rem;
-    left: 2.5rem;
+    top: 13.91rem;
+    left: 0.55rem;
+  }
+
+  .lot-4 {
+    top: .35rem;
+    left: 13.58rem;
+  }
+
+  .lot-5 {
+    top: .35rem;
+    left: 14.72rem;
+  }
+
+  .lot-6 {
+    top: .35rem;
+    left: 15.85rem;
+  }
+
+  .lot-7 {
+    top: .35rem;
+    left: 17.04rem;
+  }
+
+  .lot-8 {
+    top: .35rem;
+    left: 18.2rem;
+  }
+
+  .lot-9 {
+    top: .35rem;
+    left: 19.35rem;
+  }
+
+  .lot-10 {
+    top: .35rem;
+    left: 20.47rem;
   }
 
   .smoking {
-    left: 8.55rem;
+    top: 17rem;
+    left: 7.65rem;
   }
 
   .backDoor {
-    left: 1rem;
+    left: 0.2rem;
+    font-size: .9rem;
+    bottom: .4rem;
+  }
+
+  span {
+    font-size: 15px;
   }
 }

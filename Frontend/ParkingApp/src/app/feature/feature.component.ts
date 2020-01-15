@@ -28,6 +28,8 @@ export class FeatureComponent implements OnInit, OnDestroy {
 
   updateSubscription: Subscription;
 
+  connectionLostSubscription: Subscription;
+
   loadDataCounter = 0;
 
 
@@ -58,18 +60,21 @@ export class FeatureComponent implements OnInit, OnDestroy {
           this.parkingLots = data.sort((a, b) => (a.number > b.number) ? 1 : (a.number < b.number ? -1 : 0));
           this.dataLoaded = true;
           this.message = '';
-
+          if (this.connectionLostSubscription) {
+            this.connectionLostSubscription.unsubscribe();
+          }
         } else {
           this.message = 'No data found, please contact support';
         }
       },
       error => {
-        const subscribe: Subscription = interval(10000).subscribe(
+        this.message = 'Please wait...';
+        this.connectionLostSubscription = interval(5000).subscribe(
           () => {
             if (this.loadDataCounter <= 5) {
               this.loadData();
             } else {
-              subscribe.unsubscribe();
+              this.connectionLostSubscription.unsubscribe();
               this.updateSubscription.unsubscribe();
               this.message = 'Can\'t connect to server. Please contact support';
             }
