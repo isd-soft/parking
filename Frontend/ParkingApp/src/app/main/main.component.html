@@ -11,7 +11,7 @@
   <div class="col-12 col-sm-6 col-md-4 col-lg-3 elem" *ngFor="let parkingLot of parkingLots">
     <div class="lot-name">{{'LOT ' + parkingLot.number}}</div>
     <div class="btn lot col-12"  [ngClass]="{'green': parkingLot.status === 'FREE',
-                                            'red' : parkingLot.status === 'OCCUPIED',
+                                            'red' : parkingLot.status === 'OCCUPIED' || parkingLot.status == null,
                                             'grey' : parkingLot.status === 'UNKNOWN'}" (click)="showDetails(parkingLot.id)">
       <i class="fas fa-car" *ngIf="parkingLot.status === 'OCCUPIED'"></i>
       <i class="fas fa-parking" *ngIf="parkingLot.status === 'FREE'"></i>

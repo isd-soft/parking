@@ -15,6 +15,9 @@ export class StatisticsComponent implements OnInit {
   statistics: Array<Statistics>;
   filteredStatistics: Array<Statistics>;
   parkingLots: Array<ParkingLot>;
+
+  lotNumber = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
   selectedLotNumber: string = null;
 
   startDate: string;

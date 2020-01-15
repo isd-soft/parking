@@ -24,7 +24,7 @@ export class DataService {
     pl1.status = 'FREE';
     pl1.updatedAt = new Date();
 
-    // this.parkingLots.push(pl1);
+    this.parkingLots.push(pl1);
 
     const pl2 = new ParkingLot();
     pl2.id = 2;
@@ -40,7 +40,7 @@ export class DataService {
     pl3.status = 'FREE';
     pl3.updatedAt = new Date();
 
-    // this.parkingLots.push(pl3);
+    this.parkingLots.push(pl3);
 
     const pl4 = new ParkingLot();
     pl4.id = 4;
@@ -48,7 +48,7 @@ export class DataService {
     pl4.status = 'FREE';
     pl4.updatedAt = new Date();
 
-    // this.parkingLots.push(pl4);
+    this.parkingLots.push(pl4);
 
     const pl5 = new ParkingLot();
     pl5.id = 5;
@@ -56,7 +56,7 @@ export class DataService {
     pl5.status = 'OCCUPIED';
     pl5.updatedAt = new Date();
 
-    // this.parkingLots.push(pl5);
+    this.parkingLots.push(pl5);
 
     const pl6 = new ParkingLot();
     pl6.id = 6;
@@ -64,7 +64,7 @@ export class DataService {
     pl6.status = 'FREE';
     pl6.updatedAt = new Date();
 
-    // this.parkingLots.push(pl6);
+    this.parkingLots.push(pl6);
 
     const pl7 = new ParkingLot();
     pl7.id = 7;
@@ -80,7 +80,7 @@ export class DataService {
     pl8.status = 'OCCUPIED';
     pl8.updatedAt = new Date();
 
-    // this.parkingLots.push(pl8);
+    this.parkingLots.push(pl8);
 
     const pl9 = new ParkingLot();
     pl9.id = 9;
@@ -88,7 +88,7 @@ export class DataService {
     pl9.status = 'FREE';
     pl9.updatedAt = new Date();
 
-    // this.parkingLots.push(pl9);
+    this.parkingLots.push(pl9);
 
     const pl10 = new ParkingLot();
     pl10.id = 10;
@@ -96,7 +96,7 @@ export class DataService {
     pl10.status = 'FREE';
     pl10.updatedAt = new Date();
 
-    // this.parkingLots.push(pl10);
+    this.parkingLots.push(pl10);
 
 
     this.users = new Array<User>();

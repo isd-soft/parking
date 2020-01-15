@@ -1,6 +1,6 @@
 <h1>Statistics</h1>
 
-<div class="search row">
+<div class="search d-flex justify-content-end">
   <div class="date col-6">
     <label for="dateBegin">Start date:</label>
     <input class="form-control" id="dataBegin" type="date" [(ngModel)]="startDate" (change)="filterData()"/><br>
@@ -12,7 +12,7 @@
     <label for="lotNumber">Lot number</label>
     <select class="form-control" name="lots" [(ngModel)]="selectedLotNumber" (change)="filterData()">
       <option>-</option>
-      <option *ngFor="let lot of parkingLots">{{lot.number}}</option>
+      <option *ngFor="let lot of lotNumber">{{lot}}</option>
     </select>
   </div>
 </div>
