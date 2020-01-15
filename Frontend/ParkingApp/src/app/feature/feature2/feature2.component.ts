@@ -28,6 +28,8 @@ export class Feature2Component implements OnInit, OnDestroy {
 
   connectionLostSubscription: Subscription;
 
+  loadDataSubscription: Subscription;
+
   loadDataCounter = 0;
 
 
@@ -40,7 +42,7 @@ export class Feature2Component implements OnInit, OnDestroy {
 
     this.processUrlParams();
 
-    this.updateSubscription = interval(5000).subscribe(
+    this.updateSubscription = interval(10000).subscribe(
       () => {
         this.loadData();
       }
@@ -49,10 +51,11 @@ export class Feature2Component implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.updateSubscription.unsubscribe();
+    this.loadDataSubscription.unsubscribe();
   }
 
   loadData() {
-    this.dataService.getAllParkingLots().subscribe(
+    this.loadDataSubscription = this.dataService.getAllParkingLots().subscribe(
       data => {
         if (data.length !== 0) {
           this.parkingLots = data.sort((a, b) => (a.number > b.number) ? 1 : (a.number < b.number ? -1 : 0));
@@ -63,32 +66,28 @@ export class Feature2Component implements OnInit, OnDestroy {
             for (let i = 1; i <= 10; i++) {
               const pl = new ParkingLot();
               if (!this.parkingLots.find(lot => lot.number === i)) {
-                pl.number = i;
+                pl.number = pl.id = i;
                 this.parkingLots.push(pl);
               }
             }
           }
-
-          if (this.connectionLostSubscription) {
-            this.connectionLostSubscription.unsubscribe();
-          }
+          this.loadDataCounter = 0;
         } else {
           this.message = 'No data found, please contact support';
         }
       },
       error => {
-        this.message = 'Please wait...';
-        this.connectionLostSubscription = interval(5000).subscribe(
-          () => {
-            if (this.loadDataCounter <= 5) {
-              this.loadData();
-            } else {
-              this.connectionLostSubscription.unsubscribe();
-              this.updateSubscription.unsubscribe();
-              this.message = 'Can\'t connect to server. Please contact support';
-            }
+        setTimeout(() => {
+          if (++this.loadDataCounter <= 5) {
+            this.message = 'Connection lost. Please wait...';
+            console.log(this.loadDataCounter);
+            this.loadData();
+          } else {
+            this.message = 'Can\'t connect to server. Please contact support';
+            this.updateSubscription.unsubscribe();
+            this.loadDataSubscription.unsubscribe();
           }
-        );
+        }, 7000);
       }
     );
   }
@@ -102,11 +101,11 @@ export class Feature2Component implements OnInit, OnDestroy {
 
   refresh() {
     this.loadData();
-    this.router.navigate(['test']);
+    this.router.navigate(['test2']);
   }
 
   showDetails(id: number) {
-    this.router.navigate(['test'], {queryParams : {id , action : 'view'}});
+    this.router.navigate(['test2'], {queryParams : {id , action : 'view'}});
     this.selectedParkingLot = this.parkingLots.find(pl => pl.id === id);
     this.processUrlParams();
   }

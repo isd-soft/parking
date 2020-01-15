@@ -5,7 +5,7 @@
 
   <div class="display-4 text-light d-flex justify-content-center mb-2 title">TEST ParKing Layout</div>
 
-  <div class="bg-warning pg-5 display-4 d-flex justify-content-center text-center" *ngIf="message">{{message}}</div>
+  <div class="bg-warning display-5 d-flex justify-content-center text-center mb-2 message" *ngIf="message">{{message}}</div>
 
   <app-parking-lot-detail *ngIf="action === 'view'" [parkingLot]="selectedParkingLot" (goBackEvent)="refresh()"></app-parking-lot-detail>
 
@@ -19,11 +19,11 @@
               'lot-side' : parkingLots[num]?.number < 4,
               'lot-top' : parkingLots[num]?.number >= 4,
 
-              'car-occupied-side' : (parkingLots[num]?.status === 'OCCUPIED' || parkingLots[num].id == null) && parkingLots[num]?.number < 4,
+              'car-occupied-side' : (parkingLots[num]?.status === 'OCCUPIED' || parkingLots[num].status == null) && parkingLots[num]?.number < 4,
               'car-lost-side' : (parkingLots[num]?.status === 'UNKNOWN') && parkingLots[num]?.number < 4,
               'car-free-side' : parkingLots[num]?.status === 'FREE'  && parkingLots[num]?.number < 4,
 
-              'car-occupied-top' : (parkingLots[num]?.status === 'OCCUPIED'  || parkingLots[num].id == null) && parkingLots[num]?.number >= 4,
+              'car-occupied-top' : (parkingLots[num]?.status === 'OCCUPIED'  || parkingLots[num].status == null) && parkingLots[num]?.number >= 4,
               'car-lost-top' : (parkingLots[num]?.status === 'UNKNOWN') && parkingLots[num]?.number >= 4,
               'car-free-top' : parkingLots[num]?.status === 'FREE' && parkingLots[num]?.number >= 4,
 
@@ -37,7 +37,8 @@
               'lot-8' : parkingLots[num]?.number === 8,
               'lot-9' : parkingLots[num]?.number === 9,
               'lot-10' : parkingLots[num]?.number === 10
-            }">
+            }"
+            (click)="showDetails(parkingLots[num]?.id)">
             <span *ngIf="parkingLots[num]?.status === 'FREE'"
               [ngClass]="{
                 'lot-number-side' : parkingLots[num]?.number < 4,

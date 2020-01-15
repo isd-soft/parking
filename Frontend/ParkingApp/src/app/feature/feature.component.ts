@@ -65,7 +65,7 @@ export class FeatureComponent implements OnInit, OnDestroy {
             for (let i = 1; i <= 10; i++) {
               const pl = new ParkingLot();
               if (!this.parkingLots.find(lot => lot.number === i)) {
-                pl.number = i;
+                pl.number = pl.id = i;
                 this.parkingLots.push(pl);
               }
             }
