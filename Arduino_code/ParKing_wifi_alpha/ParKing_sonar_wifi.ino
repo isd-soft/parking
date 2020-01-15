@@ -5,6 +5,7 @@
 #define trigger1 2 // Trigger Pin
 #define echo1 5 // Echo Pin
 
+
 const char *ssid = "Inther";                            //Enter SSID
 const char *password = "inth3rmoldova";                 //Enter Password
 const char *websockets_server_host = "172.17.41.101";    //Enter server address
@@ -20,7 +21,7 @@ const long speed_of_sound = 29.1;    // speed of sound microseconds per centimet
 boolean isLotFree = false;          // boolean variable to define if the status of parking lot was changed or not
 
 using namespace websockets;
- WebsocketsClient client;
+WebsocketsClient client;
 
 int test_lot_number = 1;                                                //hardcoded test number
 
@@ -36,50 +37,53 @@ void setup() {
   pinMode(trigger1, OUTPUT);
   pinMode(echo1, INPUT);
   // Connect to wifi
-    WiFi.begin(ssid, password);
+  WiFi.begin(ssid, password);
 
-    // Wait some time to connect to wifi
-    for (int i = 0; i < 10 && WiFi.status() != WL_CONNECTED; i++) {
-        Serial.print(".");
-        delay(1000);
-    }
+  // Wait some time to connect to wifi
+  for (int i = 0; i < 10 && WiFi.status() != WL_CONNECTED; i++) {
+    Serial.print(".");
+    delay(1000);
+  }
 
-    // Check if connected to wifi
-    if (WiFi.status() != WL_CONNECTED) {
-        Serial.println("No Wifi!");
-        return;
-    }
+  // Check if connected to wifi
+  if (WiFi.status() != WL_CONNECTED) {
+    Serial.println("No Wifi!");
+    return;
+  }
 
-    Serial.println("Connected to Wifi, Connecting to server.");
-    // try to connect to Websockets server
-    bool connected = client.connect(websockets_server_host, websockets_server_port, "/test");
-    if (connected) {
-        Serial.println("Connected!");
+  Serial.println("Connected to Wifi, Connecting to server.");
+  // try to connect to Websockets server
+  bool connected = client.connect(websockets_server_host, websockets_server_port, "/test");
+  if (connected) {
+    Serial.println("Connected to WebSocket!");
 
-    } else {
-        Serial.println("Not Connected!");
-    }
+  } else {
+    Serial.println("Not Connected to WebSocket!");
+  }
 
-    // run callback when messages are received
-    client.onMessage([&](WebsocketsMessage message) {
-        Serial.print("Got Message: ");
-        Serial.println(message.data());
-    });
+  // run callback when messages are received
+  //  client.onMessage([&](WebsocketsMessage message) {
+  //    Serial.print("Got Message: ");
+  //    Serial.println(message.data());
+  //  });
+
+  client.onEvent(onEventsCallback);
+
 }
 
 void loop() {
   SingleSonar();
   ////// PRINT FOR PROOF CHECKING //////
   //  Serial.print("Filtered Sonar = ");
-   //Serial.println(Sonar);
+  //Serial.println(Sonar);
   //  Serial.print(" cm, ");
   //  Serial.print("Unfiltered Sonar = ");
   //  Serial.print(RawSonar);
   //  Serial.print(" cm");
   //  Serial.println();
   ////// END OF PRINT-CHECK //////
-char *msg = "{\"mBody\":\"Arduino data\", \"id\":\"";
-  
+  char *msg = "{\"mBody\":\"Arduino data\", \"id\":\"";
+
   if (Sonar >= 20 && isLotFree == false) {
     Serial.println("Lot is free!");
     Serial.println(Sonar);
@@ -93,13 +97,19 @@ char *msg = "{\"mBody\":\"Arduino data\", \"id\":\"";
     client.send(msg + String(test_lot_number) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + security_token + String("\"}"));
     isLotFree = false;
   }
+  
+//  if (Sonar == 0) {
+//    Serial.println("Status Lot is uknown!");
+//    Serial.println(Sonar);
+//    client.send(msg + String(test_lot_number) + String("\", \"status\":\"") + status_unknown + String("\", \"token\":\"") + security_token + String("\"}"));
+//  }
 
   // let the websockets client check for incoming messages
-    if (client.available()) {
-        client.poll();
-    }
+  if (client.available()) {
+    client.poll();
+  }
 
-    delay(500);
+  delay(500);
 }
 
 void SonarSensor(int trigPin, int echoPin) {
@@ -130,4 +140,20 @@ void SingleSonar() {
   Sonar = distance;
   RawSonar = unfiltered;
   delay(50); //Delay 50ms before next reading.
+}
+
+
+void onEventsCallback(WebsocketsEvent event, String data) {
+  if (event == WebsocketsEvent::ConnectionOpened) {
+    Serial.println("WebSocket connnection opened!");
+  } else if (event == WebsocketsEvent::ConnectionClosed) {
+    Serial.println("WebSocket connection closed!");
+    Serial.println("Trying to reconnect to WebSocket ...");
+    delay(10000);
+    bool connected = client.connect(websockets_server_host, websockets_server_port, "/test");
+  } else if (event == WebsocketsEvent::GotPing) {
+    Serial.println("Got a Ping!");
+  } else if (event == WebsocketsEvent::GotPong) {
+    Serial.println("Got a Pong!");
+  }
 }
