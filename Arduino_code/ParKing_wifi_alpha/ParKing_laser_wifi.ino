@@ -4,7 +4,7 @@
 
 const char *ssid = "Inther";                            //Enter SSID
 const char *password = "inth3rmoldova";                 //Enter Password
-const char *websockets_server_host = "172.17.41.30";    //Enter server address
+const char *websockets_server_host = "172.17.41.36";    //Enter server address
 const uint16_t websockets_server_port = 8080;           // Enter server port
 
 using namespace websockets;
@@ -23,6 +23,7 @@ char *security_token = "4a0a8679643673d083b23f52c21f27cac2b03fa2";      //some s
 
 const int pinLaser = 2; // output signal pin of laser module/laser pointer
 const int pinReceiver = 18; // input signal pin of receiver/detector (the used module does only return a digital state)
+
 void setup() {
   pinMode(pinLaser, OUTPUT); // set the laser pin to output mode
   pinMode(pinReceiver, INPUT); // set the laser pin to output mode
@@ -48,7 +49,7 @@ void setup() {
 
   Serial.println("Connected to Wifi, Connecting to server.");
   // try to connect to Websockets server
-  bool connected = client.connect(websockets_server_host, websockets_server_port, "/arduino");
+  bool connected = client.connect(websockets_server_host, websockets_server_port, "/test");
   if (connected) {
     Serial.println("Connected!");
 
@@ -71,13 +72,13 @@ void loop() {
 
   if (value == 0 && isLotFree == false) {
     Serial.println("Lot is free!");
-    client.send(msg + test_lot_number + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + security_token + String("\"}"));
+    client.send(msg + String(test_lot_number) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + security_token + String("\"}"));
     isLotFree = true;
   }
 
   if (value == 1 && isLotFree == true) {
     Serial.println("Lot is occupied!");
-    client.send(msg + test_lot_number + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + security_token + String("\"}"));
+    client.send(msg + String(test_lot_number) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + security_token + String("\"}"));
     isLotFree = false;
   }
 
