@@ -9,6 +9,7 @@
 
   <app-parking-lot-detail *ngIf="action === 'view'" [parkingLot]="selectedParkingLot" (goBackEvent)="refresh()"></app-parking-lot-detail>
 
+  <!-- legend -->
   <div class="d-flex justify-content-center text-center mb-2" *ngIf="action !== 'view'">
     <div class="justify-content-center">
       <img class="legend" src="assets/img/car-side-blue-free-border.png">
@@ -20,52 +21,51 @@
     </div>
   </div>
 
-  <div>
-    <div class="container p-0 text-center" *ngIf="action !== 'view' ">
-      <img class="layout" src="assets/img/isd-parking-layout-blue-striped.png" alt="layout">
-      <div  *ngIf='dataLoaded' >
-        <div *ngFor="let num of numberOfParkingLots">
-          <div class="car-icon lot-"
+  <!-- parking lots generator -->
+  <div class="container p-0 text-center" *ngIf="action !== 'view' ">
+    <img class="layout" src="assets/img/isd-parking-layout-blue-striped.png" alt="layout">
+    <div  *ngIf='dataLoaded' >
+      <div *ngFor="let num of numberOfParkingLots">
+        <div class="car-icon lot-"
+          [ngClass]="{
+            'lot-side' : parkingLots[num]?.number < 4,
+            'lot-top' : parkingLots[num]?.number >= 4,
+
+            'car-occupied-side' : (parkingLots[num]?.status === 'OCCUPIED' || parkingLots[num].status == null) && parkingLots[num]?.number < 4,
+            'car-lost-side' : (parkingLots[num]?.status === 'UNKNOWN') && parkingLots[num]?.number < 4,
+            'car-free-side' : parkingLots[num]?.status === 'FREE'  && parkingLots[num]?.number < 4,
+
+            'car-occupied-top' : (parkingLots[num]?.status === 'OCCUPIED'  || parkingLots[num].status == null) && parkingLots[num]?.number >= 4,
+            'car-lost-top' : (parkingLots[num]?.status === 'UNKNOWN') && parkingLots[num]?.number >= 4,
+            'car-free-top' : parkingLots[num]?.status === 'FREE' && parkingLots[num]?.number >= 4,
+
+            'lot-1' : parkingLots[num]?.number === 1,
+            'lot-2' : parkingLots[num]?.number === 2,
+            'lot-3' : parkingLots[num]?.number === 3,
+            'lot-4' : parkingLots[num]?.number === 4,
+            'lot-5' : parkingLots[num]?.number === 5,
+            'lot-6' : parkingLots[num]?.number === 6,
+            'lot-7' : parkingLots[num]?.number === 7,
+            'lot-8' : parkingLots[num]?.number === 8,
+            'lot-9' : parkingLots[num]?.number === 9,
+            'lot-10' : parkingLots[num]?.number === 10
+          }"
+          (click)="showDetails(parkingLots[num]?.id)">
+          <span *ngIf="parkingLots[num]?.status === 'FREE'"
             [ngClass]="{
-              'lot-side' : parkingLots[num]?.number < 4,
-              'lot-top' : parkingLots[num]?.number >= 4,
-
-              'car-occupied-side' : (parkingLots[num]?.status === 'OCCUPIED' || parkingLots[num].status == null) && parkingLots[num]?.number < 4,
-              'car-lost-side' : (parkingLots[num]?.status === 'UNKNOWN') && parkingLots[num]?.number < 4,
-              'car-free-side' : parkingLots[num]?.status === 'FREE'  && parkingLots[num]?.number < 4,
-
-              'car-occupied-top' : (parkingLots[num]?.status === 'OCCUPIED'  || parkingLots[num].status == null) && parkingLots[num]?.number >= 4,
-              'car-lost-top' : (parkingLots[num]?.status === 'UNKNOWN') && parkingLots[num]?.number >= 4,
-              'car-free-top' : parkingLots[num]?.status === 'FREE' && parkingLots[num]?.number >= 4,
-
-              'lot-1' : parkingLots[num]?.number === 1,
-              'lot-2' : parkingLots[num]?.number === 2,
-              'lot-3' : parkingLots[num]?.number === 3,
-              'lot-4' : parkingLots[num]?.number === 4,
-              'lot-5' : parkingLots[num]?.number === 5,
-              'lot-6' : parkingLots[num]?.number === 6,
-              'lot-7' : parkingLots[num]?.number === 7,
-              'lot-8' : parkingLots[num]?.number === 8,
-              'lot-9' : parkingLots[num]?.number === 9,
-              'lot-10' : parkingLots[num]?.number === 10
-            }"
-            (click)="showDetails(parkingLots[num]?.id)">
-            <span *ngIf="parkingLots[num]?.status === 'FREE'"
-              [ngClass]="{
-                'lot-number-side' : parkingLots[num]?.number < 4,
-                'lot-number-top' : parkingLots[num]?.number >= 4
-              }">{{'L' + (parkingLots[num]?.number < 10 ? 0 : '') + parkingLots[num]?.number}}</span>
-          </div>
+              'lot-number-side' : parkingLots[num]?.number < 4,
+              'lot-number-top' : parkingLots[num]?.number >= 4
+            }">{{'L' + (parkingLots[num]?.number < 10 ? 0 : '') + parkingLots[num]?.number}}</span>
         </div>
-        <div class="smoking text-secondary"><i class="fas fa-smoking"></i></div>
-        <div class="backDoor first">
-          <div class="display-5">ISD </div>
-          <div class="display-5">Back Door</div>
-        </div>
-        <div class="backDoor second" *ngIf="false">
-          <div class="display-5">ISD </div>
-          <div class="display-5">Back Door</div>
-        </div>
+      </div>
+      <div class="smoking text-secondary"><i class="fas fa-smoking"></i></div>
+      <div class="backDoor first">
+        <div class="display-5">ISD 2nd</div>
+        <div class="display-5">Back Door</div>
+      </div>
+      <div class="backDoor second" *ngIf="true">
+        <div class="display-5">ISD 1st</div>
+        <div class="display-5">Back Door</div>
       </div>
     </div>
   </div>
