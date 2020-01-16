@@ -64,10 +64,10 @@ void setup() {
   // try to connect to Websockets server
   bool connected = client.connect(websockets_server_host, websockets_server_port, "/test");
   if (connected) {
-    Serial.println("Connected!");
+    Serial.println("Connected to WebSocket!");
 
   } else {
-    Serial.println("Not Connected!");
+    Serial.println("Not Connected to WebSocket!");
   }
 
   // run callback when messages are received
@@ -75,6 +75,9 @@ void setup() {
     Serial.print("Got Message: ");
     Serial.println(message.data());
   });
+  
+    client.onEvent(onEventsCallback);
+
 
 }
 
@@ -148,4 +151,19 @@ void SingleSonar() {
   Sonar = distance;
   RawSonar = unfiltered;
   delay(50); //Delay 50ms before next reading.
+}
+
+void onEventsCallback(WebsocketsEvent event, String data) {
+  if (event == WebsocketsEvent::ConnectionOpened) {
+    Serial.println("WebSocket connnection opened!");
+  } else if (event == WebsocketsEvent::ConnectionClosed) {
+    Serial.println("WebSocket connection closed!");
+    Serial.println("Trying to reconnect to WebSocket ...");
+    delay(10000);
+    bool connected = client.connect(websockets_server_host, websockets_server_port, "/test");
+  } else if (event == WebsocketsEvent::GotPing) {
+    Serial.println("Got a Ping!");
+  } else if (event == WebsocketsEvent::GotPong) {
+    Serial.println("Got a Pong!");
+  }
 }
