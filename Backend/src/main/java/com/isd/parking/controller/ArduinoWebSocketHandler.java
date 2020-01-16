@@ -3,13 +3,17 @@ package com.isd.parking.controller;
 import com.isd.parking.model.ParkingLot;
 import com.isd.parking.model.StatisticsRecord;
 import com.isd.parking.model.enums.ParkingLotStatus;
+import com.isd.parking.repository.ParkingLotRepository;
 import com.isd.parking.service.ParkingLotService;
 import com.isd.parking.service.StatisticsService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
@@ -18,19 +22,20 @@ import java.util.Optional;
 
 
 @Slf4j
+@Component
 public class ArduinoWebSocketHandler extends TextWebSocketHandler {
 
     private final String securityToken = "4a0a8679643673d083b23f52c21f27cac2b03fa2";           //{SHA1}arduino
 
-    @Autowired
-    private ParkingLotService parkingLotService;
+    private final ParkingLotRepository parkingLotService;
 
-    //For using local repository uncomment this and comment parkingLotService above
-    /*@Autowired
-    private ParkingLotLocalService parkingLotService;*/
+    private final StatisticsService statisticsService;
 
     @Autowired
-    private StatisticsService statisticsService;
+    public ArduinoWebSocketHandler(ParkingLotRepository parkingLotService, StatisticsService statisticsService) {
+        this.parkingLotService = parkingLotService;
+        this.statisticsService = statisticsService;
+    }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
@@ -40,11 +45,11 @@ public class ArduinoWebSocketHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
 
-        try {
-            super.handleTextMessage(session, message);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            super.handleTextMessage(session, message);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         log.info("Session Id: " + session.getId() + ", message body" + message.toString());
         log.info("Message : " + message.getPayload());
