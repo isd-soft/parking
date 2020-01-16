@@ -2,15 +2,11 @@
 
 #include <WiFi.h>
 
-#define trigger1 2 // Trigger Pin
-#define echo1 5 // Echo Pin
+#define trigger1 2 // Trigger Pin for sonar
+#define echo1 5 // Echo Pin for sonar
 
-
-const char *ssid = "Inther";                            //Enter SSID
-const char *password = "inth3rmoldova";                 //Enter Password
-const char *websockets_server_host = "172.17.41.101";    //Enter server address
-const uint16_t websockets_server_port = 8080;           // Enter server port
-
+const int pinLaser = 4; // output signal pin of laser module/laser pointer
+const int pinReceiver = 18; // input signal pin of receiver/detector (the used module does only return a digital state)
 
 int inRange = 45; //Wide Range First sight of Target
 int TargetRange = 12; //Minimal Parking Range to Target
@@ -18,24 +14,37 @@ const int NoiseReject = 40; //Percentage of reading closeness for rejection filt
 long duration, distance, lastDuration, unfiltered, Sonar, RawSonar;
 const unsigned int maxDuration = 11650; // around 200 cm, the sensor gets flaky at greater distances.
 const long speed_of_sound = 29.1;    // speed of sound microseconds per centimeter
-boolean isLotFree = false;          // boolean variable to define if the status of parking lot was changed or not
+boolean isLotFree = false;          // Sonar's boolean variable to define if the status of parking lot was changed or not
+boolean isLotFree1 = false;          // Laser's boolean variable to define if the status of parking lot was changed or not
+int test_lot_number;                                                //hardcoded test number
+
+
+const char *ssid = "Inther";                            //Enter SSID
+const char *password = "inth3rmoldova";                 //Enter Password
+const char *websockets_server_host = "172.17.41.101";    //Enter server address
+const uint16_t websockets_server_port = 8080;           // Enter server port
 
 using namespace websockets;
 WebsocketsClient client;
 
-int test_lot_number = 1;                                                //hardcoded test number
-
-String status_free = "FREE";                                            //if string not compile use char *
+String status_free = "FREE";
 String status_occupied = "OCCUPIED";
 String status_unknown = "UNKNOWN";
 
 char *security_token = "4a0a8679643673d083b23f52c21f27cac2b03fa2";      //some security token to verify connection ({SHA1}"arduino")
 
+
 void setup() {
+  // put your setup code here, to run once:
+  pinMode(pinLaser, OUTPUT); // set the laser pin to output mode
+  pinMode(pinReceiver, INPUT); // set the laser pin to output mode
+  digitalWrite(pinLaser,  HIGH); // emit red laser
   Serial.begin(9600);
   //Sensor Connections
   pinMode(trigger1, OUTPUT);
   pinMode(echo1, INPUT);
+
+
   // Connect to wifi
   WiFi.begin(ssid, password);
 
@@ -62,47 +71,48 @@ void setup() {
   }
 
   // run callback when messages are received
-  //  client.onMessage([&](WebsocketsMessage message) {
-  //    Serial.print("Got Message: ");
-  //    Serial.println(message.data());
-  //  });
+  client.onMessage([&](WebsocketsMessage message) {
+    Serial.print("Got Message: ");
+    Serial.println(message.data());
+  });
+  
+    client.onEvent(onEventsCallback);
 
-  client.onEvent(onEventsCallback);
 
 }
 
 void loop() {
-  SingleSonar();
-  ////// PRINT FOR PROOF CHECKING //////
-  //  Serial.print("Filtered Sonar = ");
-  //Serial.println(Sonar);
-  //  Serial.print(" cm, ");
-  //  Serial.print("Unfiltered Sonar = ");
-  //  Serial.print(RawSonar);
-  //  Serial.print(" cm");
-  //  Serial.println();
-  ////// END OF PRINT-CHECK //////
   char *msg = "{\"mBody\":\"Arduino data\", \"id\":\"";
 
+  int value = digitalRead(pinReceiver); // receiver/detector send either LOW or HIGH (no analog values!)
+
+  SingleSonar();
   if (Sonar >= 20 && isLotFree == false) {
-    Serial.println("Lot is free!");
+    Serial.println("Lot is free! Message from sonar. Parking lot 1");
+    client.send(msg + String(1) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + security_token + String("\"}"));
     Serial.println(Sonar);
-    client.send(msg + String(test_lot_number) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + security_token + String("\"}"));
     isLotFree = true;
   }
 
   if (Sonar < 20 && isLotFree == true) {
-    Serial.println("Lot is occupied!");
+    Serial.println("Lot is occupied! Message from sonar. Parking lot 1");
+    client.send(msg + String(1) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + security_token + String("\"}"));
     Serial.println(Sonar);
-    client.send(msg + String(test_lot_number) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + security_token + String("\"}"));
     isLotFree = false;
   }
-  
-//  if (Sonar == 0) {
-//    Serial.println("Status Lot is uknown!");
-//    Serial.println(Sonar);
-//    client.send(msg + String(test_lot_number) + String("\", \"status\":\"") + status_unknown + String("\", \"token\":\"") + security_token + String("\"}"));
-//  }
+
+
+  if (value == 0 && isLotFree1 == false) {
+    Serial.println("Lot is free! Message from laser. Parking lot 2");
+    client.send(msg + String(2) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + security_token + String("\"}"));
+    isLotFree1 = true;
+  }
+
+  if (value == 1 && isLotFree1 == true) {
+    Serial.println("Lot is occupied! Message from laser. Parking lot 2");
+    client.send(msg + String(2) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + security_token + String("\"}"));
+    isLotFree1 = false;
+  }
 
   // let the websockets client check for incoming messages
   if (client.available()) {
@@ -111,6 +121,7 @@ void loop() {
 
   delay(500);
 }
+
 
 void SonarSensor(int trigPin, int echoPin) {
   digitalWrite(trigPin, LOW);
@@ -141,7 +152,6 @@ void SingleSonar() {
   RawSonar = unfiltered;
   delay(50); //Delay 50ms before next reading.
 }
-
 
 void onEventsCallback(WebsocketsEvent event, String data) {
   if (event == WebsocketsEvent::ConnectionOpened) {
