@@ -10,20 +10,24 @@
   <app-parking-lot-detail *ngIf="action === 'view'" [parkingLot]="selectedParkingLot" (goBackEvent)="refresh()"></app-parking-lot-detail>
 
   <!-- legend -->
-  <div class="d-flex justify-content-center text-center mb-2" *ngIf="action !== 'view'">
-    <div class="justify-content-center">
+  <div class="d-flex legend-group text-center mb-2" *ngIf="action !== 'view'">
+    <div class="legend-elem">
       <img class="legend" src="assets/img/car-side-blue-free-border.png">
-      <div class="d-inline-block text-light col-3">free</div>
+      <div class="text-light col-3">free</div>
     </div>
-    <div class="justify-content-center">
+    <div class="legend-elem">
       <img class="legend" src="assets/img/car-side-blue.png">
-      <div class="d-inline-block text-light col-3">occupied</div>
+      <div class="text-light col-3">occupied</div>
+    </div>
+    <div class="legend-elem">
+      <img class="legend" src="assets/img/car-side-blue-lost.png">
+      <div class="text-light col-3">no connection</div>
     </div>
   </div>
 
   <!-- parking lots generator -->
   <div class="container p-0 text-center" *ngIf="action !== 'view' ">
-    <img class="layout" src="assets/img/isd-parking-layout-blue-striped.png" alt="layout">
+    <img class="layout" src="assets/img/isd-parking-layout-blue-striped-car.png" alt="layout">
     <div  *ngIf='dataLoaded' >
       <div *ngFor="let num of numberOfParkingLots">
         <div class="car-icon lot-"

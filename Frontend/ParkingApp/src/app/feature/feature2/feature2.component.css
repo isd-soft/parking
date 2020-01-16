@@ -14,6 +14,20 @@ img.legend {
   width: 4rem;
 }
 
+.legend-group {
+  display: flex;
+  justify-content: center;
+}
+
+.legend-elem:nth-child(2) {
+  margin-left: 6rem;
+  margin-right: 4rem;
+}
+
+.col-3 {
+  max-width: 100%;
+}
+
 img.layout {
   width: 42rem;
 }
@@ -241,6 +255,14 @@ span {
 }
 
 @media (max-width: 991px) {
+  .legend-group {
+    justify-content: space-evenly;
+  }
+
+  .legend-elem:nth-child(2) {
+    margin: 0;
+  }
+
   .lot-1 {
     left: 2.15rem;
     top: 21.22rem;
