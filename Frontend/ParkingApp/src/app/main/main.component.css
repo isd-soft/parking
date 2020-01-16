@@ -1,0 +1,38 @@
+.green {
+  background-color: #20b600;
+}
+
+.red {
+  background-color: #fd0006;
+}
+
+.grey {
+  background-color: grey;
+}
+
+.lot {
+  margin-bottom: 20px;
+  height: 100px;
+  min-width: 150px;
+}
+
+.fas, .far {
+  font-size: 3rem;
+  vertical-align: middle;
+  margin-top: 1rem;
+}
+
+.elem {
+  text-align: center;
+}
+
+.lot-name {
+  font-size: 25px;
+  text-transform: uppercase;
+}
+
+.refresh {
+  min-width: 100%;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}

@@ -1,2 +1,6 @@
-# parking
-Project build during an internship program.
+
+Project build during an internship program. 
+
+--- ISD ParKing ---
+(Angular, Spring Boot, PostgreSQL, JPA, Hibernate) 
+
