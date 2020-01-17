@@ -21,7 +21,7 @@ int test_lot_number;                                                //hardcoded 
 
 const char *ssid = "Inther";                            //Enter SSID
 const char *password = "inth3rmoldova";                 //Enter Password
-const char *websockets_server_host = "172.17.41.101";    //Enter server address
+const char *websockets_server_host = "172.17.40.57";    //Enter server address
 const uint16_t websockets_server_port = 8080;           // Enter server port
 
 using namespace websockets;
@@ -102,13 +102,13 @@ void loop() {
   }
 
 
-  if (value == 0 && isLotFree1 == false) {
+  if (value == 1 && isLotFree1 == false) {
     Serial.println("Lot is free! Message from laser. Parking lot 2");
     client.send(msg + String(2) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + security_token + String("\"}"));
     isLotFree1 = true;
   }
 
-  if (value == 1 && isLotFree1 == true) {
+  if (value == 0 && isLotFree1 == true) {
     Serial.println("Lot is occupied! Message from laser. Parking lot 2");
     client.send(msg + String(2) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + security_token + String("\"}"));
     isLotFree1 = false;
@@ -131,7 +131,7 @@ void SonarSensor(int trigPin, int echoPin) {
   digitalWrite(trigPin, LOW);
   duration = pulseIn(echoPin, HIGH);
   unfiltered = (duration / 2) / speed_of_sound; //Stores preliminary reading to compare
-  if (duration <= 8) duration = ((inRange + 1) * speed_of_sound * 2);
+  if (duration <= 8) duration = ((inRange + 1)  speed_of_sound  2);
   //Rejects very low readings, kicks readout to outside detection range
   if (lastDuration == 0) lastDuration = duration;
   //Compensation parameters for intial start-up
@@ -140,7 +140,7 @@ void SonarSensor(int trigPin, int echoPin) {
   //Sets the fault reading to the last known "successful" reading
   if (duration > maxDuration) duration = maxDuration;
   //Caps Reading output at defined maximum distance (~200)
-  if ((duration - lastDuration) < ((-1) * (NoiseReject / 100) * lastDuration)) {
+  if ((duration - lastDuration) < ((-1)  (NoiseReject / 100)  lastDuration)) {
     distance = (lastDuration / 2) / speed_of_sound; //Noise filter for low range drops
   }
   distance = (duration / 2) / speed_of_sound;
