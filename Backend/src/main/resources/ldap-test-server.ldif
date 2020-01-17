@@ -14,27 +14,22 @@ objectclass: top
 objectclass: organizationalUnit
 ou: subgroups
 
-dn: ou=people,dc=isd,dc=com
+dn: ou=users,dc=isd,dc=com
 objectclass: top
 objectclass: organizationalUnit
-ou: people
+ou: users
 
-dn: ou=space cadets,dc=isd,dc=com
+dn: ou=\"quoted users\",dc=isd,dc=com
 objectclass: top
 objectclass: organizationalUnit
-ou: space cadets
+ou: "quoted users"
 
-dn: ou=\"quoted people\",dc=isd,dc=com
+dn: ou=otherusers,dc=isd,dc=com
 objectclass: top
 objectclass: organizationalUnit
-ou: "quoted people"
+ou: otherusers
 
-dn: ou=otherpeople,dc=isd,dc=com
-objectclass: top
-objectclass: organizationalUnit
-ou: otherpeople
-
-dn: uid=ben,ou=people,dc=isd,dc=com
+dn: uid=ben,ou=users,dc=isd,dc=com
 objectclass: top
 objectclass: person
 objectclass: organizationalPerson
@@ -44,7 +39,7 @@ sn: Alex
 uid: ben
 userPassword: {SHA}nFCebWjxfaLbHHG1Qk5UU4trbvQ=
 
-dn: uid=bob,ou=people,dc=isd,dc=com
+dn: uid=bob,ou=users,dc=isd,dc=com
 objectclass: top
 objectclass: person
 objectclass: organizationalPerson
@@ -58,7 +53,7 @@ userPassword: {SHA}Ym9ic3Bhc3N3b3Jk
 
 # custom user
 
-dn: uid=alex,ou=people,dc=isd,dc=com
+dn: uid=alex,ou=users,dc=isd,dc=com
 objectclass: top
 objectclass: person
 objectclass: organizationalPerson
@@ -73,7 +68,7 @@ userPassword: alexspassword
 
 
 
-dn: uid=joe,ou=otherpeople,dc=isd,dc=com
+dn: uid=joe,ou=otherusers,dc=isd,dc=com
 objectclass: top
 objectclass: person
 objectclass: organizationalPerson
@@ -83,7 +78,7 @@ sn: Smeth
 uid: joe
 userPassword: joespassword
 
-dn: cn=quote\"guy,ou=\"quoted people\",dc=isd,dc=com
+dn: cn=quote\"guy,ou=\"quoted users\",dc=isd,dc=com
 objectclass: top
 objectclass: person
 objectclass: organizationalPerson
@@ -99,20 +94,20 @@ objectclass: top
 objectclass: groupOfUniqueNames
 cn: developers
 ou: developer
-uniqueMember: uid=ben,ou=people,dc=isd,dc=com
-uniqueMember: uid=bob,ou=people,dc=isd,dc=com
+uniqueMember: uid=ben,ou=users,dc=isd,dc=com
+uniqueMember: uid=bob,ou=users,dc=isd,dc=com
 
 dn: cn=managers,ou=groups,dc=isd,dc=com
 objectclass: top
 objectclass: groupOfUniqueNames
 cn: managers
 ou: manager
-uniqueMember: uid=ben,ou=people,dc=isd,dc=com
-uniqueMember: cn=mouse\, jerry,ou=people,dc=isd,dc=com
+uniqueMember: uid=ben,ou=users,dc=isd,dc=com
+uniqueMember: cn=mouse\, jerry,ou=users,dc=isd,dc=com
 
 dn: cn=submanagers,ou=subgroups,ou=groups,dc=isd,dc=com
 objectclass: top
 objectclass: groupOfUniqueNames
 cn: submanagers
 ou: submanager
-uniqueMember: uid=ben,ou=people,dc=isd,dc=com
+uniqueMember: uid=ben,ou=users,dc=isd,dc=com

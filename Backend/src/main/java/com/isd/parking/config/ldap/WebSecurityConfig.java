@@ -13,6 +13,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+
+                .antMatchers("/parking").permitAll()
                 .anyRequest().fullyAuthenticated()
                 .and()
                 .formLogin()
@@ -23,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .ldapAuthentication()
-                .userDnPatterns("uid={0},ou=people")
+                .userDnPatterns("uid={0},ou=users")
                 .groupSearchBase("ou=groups")
                 .contextSource()
                 .url("ldap://localhost:18889/dc=isd,dc=com")

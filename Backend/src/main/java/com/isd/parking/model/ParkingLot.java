@@ -17,7 +17,7 @@ public class ParkingLot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "number")
+    @Column(name = "lot_number")
     private Integer number;
 
     @Column(name = "updated_at")

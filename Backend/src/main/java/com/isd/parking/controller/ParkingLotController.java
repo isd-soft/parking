@@ -24,7 +24,7 @@ public class ParkingLotController {
     @GetMapping("parking")
     public List<ParkingLot> getAllParkingLots() {
 
-        LOG.info("Controller update parking lot executed...");
+        LOG.info("Controller get all parking lots executed...");
 
         return parkingLotService.listAll();
     }

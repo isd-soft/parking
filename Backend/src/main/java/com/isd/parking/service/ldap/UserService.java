@@ -24,32 +24,40 @@ public class UserService {
         return user != null;
     }
 
-    public List<String> search(final String username) {
+    public List<User> search(final String username) {
         List<User> userList = userRepository.findByUsernameLikeIgnoreCase(username);
         if (userList == null) {
             return Collections.emptyList();
         }
 
-        return userList.stream()
-                .map(User::getUsername)
-                .collect(Collectors.toList());
+        /*return userList.stream()
+                .map(User::getFullName)
+                .collect(Collectors.toList());*/
+
+        return userList;
     }
 
     public void create(final String username, final String password) {
-        User newUser = new User(username,digestSHA(password));
+        User newUser = new User(username, digestSHA(password));
         newUser.setId(LdapUtils.emptyLdapName());
-        userRepository.save(newUser);
 
+        userRepository.save(newUser);
     }
 
     public void modify(final String username, final String password) {
         User user = userRepository.findByUsername(username);
         user.setPassword(password);
+
         userRepository.save(user);
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     private String digestSHA(final String password) {
         String base64;
+
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA");
             digest.update(password.getBytes());
@@ -58,6 +66,10 @@ public class UserService {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+
         return "{SHA}" + base64;
     }
+
+
+
 }
