@@ -61,6 +61,7 @@ export class Feature2Component implements OnInit, OnDestroy {
           this.parkingLots = data.sort((a, b) => (a.number > b.number) ? 1 : (a.number < b.number ? -1 : 0));
           this.dataLoaded = true;
           this.message = '';
+          console.log('loadData');
 
           if (this.parkingLots.length < 10) {
             for (let i = 1; i <= 10; i++) {

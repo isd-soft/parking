@@ -45,7 +45,7 @@ export class DataService {
     const pl4 = new ParkingLot();
     pl4.id = 4;
     pl4.number = 4;
-    pl4.status = 'FREE';
+    pl4.status = 'OCCUPIED';
     pl4.updatedAt = new Date();
 
     this.parkingLots.push(pl4);
@@ -93,7 +93,7 @@ export class DataService {
     const pl10 = new ParkingLot();
     pl10.id = 10;
     pl10.number = 10;
-    pl10.status = 'FREE';
+    pl10.status = 'OCCUPIED';
     pl10.updatedAt = new Date();
 
     this.parkingLots.push(pl10);

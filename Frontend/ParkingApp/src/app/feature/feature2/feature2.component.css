@@ -466,7 +466,7 @@ span {
   }
 
   .lot-3 {
-    top: 15.45rem;
+    top: 15.47rem;
     left: 0.5rem;
   }
 
@@ -519,6 +519,104 @@ span {
 
   .second {
     left: 4.8rem;
+    font-size: .9rem;
+    top: .5rem;
+  }
+}
+
+@media (max-width: 401px) {
+
+  img.layout {
+    width: 24.9rem;
+  }
+
+  img.legend {
+    width: 2.3rem;
+  }
+
+  .lot-side {
+    width: 2.6rem;
+    height: 1.14rem;
+  }
+
+  .lot-top {
+    width: 1.18rem;
+    height: 2.8rem;
+  }
+
+  .lot-number-side {
+    line-height: 1.1rem;
+    font-size: 15px;
+  }
+
+  .lot-number-top {
+    font-size: 15px;
+    line-height: initial;
+  }
+
+  .lot-1 {
+    top: 12.55rem;
+    left: 0.4rem;
+  }
+
+  .lot-2 {
+    top: 13.8rem;
+    left: 0.4rem;
+  }
+
+  .lot-3 {
+    top: 15.1rem;
+    left: 0.4rem;
+  }
+
+  .lot-4 {
+    top: .4rem;
+    left: 12.85rem;
+  }
+
+  .lot-5 {
+    top: .4rem;
+    left: 14.154rem;
+  }
+
+  .lot-6 {
+    top: .4rem;
+    left: 15.45rem;
+  }
+
+  .lot-7 {
+    top: .4rem;
+    left: 16.75rem;
+  }
+
+  .lot-8 {
+    top: .4rem;
+    left: 18.1rem;
+  }
+
+  .lot-9 {
+    top: .4rem;
+    left: 19.4rem;
+  }
+
+  .lot-10 {
+    top: .4rem;
+    left: 20.7rem;
+  }
+
+  .smoking {
+    top: 18.5rem;
+    left: 8.4rem;
+  }
+
+  .first {
+    left: 0.3rem;
+    font-size: .9rem;
+    bottom: .2rem;
+  }
+
+  .second {
+    left: 4.5rem;
     font-size: .9rem;
     top: .5rem;
   }
@@ -705,6 +803,111 @@ span {
   span {
     font-size: 15px;
   }
+}
+
+@media (max-width: 360px) {
+  img.layout {
+    width: 22.5rem;
+  }
+
+  .lot-side {
+    width: 2.4rem;
+    height: 1.05rem;
+  }
+
+  .lot-top {
+    width: 1.05rem;
+    height: 2.45rem;
+  }
+
+  .lot-number-top {
+    font-size: 13px;
+    line-height: unset;
+  }
+
+  .lot-number-side {
+    font-size: 13px;
+  }
+
+  .lot-1 {
+    top: 11.3rem;
+    left: 0.3rem;
+  }
+
+  .lot-2 {
+    top: 12.47rem;
+    left: 0.3rem;
+  }
+
+  .lot-3 {
+    top: 13.6rem;
+    left: 0.3rem;
+  }
+
+  .lot-4 {
+    top: .35rem;
+    left: 11.5rem;
+  }
+
+  .lot-5 {
+    top: .35rem;
+    left: 12.7rem;
+  }
+
+  .lot-6 {
+    top: .35rem;
+    left: 13.85rem;
+  }
+
+  .lot-7 {
+    top: .35rem;
+    left: 15.05rem;
+  }
+
+  .lot-8 {
+    top: .35rem;
+    left: 16.25rem;
+  }
+
+  .lot-9 {
+    top: .35rem;
+    left: 17.44rem;
+  }
+
+  .lot-10 {
+    top: .35rem;
+    left: 18.65rem;
+  }
+
+  .smoking {
+    top: 17rem;
+    left: 7.9rem;
+  }
+
+  .first {
+    left: 0.1rem;
+    font-size: .85rem;
+    bottom: .1rem;
+  }
+
+  .second {
+    left: 3.5rem;
+    top: .3rem;
+  }
+
+  span {
+    font-size: 15px;
+    font-size: .85rem;
+  }
+}
+
+.message {
+  position: absolute;
+  z-index: 1000;
+  top: 11rem;
+  left: 0;
+  width: 100%;
+  font-size: 2.5rem;
 }
 
 .message {
