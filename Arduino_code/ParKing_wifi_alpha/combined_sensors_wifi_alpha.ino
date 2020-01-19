@@ -133,7 +133,6 @@ void loop()
     client.poll();
   }
 
-  delay(500);
 }
 
 void readFromSingleSonar()
