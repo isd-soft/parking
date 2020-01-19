@@ -17,6 +17,10 @@ const int noiseRejectPercent = 40; //Percentage of reading closeness for rejecti
 long duration, distance, lastDuration, unfilteredDistance, filteredSonarDistance, rawSonarDistance;
 const unsigned int maxDuration = 11650; // around 200 cm, the sensor gets flaky at greater distances.
 const long speed_of_sound = 29.1;       // speed of sound microseconds per centimeter
+int lotId; // id of the parking lot
+
+// Set the distance when status should be changed here
+long targetDistance = 20; // target distance value when the status should be trigerred
 
 //parking lot
 boolean isLotFreeSonar = false;   // Sonar's boolean variable to define if the status of parking lot was changed or not
@@ -107,15 +111,17 @@ void loop()
   //data from sonar
 
 
-  if (!sonarInitialized || (filteredSonarDistance >= 20 && !isLotFreeSonar) || (filteredSonarDistance < 20 && isLotFreeSonar)) {
+  if (!sonarInitialized || (filteredSonarDistance >= targetDistance && !isLotFreeSonar) || (filteredSonarDistance < targetDistance && isLotFreeSonar)) {
+    lotId = 1;
     sonarInitialized = true;
-    isLotFreeSonar = filteredSonarDistance >= 20;
+    isLotFreeSonar = filteredSonarDistance >= targetDistance;
     client.send(isLotFreeSonar ? msg + String(1) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + security_token + String("\"}") : msg + String(1) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + security_token + String("\"}"));
   }
 
   //data from laser
 
   if (!laserInitialized || (laserValue == 0 && isLotFreeLaser) || (laserValue == 1 && isLotFreeLaser)) {
+    lotId = 2;
     laserInitialized = true;
     isLotFreeLaser = laserValue == 0;
     client.send(isLotFreeLaser ? msg + String(2) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") +
