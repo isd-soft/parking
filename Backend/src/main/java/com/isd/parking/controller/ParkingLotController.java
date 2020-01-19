@@ -17,12 +17,16 @@ import java.util.List;
 @Slf4j
 public class ParkingLotController {
 
-    @Autowired
-    private ParkingLotService parkingLotService;
-
-    //For using local repository uncomment this and comment parkingLotService above
+    //For using database uncomment this and comment parkingLotService below
     /*@Autowired
-    private ParkingLotLocalService parkingLotService;*/
+    private ParkingLotService parkingLotService;*/
+
+    private final ParkingLotLocalService parkingLotService;
+
+    @Autowired
+    public ParkingLotController(ParkingLotLocalService parkingLotService) {
+        this.parkingLotService = parkingLotService;
+    }
 
     @GetMapping("parking")
     public List<ParkingLot> getAllParkingLots() {

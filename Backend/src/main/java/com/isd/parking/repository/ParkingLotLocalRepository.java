@@ -1,12 +1,13 @@
 package com.isd.parking.repository;
 
 import com.isd.parking.model.ParkingLot;
-import com.isd.parking.model.ParkingNumber;
-import com.isd.parking.model.enums.ParkingLotStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Slf4j
@@ -15,41 +16,28 @@ public class ParkingLotLocalRepository {
     //Local in-memory storage of parking lots
     private HashMap<Long, ParkingLot> parkingMap = new HashMap<>();
 
-    public List<ParkingLot> findAll() {
+    public synchronized List<ParkingLot> findAll() {
         List<ParkingLot> parkingLots = new ArrayList<>(parkingMap.values());
         log.info("Parking lots" + parkingLots);
         return parkingLots;
     }
 
-    public Optional<ParkingLot> findById(Long parkingLotId) {
+    public synchronized Optional<ParkingLot> findById(Long parkingLotId) {
         ParkingLot parkingLot = parkingMap.get(parkingLotId);
         log.info("Get parking lot: " + parkingLot);
         return Optional.ofNullable(parkingLot);
     }
 
     public ParkingLotLocalRepository() {
-        initParkingMap();
+
     }
 
-    private void initParkingMap() {
-        Date date = new Date(System.currentTimeMillis());
-
-        for (int i = 1; i <= ParkingNumber.totalParkingLotsNumber; i++) {
-            ParkingLot parkingLot = new ParkingLot();
-            parkingLot.setId((long) i);
-            parkingLot.setNumber(i);
-            parkingLot.setStatus(ParkingLotStatus.UNKNOWN);
-            parkingLot.setUpdatedAt(date);
-            parkingMap.put(parkingLot.getId(), parkingLot);
-        }
-    }
-
-    public ParkingLot save(ParkingLot parkingLot) {
+    public synchronized ParkingLot save(ParkingLot parkingLot) {
 
         if (parkingMap.containsValue(parkingLot)) {
 
             ParkingLot updatedParkingLot = parkingMap.get(parkingLot.getId());
-            updatedParkingLot.setUpdatedAt(new Date(System.currentTimeMillis()));
+            updatedParkingLot.setUpdatedNow();
 
             parkingMap.put(updatedParkingLot.getId(), updatedParkingLot);
 
@@ -66,6 +54,21 @@ public class ParkingLotLocalRepository {
         }
     }
 
+    //alternative fallback initialization method
+    /*private void initParkingMap() {
+
+
+        for (int i = 1; i <= ParkingNumber.totalParkingLotsNumber; i++) {
+            ParkingLot parkingLot = ParkingLot.builder()
+                    .id((long) i)
+                    .number(i)
+                    .status(ParkingLotStatus.FREE)
+                    .updatedAt(new Date(System.currentTimeMillis())).build();
+
+            parkingMap.put(parkingLot.getId(), parkingLot);
+        }
+    }*/
+
     //alternate methods using list
 
     //private List<ParkingLot> parkingLotList = new ArrayList<>();
@@ -74,11 +77,11 @@ public class ParkingLotLocalRepository {
         Date date = new Date(System.currentTimeMillis());
 
         for (int i = 0; i < ParkingNumber.totalParkingLotsNumber; i++) {
-            ParkingLot parkingLot = new ParkingLot();
-            parkingLot.setId((long) i);
-            parkingLot.setNumber(i);
-            parkingLot.setStatus(ParkingLotStatus.UNKNOWN);
-            parkingLot.setUpdatedAt(date);
+            ParkingLot parkingLot = ParkingLot.builder()
+                    .id((long) i)
+                    .number(i)
+                    .status(ParkingLotStatus.FREE)
+                    .updatedAt(new Date(System.currentTimeMillis())).build();
 
             parkingLotList.add(parkingLot);
         }

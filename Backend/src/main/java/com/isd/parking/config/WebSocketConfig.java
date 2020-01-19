@@ -1,5 +1,6 @@
 package com.isd.parking.config;
 
+
 import com.isd.parking.controller.ArduinoWebSocketHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

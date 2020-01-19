@@ -14,24 +14,34 @@ import java.util.Optional;
 @Slf4j
 public class ParkingLotService {
 
+    private final ParkingLotRepository parkingLotRepository;
+
     @Autowired
-    private ParkingLotRepository parkingLotRepository;
+    public ParkingLotService(ParkingLotRepository parkingLotRepository) {
+        this.parkingLotRepository = parkingLotRepository;
+    }
 
     @Transactional
     public List<ParkingLot> listAll() {
+
         log.info("Service get all parking lots list executed...");
+
         return parkingLotRepository.findAll();
     }
 
     @Transactional
     public Optional<ParkingLot> findById(Long parkingLotId) {
+
         log.info("Service get parking lot by id executed...");
+
         return parkingLotRepository.findById(parkingLotId);
     }
 
     @Transactional
     public ParkingLot save(ParkingLot parkingLot) {
-        log.info("Service save parking lot executed...");
+
+        log.info("Service save parking lot in database executed...");
+
         return parkingLotRepository.save(parkingLot);
     }
 }

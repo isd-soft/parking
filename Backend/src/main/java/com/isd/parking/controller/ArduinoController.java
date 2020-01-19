@@ -19,15 +19,18 @@ import java.util.Optional;
 @Slf4j
 public class ArduinoController {
 
-    @Autowired
-    private ParkingLotService parkingLotService;
+    private final ParkingLotService parkingLotService;
 
-    //For using local repository uncomment this and comment parkingLotService above
-    /*@Autowired
-    private ParkingLotLocalService parkingLotService;*/
+    private final ParkingLotLocalService parkingLotLocalService;
+
+    private final StatisticsService statisticsService;
 
     @Autowired
-    private StatisticsService statisticsService;
+    public ArduinoController(ParkingLotService parkingLotService, ParkingLotLocalService parkingLotLocalService, StatisticsService statisticsService) {
+        this.parkingLotService = parkingLotService;
+        this.parkingLotLocalService = parkingLotLocalService;
+        this.statisticsService = statisticsService;
+    }
 
     @PutMapping("/arduino")
     @ResponseStatus(HttpStatus.OK)
@@ -46,10 +49,13 @@ public class ArduinoController {
 
             log.info("Updated parking lot: " + updatingParkingLot);
 
+            //saving in database
             parkingLotService.save(updatingParkingLot);
+            //saving in local Java memory
+            parkingLotLocalService.save(updatingParkingLot);
 
             //save new statistics to database
-            StatisticsRecord statisticsRecord = StatisticsRecord.builder()//.id(UUID.randomUUID())
+            StatisticsRecord statisticsRecord = StatisticsRecord.builder()
                     .lotNumber(updatingParkingLot.getNumber())
                     .status(updatingParkingLot.getStatus())
                     .updatedAt(new Date(System.currentTimeMillis())).build();
@@ -85,7 +91,10 @@ public class ArduinoController {
 
             log.info("Updated parking lot: " + parkingLotStatus);
 
+            //saving in database
             parkingLotService.save(parkingLot);
+            //saving in local Java memory
+            parkingLotLocalService.save(parkingLot);
 
             //save new statistics to database
             StatisticsRecord statisticsRecord = StatisticsRecord.builder()//.id(UUID.randomUUID())

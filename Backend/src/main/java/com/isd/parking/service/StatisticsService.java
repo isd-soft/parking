@@ -14,8 +14,12 @@ import java.util.List;
 @Slf4j
 public class StatisticsService {
 
+    private final StatisticsRepository statisticsRepository;
+
     @Autowired
-    private StatisticsRepository statisticsRepository;
+    public StatisticsService(StatisticsRepository statisticsRepository) {
+        this.statisticsRepository = statisticsRepository;
+    }
 
     public List<StatisticsRecord> listAll() {
 

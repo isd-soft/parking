@@ -2,6 +2,7 @@ package com.isd.parking.model;
 
 import com.isd.parking.model.enums.ParkingLotStatus;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
@@ -12,6 +13,7 @@ import java.util.Date;
 @Entity(name = "parking_lots")
 @DynamicUpdate
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ParkingLot {

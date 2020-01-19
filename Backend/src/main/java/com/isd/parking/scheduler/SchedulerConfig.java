@@ -1,4 +1,4 @@
-package com.isd.parking.sheduller;
+package com.isd.parking.scheduler;
 
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;

@@ -13,8 +13,12 @@ import java.util.Optional;
 @Slf4j
 public class ParkingLotLocalService {
 
+    private final ParkingLotLocalRepository parkingLotLocalRepository;
+
     @Autowired
-    private ParkingLotLocalRepository parkingLotLocalRepository;
+    public ParkingLotLocalService(ParkingLotLocalRepository parkingLotLocalRepository) {
+        this.parkingLotLocalRepository = parkingLotLocalRepository;
+    }
 
     public List<ParkingLot> listAll() {
 

@@ -13,8 +13,12 @@ import java.util.List;
 @Slf4j
 public class StatisticsController {
 
+    private final StatisticsService statisticsService;
+
     @Autowired
-    private StatisticsService statisticsService;
+    public StatisticsController(StatisticsService statisticsService) {
+        this.statisticsService = statisticsService;
+    }
 
     @GetMapping("/statistics")
     public List<StatisticsRecord> getAllStats() {
