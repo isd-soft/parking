@@ -104,16 +104,13 @@ void loop()
 
   readFromSingleSonar();
 
-  //data form sonar
+  //data from sonar
 
 
-  if (!sonarInitialized || (filteredSonarDistance >= 20 && !isLotFreeSonar) || (filteredSonarDistance < 20  && isLotFreeSonar))
-  {
+  if (!sonarInitialized || (filteredSonarDistance >= 20 && !isLotFreeSonar) || (filteredSonarDistance < 20 && isLotFreeSonar)) {
     sonarInitialized = true;
     isLotFreeSonar = filteredSonarDistance >= 20;
-    client.send(isLotFreeSonar ? msg + String(1) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") +
-                security_token + String("\"}")
-                : msg + String(1) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + security_token + String("\"}"));
+    client.send(isLotFreeSonar ? msg + String(1) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + security_token + String("\"}") : msg + String(1) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + security_token + String("\"}"));
   }
 
   //data from laser
