@@ -1,4 +1,5 @@
 #include <ArduinoWebsockets.h>
+#include <NewPing.h>
 
 #include <WiFi.h>
 
@@ -6,19 +7,25 @@
 #define pinTrigger 2 // Trigger Pin for sonar
 #define pinEcho 5    // Echo Pin for sonar
 
+
+#define TRIGGER_PIN  2  // Arduino pin tied to trigger pin on the ultrasonic sensor.
+#define ECHO_PIN     5  // Arduino pin tied to echo pin on the ultrasonic sensor.
+#define MAX_DISTANCE 300 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
+
 //Laser detector pins
 #define pinLaser 4     // output signal pin of laser module/laser pointer
 #define pinReceiver 18 // input signal pin of receiver/detector (the used module does only return a digital state)
 
-//Sonar variables
-int inRange = 45;                  //Wide Range First sight of Target
-int targetParkingRange = 12;       //Minimal Parking Range to Target
-const int noiseRejectPercent = 40; //Percentage of reading closeness for rejection filter
-long duration, distance, lastDuration, unfilteredDistance, filteredSonarDistance, rawSonarDistance;
-const unsigned int maxDuration = 11650; // around 200 cm, the sensor gets flaky at greater distances.
-const long speed_of_sound = 29.1;       // speed of sound microseconds per centimeter
+////Sonar variables
+//int inRange = 45;                  //Wide Range First sight of Target
+//int targetParkingRange = 12;       //Minimal Parking Range to Target
+//const int noiseRejectPercent = 40; //Percentage of reading closeness for rejection filter
+//long duration, distance, lastDuration, unfilteredDistance, filteredSonarDistance, rawSonarDistance;
+unsigned int filteredSonarDistance;
+//const unsigned int maxDuration = 11650; // around 200 cm, the sensor gets flaky at greater distances.
+//const long speed_of_sound = 29.1;       // speed of sound microseconds per centimeter
 
-long targetDistance = 20; // target distance value when the status should be trigerred
+long targetDistance = 100; // target distance value when the status should be trigerred
 
 //parking lot
 int lotId;                        // ID of the parking lot
@@ -47,6 +54,8 @@ char *msg = "{\"mBody\":\"Arduino data\", \"id\":\"";
 
 //security
 char *security_token = "4a0a8679643673d083b23f52c21f27cac2b03fa2"; //some security token to verify connection ({SHA1}"arduino")
+
+NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
 
 void setup()
 {
@@ -98,17 +107,21 @@ void setup()
         Serial.println(message.data());
     });
 
-    client.onEvent(onEventsCallback);
+    client.onEvent(onEventsCallback); 
+    
+     
 }
 
 void loop()
 {
 
-    
+ 
 
     int laserValue = digitalRead(pinReceiver); // receiver/detector send either LOW or HIGH (no analog values!)
 
-    readFromSingleSonar();
+//    readFromSingleSonar();
+
+    filteredSonarDistance = sonar.ping_median(10) / US_ROUNDTRIP_CM;
 
     //data form sonar
     if (!sonarInitialized || (filteredSonarDistance >= targetDistance && !isLotFreeSonar) || (filteredSonarDistance < targetDistance && isLotFreeSonar))
@@ -116,7 +129,7 @@ void loop()
         lotId = 1;
         sonarInitialized = true;
         isLotFreeSonar = filteredSonarDistance >= targetDistance;
-        Serial.println(isLotFreeSonar ? "SONAR : FREE" : "SONAR : OCCUPIED");
+        Serial.println(isLotFreeSonar ? "SONAR : FREE " + String(filteredSonarDistance) : "SONAR : OCCUPIED " + String(filteredSonarDistance));
         client.send(isLotFreeSonar ? msg + String(lotId) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + 
                                     security_token + String("\"}")
                                     : msg + String(lotId) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + 
@@ -124,75 +137,81 @@ void loop()
     }
 
     //data from laser
-    if (!laserInitialized || (laserValue == 0 && !isLotFreeLaser) || (laserValue == 1 && isLotFreeLaser))
-    {
-        lotId = 2;
-        laserInitialized = true;
-        isLotFreeLaser = laserValue == 0;
-        Serial.println(isLotFreeLaser ? "LASER : FREE" : "LASER : OCCUPIED");
-
-        client.send(isLotFreeLaser ? msg + String(lotId) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") +
-                                         security_token + String("\"}")
-                                   : msg + String(lotId) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") +
-                                         security_token + String("\"}"));
-    }
+//    if (!laserInitialized || (laserValue == 0 && !isLotFreeLaser) || (laserValue == 1 && isLotFreeLaser))
+//    {
+//        lotId = 2;
+//        laserInitialized = true;
+//        isLotFreeLaser = laserValue == 0;
+//        Serial.println(isLotFreeLaser ? "LASER : FREE " + String(filteredSonarDistance) : "LASER : OCCUPIED " + String(filteredSonarDistance));
+//
+//        client.send(isLotFreeLaser ? msg + String(lotId) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") +
+//                                         security_token + String("\"}")
+//                                   : msg + String(lotId) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") +
+//                                         security_token + String("\"}"));
+//    }
 
     // let the WebSockets client check for incoming messages
     if (client.available())
     {
         client.poll();
         client.ping();
-    }
-}
 
-void readFromSingleSonar()
-{
-
-    readSonarSensor(pinTrigger, pinEcho);
-
-    filteredSonarDistance = distance;
-    rawSonarDistance = unfilteredDistance;
-
-    delay(50); //Delay 50ms before next reading.
-}
-
-void readSonarSensor(int trigPin, int echoPin)
-{
-
-    digitalWrite(trigPin, LOW);
-    delayMicroseconds(2);
-    digitalWrite(trigPin, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(trigPin, LOW);
-    duration = pulseIn(echoPin, HIGH);
-
-    unfilteredDistance = (duration / 2) / speed_of_sound; //Stores preliminary reading to compare
-
-    if (duration <= 8)
-        duration = ((inRange + 1) * speed_of_sound * 2);
-
-    //Rejects very low readings, kicks readout to outside detection range
-    if (lastDuration == 0)
-        lastDuration = duration;
-
-    //Compensation parameters for initial start-up
-    if (duration > (5 * maxDuration))
-        duration = lastDuration;
-
-    //Rejects any reading defined to be out of sensor capacity (>1000)
-    //Sets the fault reading to the last known "successful" reading
-    if (duration > maxDuration)
-        duration = maxDuration;
-
-    //Caps Reading output at defined maximum distance (~200)
-    if ((duration - lastDuration) < ((-1) * (noiseRejectPercent / 100) * lastDuration))
-    {
-        distance = (lastDuration / 2) / speed_of_sound; //Noise filter for low range drops
     }
 
-    distance = (duration / 2) / speed_of_sound;
-    lastDuration = duration; //Stores "successful" reading for filter compensation
+               
+
 }
+//
+//void readFromSingleSonar()
+//{
+//
+//    readSonarSensor(pinTrigger, pinEcho);
+//
+//    filteredSonarDistance = distance;
+//    rawSonarDistance = unfilteredDistance;
+//
+//    delay(50); //Delay 50ms before next reading.
+//}
+//
+//void readSonarSensor(int trigPin, int echoPin)
+//{
+
+//    digitalWrite(trigPin, LOW);
+//    delayMicroseconds(2);
+//    digitalWrite(trigPin, HIGH);
+//    delayMicroseconds(10);
+//    digitalWrite(trigPin, LOW);
+//    duration = pulseIn(echoPin, HIGH);
+
+//    unfilteredDistance = (duration / 2) / speed_of_sound; //Stores preliminary reading to compare
+//
+//    if (duration <= 8)
+//        duration = ((inRange + 1)  speed_of_sound  2);
+//
+//    //Rejects very low readings, kicks readout to outside detection range
+//    if (lastDuration == 0)
+//        lastDuration = duration;
+//
+//    //Compensation parameters for initial start-up
+//    if (duration > (5 * maxDuration))
+//        duration = lastDuration;
+//
+//    //Rejects any reading defined to be out of sensor capacity (>1000)
+//    //Sets the fault reading to the last known "successful" reading
+//    if (duration > maxDuration)
+//        duration = maxDuration;
+//
+//    //Caps Reading output at defined maximum distance (~200)
+//    if ((duration - lastDuration) < ((-1)  (noiseRejectPercent / 100)  lastDuration))
+//    {
+//        distance = (lastDuration / 2) / speed_of_sound; //Noise filter for low range drops
+//    }
+//
+//    distance = (duration / 2) / speed_of_sound;
+//    lastDuration = duration; //Stores "successful" reading for filter compensation
+
+//      distance= duration*0.034/2;
+//}
 
 
 void(* resetFunc) (void) = 0;
@@ -204,6 +223,7 @@ void onEventsCallback(WebsocketsEvent event, String data)
     if (event == WebsocketsEvent::ConnectionOpened)
     {
         Serial.println("WebSocket connection opened!");
+        client.send("test mess");
     }
     else if (event == WebsocketsEvent::ConnectionClosed)
     {
@@ -212,6 +232,8 @@ void onEventsCallback(WebsocketsEvent event, String data)
         delay(10000);
         bool connected = client.connect(websockets_server_host, websockets_server_port, "/test");
         resetFunc();
+
+        
     }
     else if (event == WebsocketsEvent::GotPing)
     {
@@ -219,6 +241,6 @@ void onEventsCallback(WebsocketsEvent event, String data)
     }
     else if (event == WebsocketsEvent::GotPong)
     {
-        //Serial.println("Got a Pong!");
+//        Serial.println("Got a Pong!");
     }
 }
