@@ -38,7 +38,7 @@ WebsocketsClient client;
 
 const char *ssid = "Inther";                         //Enter SSID
 const char *password = "inth3rmoldova";              //Enter Password
-const char *websockets_server_host = "172.17.40.57"; //Enter server address
+const char *websockets_server_host = "172.17.41.36"; //Enter server address
 const uint16_t websockets_server_port = 8080;        // Enter server port
 
 //WebSocket
@@ -141,6 +141,7 @@ void loop()
     if (client.available())
     {
         client.poll();
+        client.ping();
     }
 }
 
@@ -193,6 +194,10 @@ void readSonarSensor(int trigPin, int echoPin)
     lastDuration = duration; //Stores "successful" reading for filter compensation
 }
 
+
+void(* resetFunc) (void) = 0;
+
+
 void onEventsCallback(WebsocketsEvent event, String data)
 {
 
@@ -206,6 +211,7 @@ void onEventsCallback(WebsocketsEvent event, String data)
         Serial.println("Trying to reconnect to WebSocket ...");
         delay(10000);
         bool connected = client.connect(websockets_server_host, websockets_server_port, "/test");
+        resetFunc();
     }
     else if (event == WebsocketsEvent::GotPing)
     {
@@ -213,6 +219,6 @@ void onEventsCallback(WebsocketsEvent event, String data)
     }
     else if (event == WebsocketsEvent::GotPong)
     {
-        Serial.println("Got a Pong!");
+        //Serial.println("Got a Pong!");
     }
 }
