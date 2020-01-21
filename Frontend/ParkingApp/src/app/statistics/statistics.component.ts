@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./statistics.component.css']
 })
 export class StatisticsComponent implements OnInit {
+  p: number = 1; // declaration of page index used for pagination
 
   statistics: Array<Statistics>;
   filteredStatistics: Array<Statistics>;
