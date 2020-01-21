@@ -6,21 +6,30 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto text-light">
-        <!-- <div class="user nav-link text-light" (click)="navigateTo404()"><i class="fas fa-user"></i> User</div> -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-light" data-toggle="dropdown">
-            Menu
-          </a>
-          <div class="dropdown-menu bg-blue" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item text-light" (click)="navigateToStats()">Statistics</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item text-light" (click)="navigateToTest2()">Parking layout</a>
-            <!-- <a class="dropdown-item text-light" (click)="navigateToTest2()">Test layout</a> -->
-          </div>
-        </li>
-      </ul>
+
+    <div *ngIf='!userLogged'>
+      <button class="btn btn-outline ml-auto text-light navbar-btn pull-right" type="button" (click)="navigateToLogin()">
+        Login
+      </button>
+    </div>
+
+    <div *ngIf='userLogged'>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto text-light">
+          <!-- <div class="user nav-link text-light" (click)="navigateTo404()"><i class="fas fa-user"></i> User</div> -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" data-toggle="dropdown">
+              Menu
+            </a>
+            <div class="dropdown-menu bg-blue" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item text-light" (click)="navigateToStats()">Statistics</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-light" (click)="navigateToTest2()">Parking layout</a>
+              <!-- <a class="dropdown-item text-light" (click)="navigateToTest2()">Test layout</a> -->
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>

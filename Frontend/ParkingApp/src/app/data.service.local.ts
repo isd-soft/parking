@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { ParkingLot } from './Model/ParkingLot';
-import { Observable, of } from 'rxjs';
-import { User } from './Model/User';
-import { Statistics } from './Model/Statistics';
+import {Injectable} from '@angular/core';
+import {ParkingLot} from './Model/ParkingLot';
+import {Observable, of} from 'rxjs';
+import {User} from './Model/User';
+import {Statistics} from './Model/Statistics';
 
 @Injectable({
   providedIn: 'root'
@@ -146,14 +146,13 @@ export class DataService {
     this.statistics.push(stats14);
 
 
+  }
 
-   }
+  getAllParkingLots(): Observable<Array<ParkingLot>> {
+    return of(this.parkingLots);
+  }
 
-   getAllParkingLots(): Observable<Array<ParkingLot>> {
-     return of(this.parkingLots);
-   }
-
-   getAllStats(): Observable<Array<Statistics>> {
-     return of(this.statistics);
-   }
+  getAllStats(): Observable<Array<Statistics>> {
+    return of(this.statistics);
+  }
 }

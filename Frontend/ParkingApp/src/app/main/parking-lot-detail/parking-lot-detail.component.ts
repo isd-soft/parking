@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ParkingLot } from 'src/app/Model/ParkingLot';
-import { ActivatedRoute } from '@angular/router';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ParkingLot} from 'src/app/Model/ParkingLot';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-parking-lot-detail',
@@ -15,11 +15,20 @@ export class ParkingLotDetailComponent implements OnInit {
   @Output()
   goBackEvent = new EventEmitter();
 
-  action: string;
+  @Output()
+  bookingEvent = new EventEmitter();
 
-  constructor(private route: ActivatedRoute) { }
+  action: string;
+  isAdmin: boolean;
+
+  constructor(private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
+
+    // testing
+    this.isAdmin = true;
+
     this.route.queryParams.subscribe(
       params => {
         this.action = params['action'];
@@ -29,6 +38,10 @@ export class ParkingLotDetailComponent implements OnInit {
 
   goBack() {
     this.goBackEvent.emit();
+  }
+
+  booking() {
+    this.bookingEvent.emit();
   }
 
 }

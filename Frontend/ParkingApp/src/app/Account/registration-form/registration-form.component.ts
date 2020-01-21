@@ -4,21 +4,23 @@ import {AuthenticationService} from '../auth.service';
 import {AbstractControl, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 
 @Component({
-  selector: 'app-login-form',
-  templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.css']
+  selector: 'app-reg-form',
+  templateUrl: './registration-form.component.html',
+  styleUrls: ['./registration-form.component.css']
 })
-export class LoginFormComponent implements OnInit {
+export class RegFormComponent implements OnInit {
 
   username: string;
   password: string;
+  confirmPass: string;
+
   errorMessage = 'Invalid Credentials';
   successMessage: string;
   invalidLogin = false;
   loginSuccess = false;
 
   @Output()
-  userLoginEvent = new EventEmitter();
+  userRegEvent = new EventEmitter();
 
   private userForm: FormGroup;
 
@@ -82,6 +84,13 @@ export class LoginFormComponent implements OnInit {
 
   }
 
+  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+    const pass = group.get('password').value;
+    const confirmPass = group.get('confirmPass').value;
+
+    return pass === confirmPass ? null : { notSame: true };
+  }
+
   get name() {
     return this.userForm.get('username');
   }
@@ -90,25 +99,29 @@ export class LoginFormComponent implements OnInit {
     return this.userForm.get('password');
   }
 
+  get passConf() {
+    return this.userForm.get('confirmPass');
+  }
+
   onSubmit() {
-    this.handleLogin();
-
-    this.userLoginEvent.emit();
+    this.handleRegistration();
   }
 
-  handleLogin() {
-    this.authenticationService.authenticationService(this.username, this.password).subscribe((result) => {
-      this.invalidLogin = false;
-      this.loginSuccess = true;
-      this.successMessage = 'Login Successful.';
-      this.router.navigate(['/parking']);
-    }, () => {
-      this.invalidLogin = true;
-      this.loginSuccess = false;
-    });
+  handleRegistration() {
+    // TODO: registration logic
+
+    // this.authenticationService.authenticationService(this.username, this.password).subscribe((result) => {
+    //   this.invalidLogin = false;
+    //   this.loginSuccess = true;
+    //   this.successMessage = 'Login Successful.';
+    //   this.router.navigate(['/parking']);
+    // }, () => {
+    //   this.invalidLogin = true;
+    //   this.loginSuccess = false;
+    // });
   }
 
-  navigateToRegistration() {
-    this.router.navigate(['registration']);
+  navigateToLogin() {
+    this.router.navigate(['login']);
   }
 }

@@ -32,6 +32,8 @@
 
 .lot {
   cursor: unset;
+
+  min-height: 5rem;
 }
 
 span {

@@ -1,7 +1,7 @@
 <h2 class="text-light">Parking lot details</h2>
 <div *ngIf="parkingLot != null">
 
-  <div class="btn lot col-sm-12 "  [ngClass]="{'green': parkingLot.status === 'FREE', 'red' : parkingLot.status === 'OCCUPIED', 'grey' : parkingLot.status === 'UNKNOWN'}">
+  <div class="btn lot col-sm-12 mx-auto mt-3 mb-3 pt-3 pb-3"  [ngClass]="{'green': parkingLot.status === 'FREE', 'red' : parkingLot.status === 'OCCUPIED', 'grey' : parkingLot.status === 'UNKNOWN'}">
     <i class="fas fa-car" *ngIf="parkingLot.status === 'OCCUPIED'"></i>
     <i class="fas fa-parking" *ngIf="parkingLot.status === 'FREE'"></i>
     <i class="fas fa-ban" *ngIf="parkingLot.status === 'UNKNOWN'"></i>
@@ -21,6 +21,12 @@
 
 <div class="error text-light" [hidden]="parkingLot != null">Something went wrong, please click on Refresh button</div>
 
+<div *ngIf="isAdmin">
+  <div class="row justify-content-center">
+    <div class="btn w-50 m-3 btn-warning" (click)="booking()">Make reservation</div>
+  </div>
+</div>
+
 <div class="row justify-content-center" >
-  <div class="btn refresh w-50" (click)="goBack()">Back</div>
+  <div class="btn refresh w-50 m-3" (click)="goBack()">Back</div>
 </div>
