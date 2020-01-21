@@ -9,6 +9,7 @@ import com.isd.parking.service.StatisticsService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -40,6 +41,11 @@ public class ArduinoWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
+        try {
+            super.afterConnectionEstablished(session);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         log.info("A user with session Id:" + session.getId() + " created a session");
     }
 
@@ -108,8 +114,14 @@ public class ArduinoWebSocketHandler extends TextWebSocketHandler {
     }
 
     @Override
+
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
+
         log.info("Session Id:" + session.getId() + " changed status to " + status);
+        log.info("test");
     }
+
+
+
 
 }
