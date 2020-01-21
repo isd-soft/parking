@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+.ngx-pagination a:hover, .ngx-pagination button:hover {
+  background: none!important;
+}
+
+.ngx-pagination a {
+  color: white!important;
+  transition: color 1s;
+}
+.ngx-pagination a:hover {
+  color: #ffffff8a!important;
+
+}
