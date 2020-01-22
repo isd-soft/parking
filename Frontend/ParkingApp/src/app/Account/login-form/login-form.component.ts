@@ -20,7 +20,7 @@ export class LoginFormComponent implements OnInit {
   @Output()
   userLoginEvent = new EventEmitter();
 
-  private userForm: FormGroup;
+  private loginForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,15 +38,16 @@ export class LoginFormComponent implements OnInit {
       };
     }
 
+    // not working
     /* password regexp validation*/
-    function forbiddenPassValidator(nameRe: RegExp): ValidatorFn {
+    /*function forbiddenPassValidator(passRe: RegExp): ValidatorFn {
       return (control: AbstractControl): { [key: string]: any } | null => {
-        const forbidden = nameRe.test(control.value);
+        const forbidden = passRe.test(control.value);
         return !forbidden ? {forbiddenPass: {value: control.value}} : null;
       };
-    }
+    }*/
 
-    this.userForm = new FormGroup({
+    this.loginForm = new FormGroup({
       username: new FormControl(this.username, [
         Validators.required,
         Validators.minLength(5),
@@ -73,21 +74,22 @@ export class LoginFormComponent implements OnInit {
         Validators.maxLength(10),
 
         /*
-        * "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+        Minimum 6 characters, at least one uppercase letter, one lowercase letter, one number and one special character
+
+        * "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$"
         */
 
-        forbiddenPassValidator(/"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"/gi)
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$')
       ])
     });
-
   }
 
   get name() {
-    return this.userForm.get('username');
+    return this.loginForm.get('username');
   }
 
   get pass() {
-    return this.userForm.get('password');
+    return this.loginForm.get('password');
   }
 
   onSubmit() {
@@ -97,7 +99,7 @@ export class LoginFormComponent implements OnInit {
   }
 
   handleLogin() {
-    this.authenticationService.authenticationService(this.username, this.password).subscribe((result) => {
+    this.authenticationService.authenticationServiceLogin(this.username, this.password).subscribe((result) => {
       this.invalidLogin = false;
       this.loginSuccess = true;
       this.successMessage = 'Login Successful.';

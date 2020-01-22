@@ -6,7 +6,7 @@
       <img src="assets/img/isd-logo.png" style="height: 200px; width: 200px;">
       <h1 class="h1">ParKing</h1>
 
-      <form [formGroup]="userForm" class="form-group mx-auto text-center">
+      <form [formGroup]="loginForm" class="form-group mx-auto text-center">
 
         <div class="alert alert-warning" *ngIf='invalidLogin'>{{errorMessage}}</div>
         <div class="alert alert-success" *ngIf='loginSuccess'>{{successMessage}}</div>
@@ -51,7 +51,7 @@
             <div *ngIf="pass.errors.maxlength">
               Password must be maximum <br/>10 characters long.
             </div>
-            <div *ngIf="pass.errors.forbiddenPass">
+            <div *ngIf="pass.errors.pattern">
               Password should contain<br/>
               at least one uppercase letter, <br/>
               one lowercase letter, one number <br/>

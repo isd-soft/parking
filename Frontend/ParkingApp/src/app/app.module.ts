@@ -17,6 +17,7 @@ import {PrefetchParkingLotsService} from './prefetch-parking-lots.service';
 import {Feature2Component} from './feature/feature2/feature2.component';
 import {ParkingLayoutComponent} from './main/parking-layout/parking-layout.component';
 import {RegFormComponent} from './Account/registration-form/registration-form.component';
+import {EqualValidator} from './Account/registration-form/equal-validator.directive';
 
 const routes: Routes = [
   {path: 'test', component: FeatureComponent},
@@ -47,6 +48,7 @@ const routes: Routes = [
     ParkingLotDetailComponent,
     LoginFormComponent,
     RegFormComponent,
+    EqualValidator,
     StatisticsComponent,
     FeatureComponent,
     Feature2Component,
