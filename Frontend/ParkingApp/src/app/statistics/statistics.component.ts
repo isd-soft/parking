@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class StatisticsComponent implements OnInit {
   p: number = 1; // declaration of page index used for pagination
-
+  colors = [{ status: "FREE", background: "green" }, { status: "OCCUPIED", background: "red" }]; // set the table row color depending on status
   statistics: Array<Statistics>;
   filteredStatistics: Array<Statistics>;
   parkingLots: Array<ParkingLot>;
@@ -193,4 +193,10 @@ export class StatisticsComponent implements OnInit {
     this.dateSortedDesc = false;
     this.dateSortedAsc = false;
   }
+
+  getColor(status: string) {
+    return this.colors.filter(item => item.status === status)[0].background;
+  }
 }
+
+

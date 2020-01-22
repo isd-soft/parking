@@ -24,14 +24,25 @@ h1, label {
   box-sizing: content-box;
   background: white;
   color: black;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 10px;
+  border-spacing: 0;
 }
 
-.table tr .free {
-  background: green;
+.table td {
+  color: white;
+}
+
+.table thead {
+  background-color: #36304a;
+  color: white;
+
 }
 
 td, th {
   text-align: center;
+  border-top : 0;
 }
 
 th .lot,
