@@ -16,12 +16,24 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/login_test")
+    //for data from angular
+    @CrossOrigin(origins = "*")
+    @RequestMapping("/login")
     public boolean login(@RequestBody User user) {
-        return false;
+
         //user.getUserName().equals("user") && user.getPassword().equals("password");
 
         //TODO: implement here LDAP authentificate
+
+        return userService.authenticate(user.getUsername(), user.getPassword());
+    }
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping("/registration")
+    public boolean registration(@RequestBody User user) {
+        //TODO: implement here LDAP save
+
+        return userService.authenticate(user.getUsername(), user.getPassword());
     }
 
     @RequestMapping("/user")
