@@ -40,6 +40,10 @@ h1, label {
 
 }
 
+.table thead th {
+  border-bottom: 0;
+}
+
 td, th {
   text-align: center;
   border-top : 0;
