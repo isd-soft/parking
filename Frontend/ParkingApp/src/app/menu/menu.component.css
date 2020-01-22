@@ -18,3 +18,15 @@ img {
 .bg-blue {
   background-color: #0A8EFF;
 }
+@media (min-width: 992px) {
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+}
+
+@media (min-width: 992px) {
+  .dropdown:hover .dropdown-menu {
+    display: block;
+    top: 95%;
+  }
+}
