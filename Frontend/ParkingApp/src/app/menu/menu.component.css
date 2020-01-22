@@ -55,8 +55,13 @@ img {
     width: 100%;
     left: 0;
     text-align: center;
-    font-size: 3rem;
-    color: white;
-    font-weight: bold;
   }
+}
+
+.appname-logo {
+  width: 10rem;
+}
+
+.navbar-brand.abs:hover {
+  cursor: default;
 }
