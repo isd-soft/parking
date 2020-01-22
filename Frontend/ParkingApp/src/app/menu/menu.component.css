@@ -30,3 +30,21 @@ img {
     top: 95%;
   }
 }
+
+.dropdown-item {
+  transition:  1s;
+}
+.dropdown-item:hover {
+  color: black!important;
+}
+
+.dropdown-menu {
+  padding: 0;
+  -webkit-box-shadow: 0px 17px 26px 0px rgba(0,0,0,0.36);
+  -moz-box-shadow: 0px 17px 26px 0px rgba(0,0,0,0.36);
+  box-shadow: 0px 17px 26px 0px rgba(0,0,0,0.36);
+}
+
+.dropdown-divider {
+  margin: 0;
+}
