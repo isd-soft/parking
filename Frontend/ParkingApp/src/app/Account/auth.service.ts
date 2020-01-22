@@ -26,6 +26,15 @@ export class AuthenticationService {
     }));
   }
 
+  authenticationServiceRegistration(username: string, password: string) {
+    return this.http.get(`http://localhost:8080/registration`,
+      {headers: {authorization: this.createBasicAuthToken(username, password)}}).pipe(map((res) => {
+      this.username = username;
+      this.password = password;
+      this.registerSuccessfulLogin(username, password);
+    }));
+  }
+
   createBasicAuthToken(username: string, password: string) {
     return 'Basic ' + window.btoa(username + ':' + password);
   }

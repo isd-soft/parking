@@ -14,6 +14,7 @@ export class LoginFormComponent implements OnInit {
   password: string;
   errorMessage = 'Invalid Credentials';
   successMessage: string;
+
   invalidLogin = false;
   loginSuccess = false;
 
@@ -93,9 +94,22 @@ export class LoginFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.handleLogin();
+    // local mockup for test
+    const user = 'admin';
+    const pass = 'aRduin1$';
 
-    this.userLoginEvent.emit();
+    if (this.username === user && this.password === pass) {
+
+      console.log(this.username + '  ' + this.password);
+
+      this.router.navigate(['parking']);
+      this.userLoginEvent.emit();
+    }
+
+    // uncomment this for backend request
+    /*this.handleLogin();
+
+    this.userLoginEvent.emit();*/
   }
 
   handleLogin() {
@@ -103,7 +117,7 @@ export class LoginFormComponent implements OnInit {
       this.invalidLogin = false;
       this.loginSuccess = true;
       this.successMessage = 'Login Successful.';
-      this.router.navigate(['/parking']);
+      this.router.navigate(['parking']);
     }, () => {
       this.invalidLogin = true;
       this.loginSuccess = false;

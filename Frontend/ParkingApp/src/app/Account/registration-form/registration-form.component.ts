@@ -16,8 +16,9 @@ export class RegFormComponent implements OnInit {
 
   errorMessage = 'Invalid Credentials';
   successMessage: string;
-  invalidLogin = false;
-  loginSuccess = false;
+
+  invalidReg = false;
+  regSuccess = false;
 
   @Output()
   userRegEvent = new EventEmitter();
@@ -100,23 +101,26 @@ export class RegFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
 
-    this.handleRegistration();
+    console.log(this.username + '  ' + this.password);
+
+    /*this.submitted = true;
+
+    this.handleRegistration();*/
   }
 
   handleRegistration() {
     // TODO: registration logic
 
-    /*this.authenticationService.authenticationService(this.username, this.password).subscribe((result) => {
-      this.invalidLogin = false;
-      this.loginSuccess = true;
-      this.successMessage = 'Login Successful.';
-      this.router.navigate(['/parking']);
+    this.authenticationService.authenticationServiceRegistration(this.username, this.password).subscribe((result) => {
+      this.invalidReg = false;
+      this.regSuccess = true;
+      this.successMessage = 'Registration Successful.';
+      this.navigateToLogin();
     }, () => {
-      this.invalidLogin = true;
-      this.loginSuccess = false;
-    });*/
+      this.invalidReg = true;
+      this.regSuccess = false;
+    });
   }
 
   navigateToLogin() {

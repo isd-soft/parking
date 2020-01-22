@@ -6,7 +6,7 @@
       <img src="assets/img/isd-logo.png" style="height: 200px; width: 200px;">
       <h1 class="h1">ParKing</h1>
 
-      <form [formGroup]="loginForm" class="form-group mx-auto text-center">
+      <form [formGroup]="loginForm" class="form-group mx-auto text-center" (ngSubmit)="onSubmit()">
 
         <div class="alert alert-warning" *ngIf='invalidLogin'>{{errorMessage}}</div>
         <div class="alert alert-success" *ngIf='loginSuccess'>{{successMessage}}</div>
@@ -59,7 +59,7 @@
             </div>
           </div>
         </div>
-        <button class="btn btn-default full-width rounded-pill mt-3 hoverable z-depth-5 login-btn" (click)=onSubmit()><span
+        <button type = "submit" class="btn btn-default full-width rounded-pill mt-3 hoverable z-depth-5 login-btn" (click)=onSubmit()><span
           class="fas fa-check"></span></button>
       </form>
     </div>
