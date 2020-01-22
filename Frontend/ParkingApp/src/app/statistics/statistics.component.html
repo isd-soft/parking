@@ -19,7 +19,7 @@
 
 <div>
   <div class="col-12">
-    <table  mat-table class="table">
+    <table class="table">
       <thead>
         <tr>
           <th (click)="sortTableByLotNumber()">
@@ -44,7 +44,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let stat of filteredStatistics | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+        <tr *ngFor="let stat of filteredStatistics | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
 <!--          //here you can set the number of rows to diplay on one page-->
           <td>{{'LOT ' + stat.lotNumber}}</td>
           <td>{{stat.status}}</td>
