@@ -15,9 +15,7 @@ img {
   cursor: pointer;
 }
 
-.bg-blue {
-  background-color: #0A8EFF;
-}
+
 @media (min-width: 992px) {
   .dropdown:hover .dropdown-menu {
     display: block;
@@ -40,9 +38,10 @@ img {
 
 .dropdown-menu {
   padding: 0;
-  -webkit-box-shadow: 0px 17px 26px 0px rgba(0,0,0,0.36);
-  -moz-box-shadow: 0px 17px 26px 0px rgba(0,0,0,0.36);
-  box-shadow: 0px 17px 26px 0px rgba(0,0,0,0.36);
+  -webkit-box-shadow: 0px 11px 12px 12px rgba(50, 50, 50, 0.2);
+  -moz-box-shadow: 0px 11px 12px 12px rgba(50, 50, 50, 0.2);
+  box-shadow: 0px 11px 12px 12px rgba(50, 50, 50, 0.2);
+  border-radius: 0;
 }
 
 .dropdown-divider {
@@ -64,6 +63,24 @@ img {
 
 .navbar-brand.abs:hover {
   cursor: default;
+}
+
+
+.isd-navbar {
+  background-color: white!important;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight: bold;
+  border-bottom: 3px solid rgb(241, 93, 34) !important;
+}
+
+.isd-navbar a {
+  color: #919495 !important;
+  transition: 0.4s;
+}
+
+.isd-navbar a:hover{
+  color: #f44e00!important;
+
 }
 
 
