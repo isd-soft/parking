@@ -2,9 +2,14 @@
 #include <NewPing.h>
 #include <WiFi.h>
 
-//Sonar details
-#define TRIGGER_PIN  2  // Arduino pin tied to trigger pin on the ultrasonic sensor.
-#define ECHO_PIN     5  // Arduino pin tied to echo pin on the ultrasonic sensor.
+//Sonar 1 details
+#define TRIGGER_PIN_1  2  // Arduino pin tied to trigger pin on the ultrasonic sensor 1.
+#define ECHO_PIN_1     5  // Arduino pin tied to echo pin on the ultrasonic sensor 1.
+
+//Sonar 2 details
+#define TRIGGER_PIN_2  4  // Arduino pin tied to trigger pin on the ultrasonic sensor 1.
+#define ECHO_PIN_2     19  // Arduino pin tied to echo pin on the ultrasonic sensor 1.
+
 #define MAX_DISTANCE 500 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
 
 //Laser detector pins
@@ -12,15 +17,21 @@
 #define pinReceiver 18 // input signal pin of receiver/detector (the used module does only return a digital state)
 
 //Sonar variables
-unsigned int filteredSonarDistance; // real time distance
-unsigned int lastSonarDistance; // last known distance, used to prevent double values
+unsigned int filteredSonarDistance_1; // real time distance from sonar 1
+unsigned int lastSonarDistance_1; // last known distance of sonar 1, used to prevent double values
+
+unsigned int filteredSonarDistance_2; // real time distance from sonar 2
+unsigned int lastSonarDistance_2; // last known distance of sonar 2, used to prevent double values
+
 long targetDistance = 100; // target distance value when the status should be trigerred
 
 //parking lot
 int lotId;                        // ID of the parking lot
-boolean isLotFreeSonar = false;   // Sonar's boolean variable to define if the status of parking lot was changed or not
+boolean isLotFreeSonar_1 = false;   // Sonar's boolean variable to define if the status of parking lot was changed or not
+boolean isLotFreeSonar_2 = false;   // Sonar's boolean variable to define if the status of parking lot was changed or not
 boolean isLotFreeLaser = false;   // Laser's boolean variable to define if the status of parking lot was changed or not
-boolean sonarInitialized = false; // initialized flag for sonar
+boolean sonarInitialized_1 = false; // initialized flag for sonar
+boolean sonarInitialized_2 = false; // initialized flag for sonar
 boolean laserInitialized = false; // initialized flag for laser
 
 //parking lot states
@@ -44,7 +55,9 @@ char *msg = "{\"mBody\":\"Arduino data\", \"id\":\"";
 //security
 char *security_token = "4a0a8679643673d083b23f52c21f27cac2b03fa2"; //some security token to verify connection ({SHA1}"arduino")
 
-NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
+NewPing sonar_1(TRIGGER_PIN_1, ECHO_PIN_1, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
+NewPing sonar_2(TRIGGER_PIN_2, ECHO_PIN_2, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
+
 
 void setup()
 {
@@ -56,8 +69,11 @@ void setup()
     Serial.begin(9600);
 
     //Sensor Connections
-    pinMode(TRIGGER_PIN, OUTPUT);
-    pinMode(ECHO_PIN, INPUT);
+    pinMode(TRIGGER_PIN_1, OUTPUT);
+    pinMode(ECHO_PIN_1, INPUT);
+
+    pinMode(TRIGGER_PIN_2, OUTPUT);
+    pinMode(ECHO_PIN_2, INPUT);
 
     // Connect to wifi
     WiFi.begin(ssid, password);
@@ -104,24 +120,43 @@ void loop()
     int laserValue = digitalRead(pinReceiver); // receiver/detector send either LOW or HIGH (no analog values!)
 
 
-    filteredSonarDistance = sonar.ping_median(10) / US_ROUNDTRIP_CM; // get real time distance in cm from sonar
-//      Serial.print("filtered: "); Serial.println(filteredSonarDistance);
+    filteredSonarDistance_1 = sonar_1.ping_median(10) / US_ROUNDTRIP_CM; // get real time distance in cm from sonar 1
+    filteredSonarDistance_2 = sonar_2.ping_median(10) / US_ROUNDTRIP_CM; // get real time distance in cm from sonar 2
+      Serial.print("filtered_1: "); Serial.println(filteredSonarDistance_1); 
+//      Serial.print("filtered_2: "); Serial.println(filteredSonarDistance_2);
       
-    //data form sonar
-    if (filteredSonarDistance != lastSonarDistance) { 
-      if (!sonarInitialized || ((filteredSonarDistance >= targetDistance || filteredSonarDistance == 0)&& !isLotFreeSonar) 
-          || (filteredSonarDistance < targetDistance && isLotFreeSonar))
+    //data form sonar 1
+    if (filteredSonarDistance_1 != lastSonarDistance_1) { 
+      if (!sonarInitialized_1 || ((filteredSonarDistance_1 >= targetDistance || filteredSonarDistance_1 == 0)&& !isLotFreeSonar_1) 
+          || (filteredSonarDistance_1 < targetDistance && isLotFreeSonar_1))
       {
           lotId = 1;
-          sonarInitialized = true;
-          isLotFreeSonar = (filteredSonarDistance >= targetDistance || filteredSonarDistance == 0) ? true : false;
-          Serial.println(isLotFreeSonar ? "SONAR : FREE " + String(filteredSonarDistance) : "SONAR : OCCUPIED " + String(filteredSonarDistance));
-          client.send(isLotFreeSonar ? msg + String(lotId) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + 
+          sonarInitialized_1 = true;
+          isLotFreeSonar_1 = (filteredSonarDistance_1 >= targetDistance || filteredSonarDistance_1 == 0) ? true : false;
+          Serial.println(isLotFreeSonar_1 ? "SONAR_1 : FREE " + String(filteredSonarDistance_1) : "SONAR_1 : OCCUPIED " + String(filteredSonarDistance_1));
+          client.send(isLotFreeSonar_1 ? msg + String(lotId) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + 
                                       security_token + String("\"}")
                                       : msg + String(lotId) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + 
                                       security_token + String("\"}"));
       } 
-      lastSonarDistance = filteredSonarDistance;
+      lastSonarDistance_1 = filteredSonarDistance_1;
+    }
+
+    //data form sonar 2
+    if (filteredSonarDistance_2 != lastSonarDistance_2) { 
+      if (!sonarInitialized_2 || ((filteredSonarDistance_2 >= targetDistance || filteredSonarDistance_2 == 0)&& !isLotFreeSonar_2) 
+          || (filteredSonarDistance_2 < targetDistance && isLotFreeSonar_2))
+      {
+          lotId = 2;
+          sonarInitialized_2 = true;
+          isLotFreeSonar_2 = (filteredSonarDistance_2 >= targetDistance || filteredSonarDistance_2 == 0) ? true : false;
+          Serial.println(isLotFreeSonar_2 ? "SONAR_2 : FREE " + String(filteredSonarDistance_2) : "SONAR_2 : OCCUPIED " + String(filteredSonarDistance_2));
+          client.send(isLotFreeSonar_2 ? msg + String(lotId) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + 
+                                      security_token + String("\"}")
+                                      : msg + String(lotId) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + 
+                                      security_token + String("\"}"));
+      } 
+      lastSonarDistance_2 = filteredSonarDistance_2;
     }
 
     //data from laser
@@ -145,8 +180,8 @@ void loop()
         client.ping();
 
     }
-}
 
+}
 void(* resetFunc) (void) = 0;
 
 
