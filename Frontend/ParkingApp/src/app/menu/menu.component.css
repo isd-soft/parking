@@ -48,3 +48,15 @@ img {
 .dropdown-divider {
   margin: 0;
 }
+@media (min-width: 768px) {
+  .navbar-brand.abs
+  {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    font-size: 3rem;
+    color: white;
+    font-weight: bold;
+  }
+}
