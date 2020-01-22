@@ -1,55 +1,81 @@
-<h1>Statistics</h1>
-
-<div class="search d-flex justify-content-end">
-  <div class="date col-6">
-    <label for="dateBegin">Start date:</label>
-    <input class="form-control" id="dataBegin" type="date" [(ngModel)]="startDate" (change)="filterData()"/><br>
-    <label for="dateEnd">End date:</label>
-    <input class="form-control" id="dateEnd" type="date" [(ngModel)]="endDate" (change)="filterData()"/>
-    <div class="btn refresh" (click)="loadData()">Reset</div>
+<div class="container statistics-form">
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="input-group">
+        <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <span><i class="fas fa-calendar-check"></i> Start date</span>
+                </span>
+        </div>
+        <input class="form-control" id="dataBegin" type="date" [(ngModel)]="startDate" (change)="filterData()"/><br>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="input-group">
+        <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <span><i class="fas fa-calendar-times"></i> End date</span>
+                </span>
+        </div>
+        <input class="form-control" id="dateEnd" type="date" [(ngModel)]="endDate" (change)="filterData()"/>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="input-group">
+        <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <span><i class="fas fa-car-side"></i> Parking lot id</span>
+                </span>
+        </div>
+        <select class="form-control" name="lots" [(ngModel)]="selectedLotNumber" (change)="filterData()">
+          <option>All</option>
+          <option *ngFor="let lot of lotNumber">{{lot}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="input-group">
+    <button class="btn btn-danger refresh" (click)="loadData()"><i class="fa fa-times-circle"></i> Reset</button>
+      </div>
+    </div>
   </div>
-  <div class="id col-6">
-    <label for="lotNumber">Lot number</label>
-    <select class="form-control" name="lots" [(ngModel)]="selectedLotNumber" (change)="filterData()">
-      <option>-</option>
-      <option *ngFor="let lot of lotNumber">{{lot}}</option>
-    </select>
-  </div>
+  <hr>
 </div>
+
 
 <div>
   <div class="col-12">
     <table class="table">
       <thead>
-        <tr>
-          <th (click)="sortTableByLotNumber()">
+      <tr>
+        <th (click)="sortTableByLotNumber()">
             <span class="lot">Parking Lot
               <i class="fas fa-sort-up" *ngIf="lotSortedAsc"></i>
               <i class="fas fa-sort-down" *ngIf="lotSortedDesc"></i>
             </span>
-          </th>
-          <th>Status</th>
-          <th (click)="sortTableByTime()">
+        </th>
+        <th>Status</th>
+        <th (click)="sortTableByTime()">
             <span class="time">Time
               <i class="fas fa-sort-up" *ngIf="timeSortedAsc"></i>
               <i class="fas fa-sort-down" *ngIf="timeSortedDesc"></i>
               </span>
-            </th>
-          <th (click)="sortTableByDate()">
+        </th>
+        <th (click)="sortTableByDate()">
             <span class="date">Date
               <i class="fas fa-sort-up" *ngIf="dateSortedAsc"></i>
               <i class="fas fa-sort-down" *ngIf="dateSortedDesc"></i>
             </span>
-          </th>
-        </tr>
+        </th>
+      </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let stat of filteredStatistics | paginate: { itemsPerPage: 10, currentPage: p }; let i = index" [ngStyle]="{'background':getColor(stat.status)}"> <!--//here you can set the number of rows to diplay on one page-->
-          <td>{{'LOT ' + stat.lotNumber}}</td>
-          <td>{{stat.status}}</td>
-          <td>{{stat.updatedAt | date : "HH:mm:ss"}}</td>
-          <td>{{stat.updatedAt | date : "dd.MM.yy"}}</td>
-        </tr>
+      <tr *ngFor="let stat of filteredStatistics | paginate: { itemsPerPage: 10, currentPage: p }; let i = index" [ngStyle]="{'background':getColor(stat.status)}"> <!--//here you can set the number of rows to diplay on one page-->
+        <td>{{'LOT ' + stat.lotNumber}}</td>
+        <td>{{stat.status}}</td>
+        <td>{{stat.updatedAt | date : "HH:mm:ss"}}</td>
+        <td>{{stat.updatedAt | date : "dd.MM.yy"}}</td>
+      </tr>
       </tbody>
     </table>
     <pagination-controls (pageChange)="p = $event"></pagination-controls>
