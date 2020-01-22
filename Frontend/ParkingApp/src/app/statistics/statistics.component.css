@@ -22,7 +22,12 @@ h1, label {
 
 .table {
   box-sizing: content-box;
-  color: #D1E7FA;
+  background: white;
+  color: black;
+}
+
+.table tr .free {
+  background: green;
 }
 
 td, th {
