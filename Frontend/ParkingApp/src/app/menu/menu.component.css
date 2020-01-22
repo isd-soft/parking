@@ -78,9 +78,12 @@ img {
   transition: 0.4s;
 }
 
-.isd-navbar a:hover{
+.isd-navbar  a:hover{
   color: #f44e00!important;
-
 }
 
 
+#navbarNav > ul > li > div > a:hover{
+  color: #f44e00!important;
+  padding-left: 30px;
+}
