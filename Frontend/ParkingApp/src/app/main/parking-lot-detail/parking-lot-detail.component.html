@@ -21,7 +21,7 @@
 
 <div class="error text-light" [hidden]="parkingLot != null">Something went wrong, please click on Refresh button</div>
 
-<div *ngIf="isAdmin">
+<div *ngIf="this.isAdminLoggedIn() ">
   <div class="row justify-content-center">
     <div class="btn w-50 m-3 btn-warning" (click)="booking()">Make reservation</div>
   </div>

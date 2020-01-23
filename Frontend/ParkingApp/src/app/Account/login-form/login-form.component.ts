@@ -94,17 +94,28 @@ export class LoginFormComponent implements OnInit {
   }
 
   onSubmit() {
-    // local mockup for test
-    const user = 'admin';
-    const pass = 'aRduin1$';
 
-    if (this.username === user && this.password === pass) {
+    // only for testing purpose
+    if ((this.username === this.authenticationService.admin && this.password === this.authenticationService.adminPassword)
+      || (this.username === this.authenticationService.user && this.password === this.authenticationService.userPassword)
+    ) {
 
-      console.log(this.username + '  ' + this.password);
+      // credentials error handle
+      this.invalidLogin = false;
+      this.loginSuccess = true;
 
-      this.router.navigate(['parking']);
+      this.authenticationService.registerSuccessfulLogin(this.username);
+
+      console.log(sessionStorage.getItem('authenticatedUser'));
+
+      this.router.navigate(['']);
       this.userLoginEvent.emit();
+    } else {
+      this.invalidLogin = true;
+      this.loginSuccess = false;
     }
+
+    console.log(this.username + '  ' + this.password);
 
     // uncomment this for backend request
     /*this.handleLogin();
@@ -117,7 +128,7 @@ export class LoginFormComponent implements OnInit {
       this.invalidLogin = false;
       this.loginSuccess = true;
       this.successMessage = 'Login Successful.';
-      this.router.navigate(['parking']);
+      this.router.navigate(['']);
     }, () => {
       this.invalidLogin = true;
       this.loginSuccess = false;

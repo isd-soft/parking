@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { ParkingLot } from '../Model/ParkingLot';
 import { Router, ActivatedRoute } from '@angular/router';
+import {AuthenticationService} from '../Account/auth.service';
 
 @Component({
   selector: 'app-main',
@@ -18,7 +19,8 @@ export class MainComponent implements OnInit {
 
   constructor(private dataService: DataService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     this.noData = new Array<number>();

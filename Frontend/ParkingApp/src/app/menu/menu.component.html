@@ -6,17 +6,19 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-
-    <div *ngIf='!userLogged'>
-      <button class="btn btn-outline ml-auto text-light navbar-btn pull-right" type="button" (click)="navigateToLogin()">
+    <div *ngIf='!this.isUserLoggedIn()'>
+      <button class="btn btn-outline ml-auto text-light navbar-btn pull-right" type="button"
+              (click)="navigateToLogin()">
         Login
       </button>
     </div>
 
-    <div *ngIf='userLogged'>
+    <div *ngIf='this.isUserLoggedIn()'>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto text-light">
-          <!-- <div class="user nav-link text-light" (click)="navigateTo404()"><i class="fas fa-user"></i> User</div> -->
+          <div class="user nav-link text-light" (click)="navigateTo404()"><i
+            class="fas fa-user"></i> {{this?.getUserName() == null ? 'User' : this?.getUserName()}} </div>
+          <div class="user nav-link text-light" (click)="logout()">Logout <i class="fas fa-sign-out-alt"></i></div>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-light" data-toggle="dropdown">
               Menu

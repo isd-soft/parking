@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthenticationService} from '../Account/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -9,7 +10,8 @@ import {Router} from '@angular/router';
 export class MenuComponent implements OnInit {
   userLogged: boolean;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
@@ -43,4 +45,20 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['layout']);
   }
 
+
+  isAdminLoggedIn() {
+    return this.authenticationService.isAdminLoggedIn();
+  }
+
+  isUserLoggedIn() {
+    return this.authenticationService.isUserLoggedIn();
+  }
+
+  logout() {
+    this.authenticationService.logout();
+  }
+
+  getUserName() {
+    return this.authenticationService.getLoggedInUserName();
+  }
 }

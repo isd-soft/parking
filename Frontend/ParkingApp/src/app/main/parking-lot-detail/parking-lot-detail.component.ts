@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ParkingLot} from 'src/app/Model/ParkingLot';
 import {ActivatedRoute} from '@angular/router';
+import {AuthenticationService} from '../../Account/auth.service';
 
 @Component({
   selector: 'app-parking-lot-detail',
@@ -19,15 +20,15 @@ export class ParkingLotDetailComponent implements OnInit {
   bookingEvent = new EventEmitter();
 
   action: string;
-  isAdmin: boolean;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
 
     // testing
-    this.isAdmin = true;
+    this.isAdminLoggedIn();
 
     this.route.queryParams.subscribe(
       params => {
@@ -42,6 +43,14 @@ export class ParkingLotDetailComponent implements OnInit {
 
   booking() {
     this.bookingEvent.emit();
+  }
+
+  isAdminLoggedIn() {
+    return this.authenticationService.isAdminLoggedIn();
+  }
+
+  isUserLoggedIn() {
+    return this.authenticationService.isUserLoggedIn();
   }
 
 }
