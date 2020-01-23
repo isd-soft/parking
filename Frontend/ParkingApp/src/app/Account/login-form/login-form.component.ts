@@ -39,15 +39,6 @@ export class LoginFormComponent implements OnInit {
       };
     }
 
-    // not working
-    /* password regexp validation*/
-    /*function forbiddenPassValidator(passRe: RegExp): ValidatorFn {
-      return (control: AbstractControl): { [key: string]: any } | null => {
-        const forbidden = passRe.test(control.value);
-        return !forbidden ? {forbiddenPass: {value: control.value}} : null;
-      };
-    }*/
-
     this.loginForm = new FormGroup({
       username: new FormControl(this.username, [
         Validators.required,
@@ -140,36 +131,6 @@ export class LoginFormComponent implements OnInit {
         alert('Authentication failed.');
         console.log('Authentication failed.');
       });
-
-    // 1st variant not properly working
-    /*this.authenticationService.authenticationServiceLogin(this.username, this.password).subscribe((result) => {
-      this.invalidLogin = false;
-      this.loginSuccess = true;
-      this.successMessage = 'Login Successful.';
-      this.router.navigate(['']);
-    }, () => {
-      this.invalidLogin = true;
-      this.loginSuccess = false;
-    });*/
-
-    // 2nd variant not properly working
-    /*this.authenticationService.login(this.username, this.password).subscribe(isValid => {
-      if (isValid) {
-        this.invalidLogin = false;
-        this.loginSuccess = true;
-        this.successMessage = 'Login Successful.';
-
-        sessionStorage.setItem(
-          'token',
-          btoa(this.username + ':' + this.password)
-        );
-
-        this.authenticationService.registerSuccessfulLogin(this.username);
-        this.router.navigate(['']);
-      } else {
-        alert('Authentication failed.');
-      }
-    });*/
   }
 
   private localLoginTest() {

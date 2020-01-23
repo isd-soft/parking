@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {AuthenticationService} from '../Account/auth.service';
 
 @Component({
@@ -60,5 +60,9 @@ export class MenuComponent implements OnInit {
 
   getUserName() {
     return this.authenticationService.getLoggedInUserName();
+  }
+
+  capitalize(field: string) {
+    return field.charAt(0).toUpperCase() + field.slice(1);
   }
 }
