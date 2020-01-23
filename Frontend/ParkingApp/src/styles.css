@@ -6,14 +6,17 @@
 }
 
 .ngx-pagination a {
-  color: white!important;
+  color: black!important;
   transition: color 1s;
 }
 .ngx-pagination a:hover {
-  color: #ffffff8a!important;
+  color: #f44e00!important;
 }
 
 /** {*/
 /*  font-family: 'Roboto Condensed', sans-serif!important;*/
 /*}*/
 
+body {
+  background-color: white!important;
+}
