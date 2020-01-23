@@ -13,10 +13,17 @@
   color: #f44e00!important;
 }
 
+.ngx-pagination .current{
+  background: #f44e00!important;
+}
 /** {*/
 /*  font-family: 'Roboto Condensed', sans-serif!important;*/
 /*}*/
 
 body {
   background-color: white!important;
+}
+
+footer {
+color: #919495 !important;
 }

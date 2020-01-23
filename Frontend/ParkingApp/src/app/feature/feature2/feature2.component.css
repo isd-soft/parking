@@ -73,11 +73,12 @@ span {
 .lot-number-top {
   text-orientation: mixed;
   writing-mode: vertical-rl;
-  color: #D1E7FA;
+  color: black;
 }
 
 .lot-number-side {
   line-height: 1.9rem;
+  color: black;
 }
 
 .lot-side {
@@ -160,11 +161,12 @@ span {
 }
 
 .smoking i {
-  color: #D1E7FA;
+  color: black;
 }
 
 .backDoor {
-  color: #D1E7FA;
+  color: black;
+  font-weight: bold;
   position: absolute;
 }
 
