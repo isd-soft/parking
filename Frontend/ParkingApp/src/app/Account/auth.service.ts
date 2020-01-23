@@ -1,6 +1,8 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -27,20 +29,48 @@ export class AuthenticationService {
   public user1 = 'user2';
   public userPassword1 = 'aRduin1$';
 
-constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private  router: Router) {
 
   }
 
-authenticationServiceLogin(username: string, password: string) {
+  // TODO: alternative login method
+  login(username: string, password: string) {
+
+    const url = 'http://localhost:8080/login';
+
+    console.log('Auth login');
+    console.log('Login' + username + '  ' + password);
+
+    return this.http.post<Observable<boolean>>(url, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: this.createBasicAuthToken(username, password)
+      },
+
+      username,
+      password
+    });
+  }
+
+  // old not properly working
+  /*authenticationServiceLogin(username: string, password: string) {
+
+    console.log('Auth login');
+    console.log('Login' + username + '  ' + password);
+
     return this.http.get(`http://localhost:8080/login`,
       {headers: {authorization: this.createBasicAuthToken(username, password)}}).pipe(map((res) => {
+
+      console.log(res);
+
       this.username = username;
       this.password = password;
       this.registerSuccessfulLogin(username);
-    }));
-  }
 
-authenticationServiceRegistration(username: string, password: string) {
+    }));
+  }*/
+
+  authenticationServiceRegistration(username: string, password: string) {
 
     // TODO: registration post logic here
 
@@ -52,21 +82,21 @@ authenticationServiceRegistration(username: string, password: string) {
     }));
   }
 
-createBasicAuthToken(username: string, password: string) {
+  createBasicAuthToken(username: string, password: string) {
     return 'Basic ' + window.btoa(username + ':' + password);
   }
 
-registerSuccessfulLogin(username) {
+  registerSuccessfulLogin(username) {
     sessionStorage.setItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME, username);
   }
 
-logout() {
+  logout() {
     sessionStorage.removeItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME);
     this.username = null;
     this.password = null;
   }
 
-isUserLoggedIn() {
+  isUserLoggedIn() {
     const user = sessionStorage.getItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME);
     if (user === null) {
       return false;
@@ -74,7 +104,7 @@ isUserLoggedIn() {
     return true;
   }
 
-isAdminLoggedIn() {
+  isAdminLoggedIn() {
     if (this.isUserLoggedIn() && this.getLoggedInUserName() === this.admin) {
       return true;
     } else {
@@ -82,7 +112,7 @@ isAdminLoggedIn() {
     }
   }
 
-getLoggedInUserName() {
+  getLoggedInUserName() {
     const user = sessionStorage.getItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME);
     if (user === null) {
       return '';

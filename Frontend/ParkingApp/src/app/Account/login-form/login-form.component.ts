@@ -94,12 +94,89 @@ export class LoginFormComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.username !== '' && this.password !== '') {
 
+      console.log(this.username + '  ' + this.password);
+
+      // for local login test
+      // this.localLoginTest();
+
+      // backend http auth
+      this.handleLogin();
+    }
+  }
+
+  handleLogin() {
+
+    this.authenticationService.login(this.username, this.password).subscribe(
+      data => {
+
+        console.log('Authentication success in authenticationService.login.');
+        console.log('Server response: ' + data);
+
+        if (data) {
+          this.invalidLogin = false;
+          this.loginSuccess = true;
+          this.successMessage = 'Login Successful.';
+          console.log(this.successMessage);
+
+          /*sessionStorage.setItem(
+            'token',
+            btoa(this.username + ':' + this.password)
+          );*/
+
+          this.authenticationService.registerSuccessfulLogin(this.username);
+          console.log(sessionStorage.getItem('authenticatedUser'));
+
+          this.router.navigate(['']);
+        } else {
+          this.invalidLogin = true;
+          this.loginSuccess = false;
+
+          console.log(this.successMessage);
+        }
+
+      }, error => {
+        alert('Authentication failed.');
+        console.log('Authentication failed.');
+      });
+
+    // 1st variant not properly working
+    /*this.authenticationService.authenticationServiceLogin(this.username, this.password).subscribe((result) => {
+      this.invalidLogin = false;
+      this.loginSuccess = true;
+      this.successMessage = 'Login Successful.';
+      this.router.navigate(['']);
+    }, () => {
+      this.invalidLogin = true;
+      this.loginSuccess = false;
+    });*/
+
+    // 2nd variant not properly working
+    /*this.authenticationService.login(this.username, this.password).subscribe(isValid => {
+      if (isValid) {
+        this.invalidLogin = false;
+        this.loginSuccess = true;
+        this.successMessage = 'Login Successful.';
+
+        sessionStorage.setItem(
+          'token',
+          btoa(this.username + ':' + this.password)
+        );
+
+        this.authenticationService.registerSuccessfulLogin(this.username);
+        this.router.navigate(['']);
+      } else {
+        alert('Authentication failed.');
+      }
+    });*/
+  }
+
+  private localLoginTest() {
     // only for testing purpose
     if ((this.username === this.authenticationService.admin && this.password === this.authenticationService.adminPassword)
       || (this.username === this.authenticationService.user && this.password === this.authenticationService.userPassword)
     ) {
-
       // credentials error handle
       this.invalidLogin = false;
       this.loginSuccess = true;
@@ -114,25 +191,6 @@ export class LoginFormComponent implements OnInit {
       this.invalidLogin = true;
       this.loginSuccess = false;
     }
-
-    console.log(this.username + '  ' + this.password);
-
-    // uncomment this for backend request
-    /*this.handleLogin();
-
-    this.userLoginEvent.emit();*/
-  }
-
-  handleLogin() {
-    this.authenticationService.authenticationServiceLogin(this.username, this.password).subscribe((result) => {
-      this.invalidLogin = false;
-      this.loginSuccess = true;
-      this.successMessage = 'Login Successful.';
-      this.router.navigate(['']);
-    }, () => {
-      this.invalidLogin = true;
-      this.loginSuccess = false;
-    });
   }
 
   navigateToRegistration() {
