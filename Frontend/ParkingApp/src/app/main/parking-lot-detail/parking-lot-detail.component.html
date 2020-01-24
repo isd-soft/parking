@@ -1,5 +1,5 @@
 <h2 class="text-dark">Parking lot details</h2>
-<div class="card mx-auto" style="width: 20rem;">
+<div class="card mx-auto shadow" style="width: 20rem;">
 <div *ngIf="parkingLot != null">
 
   <div class="btn lot col-sm-12 "  [ngClass]="{'green': parkingLot.status === 'FREE', 'red' : parkingLot.status === 'OCCUPIED', 'grey' : parkingLot.status === 'UNKNOWN'}">
@@ -9,10 +9,16 @@
   </div>
 
   <div class="card-body">
-      <span><b>Name: </b></span>
-      <span class="lot-name">{{'LOT ' + parkingLot.number}}</span><br>
-      <span><b>Status: </b></span>
-      <span>{{parkingLot.status}} </span><span *ngIf="parkingLot.status === 'OCCUPIED'"><br>Since {{parkingLot.updatedAt | date : 'HH:mm dd-MMM-yyyy'}}</span><br>
+
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><b>Name: </b>{{'LOT ' + parkingLot.number}}</li>
+      <li class="list-group-item"><b>Status: </b>{{parkingLot.status}}</li>
+      <li class="list-group-item">Since {{parkingLot.updatedAt | date : 'HH:mm dd-MMM-yyyy'}}</li>
+    </ul>
+<!--    <span><b>Name: </b></span>-->
+<!--      <span class="lot-name">{{'LOT ' + parkingLot.number}}</span><br>-->
+<!--      <span><b>Status: </b></span>-->
+<!--      <span>{{parkingLot.status}} </span><span *ngIf="parkingLot.status === 'OCCUPIED'"><br>Since {{parkingLot.updatedAt | date : 'HH:mm dd-MMM-yyyy'}}</span><br>-->
     <button class="btn col refresh text-center" (click)="goBack()">Back</button>
   </div>
 </div>
