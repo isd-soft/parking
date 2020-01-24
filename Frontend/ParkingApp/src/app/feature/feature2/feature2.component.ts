@@ -42,7 +42,7 @@ export class Feature2Component implements OnInit, OnDestroy {
 
     this.processUrlParams();
 
-    this.updateSubscription = interval(10000).subscribe(
+    this.updateSubscription = interval(3000).subscribe(
       () => {
         this.loadData();
       }
