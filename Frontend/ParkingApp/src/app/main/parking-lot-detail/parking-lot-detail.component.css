@@ -5,11 +5,11 @@
 .refresh {
   color: #fff;
   border-color: #fff;
-  background-color: #0A8EFF;
+  background-color: #f44e00;
 }
 
 .refresh:hover {
-  color: #0A8EFF;
+  color: #f44e00;
   background-color: #fff;
   border-color: #fff;
 }
@@ -35,5 +35,5 @@
 }
 
 span {
-  color: #D1E7FA;
+  color: black;
 }
