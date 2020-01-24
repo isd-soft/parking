@@ -1,4 +1,4 @@
-<h2 class="text-light">Parking lot details</h2>
+<h2 class="text-dark">Parking lot details</h2>
 <div *ngIf="parkingLot != null">
 
   <div class="btn lot col-sm-12 "  [ngClass]="{'green': parkingLot.status === 'FREE', 'red' : parkingLot.status === 'OCCUPIED', 'grey' : parkingLot.status === 'UNKNOWN'}">
@@ -7,7 +7,7 @@
     <i class="fas fa-ban" *ngIf="parkingLot.status === 'UNKNOWN'"></i>
   </div>
 
-  <div class="col-sm-12">
+  <div class="col-sm-12 text-dark">
     <div>
       <span >Name: </span>
       <span class="lot-name">{{'LOT ' + parkingLot.number}}</span>
@@ -19,8 +19,12 @@
   </div>
 </div>
 
-<div class="error text-light" [hidden]="parkingLot != null">Something went wrong, please click on Refresh button</div>
+<div class="error text-dark" [hidden]="parkingLot != null">Something went wrong, please click on Refresh button</div>
 
-<div class="row justify-content-center" >
-  <div class="btn refresh w-50" (click)="goBack()">Back</div>
+<div class="container">
+<div class="row ">
+  <div class="col text-center">
+  <button class="btn refresh" (click)="goBack()">Back</button>
+  </div>
+</div>
 </div>
