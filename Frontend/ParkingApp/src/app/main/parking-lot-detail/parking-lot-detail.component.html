@@ -19,7 +19,7 @@
 <!--      <span class="lot-name">{{'LOT ' + parkingLot.number}}</span><br>-->
 <!--      <span><b>Status: </b></span>-->
 <!--      <span>{{parkingLot.status}} </span><span *ngIf="parkingLot.status === 'OCCUPIED'"><br>Since {{parkingLot.updatedAt | date : 'HH:mm dd-MMM-yyyy'}}</span><br>-->
-    <button class="btn col refresh text-center" (click)="goBack()">Back</button>
+    <button class="btn col refresh text-center" (click)="goBack()"><i class="fa fa-backspace"></i> Back</button>
   </div>
 </div>
 </div>
@@ -29,7 +29,7 @@
 <div class="container">
   <div class="row ">
     <div class="col text-center">
-      <button class="btn refresh" (click)="goBack() "  [hidden]="parkingLot != null">Back</button>
+      <button class="btn refresh" (click)="goBack() "  [hidden]="parkingLot != null"><i class="fa fa-backspace"></i> Back</button>
     </div>
   </div>
 </div>
