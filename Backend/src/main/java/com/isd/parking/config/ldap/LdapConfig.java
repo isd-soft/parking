@@ -13,19 +13,22 @@ import org.springframework.ldap.core.support.LdapContextSource;
 @ComponentScan(basePackages = {"com.isd.parking.*"})
 @Profile("default")
 @EnableLdapRepositories(basePackages = "com.isd.parking.**")
-
 public class LdapConfig {
 
+    private final Environment env;
+
     @Autowired
-    private Environment env;
+    public LdapConfig(Environment env) {
+        this.env = env;
+    }
 
     @Bean
     public LdapContextSource contextSource() {
         LdapContextSource contextSource = new LdapContextSource();
         contextSource.setUrl(env.getRequiredProperty("ldap.url"));
         contextSource.setBase(env.getRequiredProperty("ldap.partitionSuffix"));
-        contextSource.setUserDn(env.getRequiredProperty("ldap.principal"));
-        contextSource.setPassword(env.getRequiredProperty("ldap.password"));
+        /*contextSource.setUserDn(env.getRequiredProperty("ldap.principal"));
+        contextSource.setPassword(env.getRequiredProperty("ldap.password"));*/
         return contextSource;
     }
 

@@ -19,6 +19,11 @@ objectclass: top
 objectclass: organizationalUnit
 ou: users
 
+dn: ou=system,dc=isd,dc=com
+objectclass: top
+objectclass: organizationalUnit
+ou: system
+
 dn: ou=\"quoted users\",dc=isd,dc=com
 objectclass: top
 objectclass: organizationalUnit
@@ -47,8 +52,8 @@ objectclass: inetOrgPerson
 cn: Bob Hamilton
 sn: Hamilton
 uid: bob
-# userPassword: bobspassword
-userPassword: {SHA}Ym9ic3Bhc3N3b3Jk
+userPassword: bobspassword
+# userPassword: {SHA}Ym9ic3Bhc3N3b3Jk
 
 
 # custom user
@@ -60,10 +65,18 @@ objectclass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Alex G
 sn: G
-uid: alex
-userPassword: alexspassword
+uid: aleks
+userPassword: aRduin1$
 
-
+dn: uid=admin,ou=users,dc=isd,dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Admin A
+sn: A
+uid: admin
+userPassword: sYst3m@
 
 
 
