@@ -30,4 +30,8 @@ public class ParkingLot {
 
 //    private User user;
 
+    public void setUpdatedNow() {
+        this.setUpdatedAt(new java.sql.Date(System.currentTimeMillis()));
+    }
+
 }

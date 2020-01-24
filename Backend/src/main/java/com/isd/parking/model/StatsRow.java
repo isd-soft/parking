@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity(name = "statistics")
 @Data
@@ -21,8 +20,8 @@ public class StatsRow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "lot_id")
-    private Long lotId;
+    @Column(name = "lot_number")
+    private Integer lotNumber;
 
     @Column(name = "updated_at")
     private Date updatedAt;

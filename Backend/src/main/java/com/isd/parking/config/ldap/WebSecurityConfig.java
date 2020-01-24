@@ -25,25 +25,30 @@ import java.io.IOException;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    /*@Value("${ldap.url}")
+    /*
+    * Ldap config
+    * */
+    @Value("${ldap.enabled}")
+    private String ldapEnabled;
+
+    @Value("${ldap.url}")
     private String ldapUrl;
 
-    @Value("${ldap.base.dn}")
+    @Value("${ldap.partitionSuffix}")
     private String ldapBaseDn;
 
-    @Value("${ldap.username}")
+    @Value("${ldap.user.dn.pattern}")
+    private String ldapUserDnPattern;
+
+    @Value("${ldap.principal}")
     private String ldapSecurityPrincipal;
 
     @Value("${ldap.password}")
     private String ldapPrincipalPassword;
 
-    @Value("${ldap.user.dn.pattern}")
-    private String ldapUserDnPattern;
-    */
-
-    @Value("${ldap.enabled}")
-    private String ldapEnabled;
-
+    /*
+    * For 'in memory' auth
+    * */
     @Value("${http.auth.admin.name}")
     private String admin;
 
@@ -86,10 +91,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         if (Boolean.parseBoolean(ldapEnabled)) {
             auth
                     .ldapAuthentication()
-                    .userDnPatterns("uid={0},ou=users")
+                    .userDnPatterns(ldapUserDnPattern)
                     .groupSearchBase("ou=groups")
                     .contextSource()
-                    .url("ldap://localhost:18889/dc=isd,dc=com")
+                    .url(ldapUrl + "/" + ldapBaseDn)
+                    .managerDn(ldapSecurityPrincipal)
+                    .managerPassword(ldapPrincipalPassword)
                     .and()
                     .passwordCompare()
                     .passwordEncoder(new LdapShaPasswordEncoder())

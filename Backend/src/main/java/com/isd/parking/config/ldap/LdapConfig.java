@@ -1,6 +1,7 @@
 package com.isd.parking.config.ldap;
 
 import com.isd.parking.service.ldap.UserLdapService;
+import com.isd.parking.service.ldap.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
@@ -38,7 +39,7 @@ public class LdapConfig {
     }
 
     @Bean
-    public UserLdapService ldapClient() {
-        return new UserLdapService();
+    public UserService ldapClient() {
+        return new UserService();
     }
 }
