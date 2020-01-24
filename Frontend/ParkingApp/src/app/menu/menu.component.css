@@ -2,9 +2,16 @@
   font-size: 1rem;
 }
 
-img {
-  width: 75px;
-  height: 75px;
+.logo img {
+  width: 131px;
+  height: 131px;
+}
+
+@media (max-width: 525px) {
+  .logo img {
+    width: 75px;
+    height: 75px;
+  }
 }
 
 .app-name {
