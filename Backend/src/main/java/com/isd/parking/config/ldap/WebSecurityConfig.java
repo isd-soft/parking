@@ -61,26 +61,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        // not working
-        // Access to XMLHttpRequest at 'http://localhost:8080/login' from origin 'http://localhost:4200' has been blocked by CORS policy:
-        // No 'Access-Control-Allow-Origin' header is present on the requested resource.
-        /*http
-                .authorizeRequests()
-                .antMatchers("/login", "/parking").permitAll()
-                .anyRequest().fullyAuthenticated();*/
-
-        // not working
-        // Failed to load resource: the server responded with a status of 500 ()
-        /*http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/login", "/parking").permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic();*/
-
-        // not working
-        // Failed to load resource: the server responded with a status of 500 ()
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/login", "/parking").permitAll()
@@ -142,35 +122,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         }*/
     }
 
-    // ---------- working standard basic HTTP auth --------------
-
-    /*@Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser(admin)
-                .password(adminPass)
-                .roles(String.valueOf(Roles.USER));
-    }
-
-    @Override
-    protected void configure(HttpSecurity http)
-            throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/login", "/parking").permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic();
-    }*/
-
-    /*@Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }*/
-
     @Bean
     public CsrfTokenRepository csrfTokenRepository() {
         CookieCsrfTokenRepository repository = new CookieCsrfTokenRepository();
@@ -207,9 +158,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-
-    /*@Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }*/
 }
