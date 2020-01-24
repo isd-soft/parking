@@ -59,7 +59,7 @@ export class StatisticsComponent implements OnInit {
   filterData() {
     let tempStats = new Array<Statistics>();
 
-    if (this.selectedLotNumber === '-') {
+    if (this.selectedLotNumber === 'All') {
       this.selectedLotNumber = null;
     }
 
