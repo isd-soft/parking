@@ -92,6 +92,7 @@ span {
 }
 
 .lot-side:hover, .lot-top:hover {
+  transition: 0.5s;
   opacity: .75;
 }
 
