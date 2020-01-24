@@ -16,6 +16,11 @@
   min-width: 150px;
 }
 
+.lot:hover{
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+  transition: 0.5s;
+}
+
 .fas, .far {
   font-size: 3rem;
   vertical-align: middle;
