@@ -1,30 +1,36 @@
 <div class="container statistics-form">
   <div class="row">
+
     <div class="col-sm-3">
       <div class="input-group">
         <div class="input-group-prepend">
                 <span class="input-group-text">
-                    <span><i class="fas fa-calendar-check"></i> Start date</span>
+                    <span><i class="fa fa-calendar-check"></i> Start date</span>
                 </span>
         </div>
-        <input class="form-control" id="dataBegin" type="date" [(ngModel)]="startDate" (change)="filterData()"/><br>
+        <input class="form-control" id="dataBegin" type="date" [(ngModel)]="startDate" (change)="filterData()"/>
       </div>
     </div>
+
+
     <div class="col-sm-3">
       <div class="input-group">
         <div class="input-group-prepend">
                 <span class="input-group-text">
-                    <span><i class="fas fa-calendar-times"></i> End date</span>
+                    <span><i class="fa fa-calendar-times"></i> End date</span>
                 </span>
         </div>
         <input class="form-control" id="dateEnd" type="date" [(ngModel)]="endDate" (change)="filterData()"/>
       </div>
     </div>
+
+
+
     <div class="col-sm-3">
       <div class="input-group">
         <div class="input-group-prepend">
                 <span class="input-group-text">
-                    <span><i class="fas fa-car-side"></i> Parking lot id</span>
+                    <span><i class="fa fa-car-side"></i> Parking lot id</span>
                 </span>
         </div>
         <select class="form-control" name="lots" [(ngModel)]="selectedLotNumber" (change)="filterData()">
