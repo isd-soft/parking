@@ -1,14 +1,29 @@
 package com.isd.parking.config.ldap;
 
 import com.isd.parking.model.Roles;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.LdapShaPasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Configuration
+@EnableAutoConfiguration
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /*
@@ -51,12 +66,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        http.cors()
-                .and().csrf().disable()
+        http.addFilterBefore(new CORSFilter(), ChannelProcessingFilter.class);
+        http.cors().and()
+                // We don't need CSRF for this cause
+                .csrf().disable()
                 .authorizeRequests()
+                // dont authenticate this particular request
                 .antMatchers("/login").permitAll()
+                // all other requests need to be authenticated
                 .anyRequest().fullyAuthenticated()
+                .and().exceptionHandling()
                 .and().httpBasic();
     }
 
@@ -83,6 +102,56 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .withUser(user).password(userPass).roles(String.valueOf(Roles.USER))
                     .and()
                     .withUser(admin).password(adminPass).roles(String.valueOf(Roles.ADMIN));
+        }
+    }
+
+    @Component
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    public static class CORSFilter implements Filter {
+
+        /**
+         * CORS filter for http-request and response
+         */
+        public CORSFilter() {
+            super();
+        }
+
+        /**
+         * Do Filter on every http-request.
+         */
+        @Override
+        public final void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain) throws IOException, ServletException {
+            final HttpServletResponse response = (HttpServletResponse) res;
+            response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+
+            // without this header jquery.ajax calls returns 401 even after successful login and SSESSIONID being succesfully stored.
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+
+            response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
+            response.setHeader("Access-Control-Max-Age", "3600");
+            response.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Authorization, Origin, Content-Type, Version");
+            response.setHeader("Access-Control-Expose-Headers", "X-Requested-With, Authorization, Origin, Content-Type");
+
+            final HttpServletRequest request = (HttpServletRequest) req;
+            if (!request.getMethod().equals("OPTIONS")) {
+                chain.doFilter(req, res);
+            } else {
+                response.setStatus(HttpServletResponse.SC_OK);
+            }
+        }
+
+        /**
+         * Destroy method
+         */
+        @Override
+        public void destroy() {
+        }
+
+        /**
+         * Initialize CORS filter
+         */
+        @Override
+        public void init(FilterConfig arg0) throws ServletException {
         }
     }
 }
