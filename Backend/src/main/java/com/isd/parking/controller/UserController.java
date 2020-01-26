@@ -10,14 +10,13 @@ import com.isd.parking.service.ldap.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.sql.Date;
 import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -31,7 +30,7 @@ public class UserController {
 
     private final ParkingLotService parkingLotService;
 
-//    private final ParkingLotLocalService parkingLotLocalService;
+    //    private final ParkingLotLocalService parkingLotLocalService;
 
     private final StatsService statisticsService;
 
@@ -61,37 +60,55 @@ public class UserController {
     @RequestMapping("/login")
     public boolean login(@RequestBody User user) {
 
-        log.info("Request body: " + user);
-        //TODO: implement here LDAP authentificate
+        final String username = user.getUsername();
+        final String password = user.getPassword();
 
+        log.info("Request body: " + user);
         log.info("LDAP enabled: " + Boolean.parseBoolean(ldapEnabled));
 
         if (Boolean.parseBoolean(ldapEnabled)) {
             // LDAP
-            log.info("Request body: " + user.getUsername() + " " + user.getPassword());
-            log.info(String.valueOf(userService.authenticate(user.getUsername(), user.getPassword())));
-            return userService.authenticate(user.getUsername(), user.getPassword());
+            log.info("Request body: login " + username + " " + password);
+            log.info(String.valueOf(userService.authenticate(username, password)));
+            return userService.authenticate(username, password);
             //   return userLdapService.authenticate(user.getUsername(), user.getPassword());       unusable don't return boolean
         } else {
-            return user.getUsername().equals(admin) && user.getPassword().equals(adminPass)
-                    || user.getUsername().equals(userName) && user.getPassword().equals(userPass);
+            return username.equals(admin) && password.equals(adminPass)
+                    || username.equals(userName) && password.equals(userPass);
         }
     }
 
     @RequestMapping("/registration")
-    public void registration(@RequestBody User user) {
-        //TODO: implement here registration logic
+    public boolean registration(@RequestBody User user) {
+
+        final String username = user.getUsername();
+        final String password = user.getPassword();
+
+        log.info("Request body: registration " + username + " " + password);
 
         //verify if user exists in db and throw error, else create
+        List<String> sameUserNames = userService.search(username);
+        log.info(String.valueOf(sameUserNames));
 
-        //TODO: implement here LDAP save
-
-        userService.create(user.getUsername(), user.getPassword());
+        if (sameUserNames.isEmpty()) {
+            userService.create(username, password);
+            sameUserNames = userService.search(username);
+            log.info(String.valueOf(sameUserNames));
+            if (!sameUserNames.isEmpty()) {
+                log.info("not created");
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     @RequestMapping("/reservate/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Boolean> reservation(@PathVariable("id") Long parkingLotId) {
+    public boolean reservation(@PathVariable("id") Long parkingLotId) {
+
+        log.info("Parking lot number in reservation request: " + parkingLotId);
 
         Optional<ParkingLot> parkingLotOptional = parkingLotService.findById(parkingLotId);
 
@@ -115,24 +132,65 @@ public class UserController {
                 parkingLotService.save(parkingLot);
 
                 //saving in local Java memory
-
                 //TODO: Save to local after merge
                 //parkingLotLocalService.save(parkingLot);
 
                 //save new statistics to database
-                StatsRow statisticsRecord = StatsRow.builder()//.id(UUID.randomUUID())
-                        .lotNumber(parkingLot.getNumber())
-                        .status(parkingLot.getStatus())
-                        .updatedAt(new Date(System.currentTimeMillis())).build();
-
-                log.info("Statistics record: " + statisticsRecord);
-                log.info("Controller update statistics executed...");
-
-                statisticsService.save(statisticsRecord);
+                addStatisticsRecord(parkingLot);
             }
         });
 
-        return ResponseEntity.ok().body(!hasErrors.get());
+        return !hasErrors.get();
+    }
+
+    @RequestMapping("/unreservate/{id}")
+    public boolean cancelReservation(@PathVariable("id") Long parkingLotId) {
+
+        log.info("Parking lot number in cancel reservation request: " + parkingLotId);
+
+        Optional<ParkingLot> parkingLotOptional = parkingLotService.findById(parkingLotId);
+
+        AtomicBoolean hasErrors = new AtomicBoolean(false);
+
+        //if lot with this number exists in database
+        parkingLotOptional.ifPresent(parkingLot -> {
+
+            log.info("Parking lot found in database: " + parkingLot);
+
+            // if parking lot is not reserved
+            if (parkingLot.getStatus() != ParkingLotStatus.RESERVED) {
+                hasErrors.set(true);
+            } else {
+                parkingLot.setStatus(ParkingLotStatus.FREE);       //get enum value from string
+                parkingLot.setUpdatedNow();
+
+                log.info("Updated parking lot: " + parkingLot);
+
+                //saving in database
+                parkingLotService.save(parkingLot);
+
+                //saving in local Java memory
+                //TODO: Save to local after merge
+                //parkingLotLocalService.save(parkingLot);
+
+                //save new statistics to database
+                addStatisticsRecord(parkingLot);
+            }
+        });
+
+        return !hasErrors.get();
+    }
+
+    private void addStatisticsRecord(ParkingLot parkingLot) {
+        StatsRow statisticsRecord = StatsRow.builder()//.id(UUID.randomUUID())
+                .lotNumber(parkingLot.getNumber())
+                .status(parkingLot.getStatus())
+                .updatedAt(new Date(System.currentTimeMillis())).build();
+
+        log.info("Statistics record: " + statisticsRecord);
+        log.info("Controller update statistics executed...");
+
+        statisticsService.save(statisticsRecord);
     }
 
     @RequestMapping("/user")

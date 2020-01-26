@@ -1,10 +1,8 @@
 package com.isd.parking.config.ldap;
 
 import com.isd.parking.model.Roles;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -41,11 +39,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${ldap.user.dn.pattern}")
     private String ldapUserDnPattern;
 
-    @Value("${ldap.principal}")
-    private String ldapSecurityPrincipal;
-
-    @Value("${ldap.password}")
-    private String ldapPrincipalPassword;
+    // @Value("${ldap.principal}")
+    // private String ldapSecurityPrincipal;
+    //
+    // @Value("${ldap.password}")
+    // private String ldapPrincipalPassword;
 
     /*
      * For 'in memory' auth
@@ -72,7 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 // dont authenticate this particular request
-                .antMatchers("/login").permitAll()
+                .antMatchers("/login", "/registration", "/parking").permitAll()
                 // all other requests need to be authenticated
                 .anyRequest().fullyAuthenticated()
                 .and().exceptionHandling()

@@ -84,8 +84,8 @@ public class SpringLdapIntegrationTest {
 
     @Test
     public void testSearchUser() {
-        List<User> users = userService.search("alex");
+        List<String> users = userService.search("alex");
         assertNotNull(users);
-        assertEquals(users.get(0).getFullName(), "Alex G");
+        assertEquals(users.get(0), "Alex G");
     }
 }

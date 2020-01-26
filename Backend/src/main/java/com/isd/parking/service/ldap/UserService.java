@@ -24,17 +24,17 @@ public class UserService {
         return user != null;
     }
 
-    public List<User> search(final String username) {
+    public List<String> search(final String username) {
         List<User> userList = userRepository.findByUsernameLikeIgnoreCase(username);
         if (userList == null) {
             return Collections.emptyList();
         }
 
-        /*return userList.stream()
-                .map(User::getFullName)
-                .collect(Collectors.toList());*/
+        //return userList;
 
-        return userList;
+        return userList.stream()
+                .map(User::getFullName)
+                .collect(Collectors.toList());
     }
 
     public void create(final String username, final String password) {
