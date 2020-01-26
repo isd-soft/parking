@@ -1,20 +1,27 @@
 <h2 class="text-light">Parking lot details</h2>
 <div *ngIf="parkingLot != null">
 
-  <div class="btn lot col-sm-12 mx-auto mt-3 mb-3 pt-3 pb-3"  [ngClass]="{'green': parkingLot.status === 'FREE', 'red' : parkingLot.status === 'OCCUPIED', 'grey' : parkingLot.status === 'UNKNOWN'}">
+  <div class="btn lot col-sm-12 mx-auto mt-3 mb-3 pt-3 pb-3" [ngClass]="{'green': parkingLot.status === 'FREE',
+                                                                          'red' : parkingLot.status === 'OCCUPIED',
+                                                                          'grey' : parkingLot.status === 'UNKNOWN',
+                                                                          'yellow' : parkingLot.status === 'RESERVED'}">
     <i class="fas fa-car" *ngIf="parkingLot.status === 'OCCUPIED'"></i>
     <i class="fas fa-parking" *ngIf="parkingLot.status === 'FREE'"></i>
     <i class="fas fa-ban" *ngIf="parkingLot.status === 'UNKNOWN'"></i>
+    <i class="fas fa-clipboard-check" *ngIf="parkingLot.status === 'RESERVED'"></i>
   </div>
 
   <div class="col-sm-12">
     <div>
-      <span >Name: </span>
+      <span>Name: </span>
       <span class="lot-name">{{'LOT ' + parkingLot.number}}</span>
     </div>
     <div>
       <span>Status: </span>
-      <span>{{parkingLot.status}} </span><span *ngIf="parkingLot.status === 'OCCUPIED'">since {{parkingLot.updatedAt | date : 'HH:mm dd-MMM-yyyy'}}</span>
+      <span>{{parkingLot.status}} </span>
+      <span
+        *ngIf="parkingLot.status === 'OCCUPIED' || parkingLot.status === 'RESERVED'">
+              since {{parkingLot.updatedAt | date : 'HH:mm dd-MMM-yyyy'}}</span>
     </div>
   </div>
 </div>
@@ -23,10 +30,10 @@
 
 <div *ngIf="this.isAdminLoggedIn() ">
   <div class="row justify-content-center">
-    <div class="btn w-50 m-3 btn-warning" (click)="booking()">Make reservation</div>
+    <div class="btn w-50 m-3 btn-warning" (click)="handleReservation()"> {{parkingLot.status === 'RESERVED'? 'Reset reservation' : 'Make reservation'}}</div>
   </div>
 </div>
 
-<div class="row justify-content-center" >
+<div class="row justify-content-center">
   <div class="btn refresh w-50 m-3" (click)="goBack()">Back</div>
 </div>

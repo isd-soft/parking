@@ -1,39 +1,64 @@
-import { Injectable } from '@angular/core';
-import { ParkingLot } from './Model/ParkingLot';
-import { Observable} from 'rxjs';
-import { map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { Statistics } from './Model/Statistics';
+import {Injectable} from '@angular/core';
+import {ParkingLot} from './Model/ParkingLot';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
+import {environment} from 'src/environments/environment';
+import {Statistics} from './Model/Statistics';
+import {AuthenticationService} from './Account/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  constructor(private http: HttpClient) { }
+  private authHeaders: {};
 
-   getAllParkingLots(): Observable<Array<ParkingLot>> {
-     return this.http.get<Array<ParkingLot>>(environment.restUrl + '/parking')
-     .pipe(
-       map(
-         data => data
-          .map(
-            pl => ParkingLot.fromHttp(pl)
-         )
-       )
-     );
-   }
+  constructor(private http: HttpClient, private authService: AuthenticationService) {
+  }
 
-   getAllStats(): Observable<Array<Statistics>> {
-     return this.http.get<Array<Statistics>>(environment.restUrl + '/statistics')
-     .pipe(
-       map(
-         data => data
-          .map(
-            st => Statistics.fromHttp(st)
-         )
-       )
-     );
-   }
+  getAllParkingLots(): Observable<Array<ParkingLot>> {
+
+    this.setHeaders();
+
+    return this.http.get<Array<ParkingLot>>(environment.restUrl + '/parking', {
+      headers: this.authHeaders
+    })
+      .pipe(
+        map(
+          data => data
+            .map(
+              pl => ParkingLot.fromHttp(pl)
+            )
+        )
+      );
+  }
+
+  getAllStats(): Observable<Array<Statistics>> {
+
+    this.setHeaders();
+
+    return this.http.get<Array<Statistics>>(environment.restUrl + '/statistics', {
+      headers: this.authHeaders
+    })
+      .pipe(
+        map(
+          data => data
+            .map(
+              st => Statistics.fromHttp(st)
+            )
+        )
+      );
+  }
+
+  private setHeaders() {
+    if (this.authService.isUserLoggedIn()) {
+      this.authHeaders = {
+        Accept: 'application/json',
+        Authorization: 'Basic ' + sessionStorage.getItem('token')
+      };
+    } else {
+      this.authHeaders = {Accept: 'application/json'};
+    }
+  }
 }

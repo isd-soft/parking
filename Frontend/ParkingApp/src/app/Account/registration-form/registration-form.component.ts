@@ -101,26 +101,39 @@ export class RegFormComponent implements OnInit {
   }
 
   onSubmit() {
-
     console.log(this.username + '  ' + this.password);
-
-    /*this.submitted = true;
-
-    this.handleRegistration();*/
+    this.submitted = true;
+    this.handleRegistration();
   }
 
   handleRegistration() {
-    // TODO: registration logic
 
-    this.authenticationService.authenticationServiceRegistration(this.username, this.password).subscribe((result) => {
-      this.invalidReg = false;
-      this.regSuccess = true;
-      this.successMessage = 'Registration Successful.';
-      this.navigateToLogin();
-    }, () => {
-      this.invalidReg = true;
-      this.regSuccess = false;
-    });
+    this.authenticationService.authenticationServiceRegistration(this.username, this.password).subscribe(
+      data => {
+
+        console.log('Registration in authenticationService.Registration.');
+        console.log('Server response: ' + data);
+
+        if (data) {
+          this.invalidReg = false;
+          this.regSuccess = true;
+          this.successMessage = 'Registration Successful.';
+          console.log(this.successMessage);
+          alert(this.successMessage);
+
+          this.navigateToLogin();
+        } else {
+          this.invalidReg = true;
+          this.regSuccess = false;
+
+          console.log(this.successMessage);
+        }
+
+      }, error => {
+        console.log(error);
+        alert('Registration failed.');
+        console.log('Registration failed.');
+      });
   }
 
   navigateToLogin() {

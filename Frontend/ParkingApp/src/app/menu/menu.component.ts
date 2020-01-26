@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../Account/auth.service';
 
@@ -8,7 +8,10 @@ import {AuthenticationService} from '../Account/auth.service';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  userLogged: boolean;
+
+  // for refreshing data
+  @Output()
+  goBackEvent = new EventEmitter();
 
   constructor(private router: Router,
               private authenticationService: AuthenticationService) {
@@ -45,7 +48,6 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['layout']);
   }
 
-
   isAdminLoggedIn() {
     return this.authenticationService.isAdminLoggedIn();
   }
@@ -55,7 +57,11 @@ export class MenuComponent implements OnInit {
   }
 
   logout() {
-    this.authenticationService.logout();
+    this.authenticationService.authenticationServiceLogout();
+    this.router.navigate(['']);
+
+    // for refreshing data
+    this.goBackEvent.emit();
   }
 
   getUserName() {

@@ -31,7 +31,7 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit(): void {
 
-    /* username regexp validation*/
+    /* username regexp validation */
     function forbiddenNameValidator(nameRe: RegExp): ValidatorFn {
       return (control: AbstractControl): { [key: string]: any } | null => {
         const forbidden = nameRe.test(control.value);
@@ -92,17 +92,17 @@ export class LoginFormComponent implements OnInit {
       // for local login test
       // this.localLoginTest();
 
-      // backend http auth
+      // backend api based http authentication
       this.handleLogin();
     }
   }
 
   handleLogin() {
 
-    this.authenticationService.login(this.username, this.password).subscribe(
+    this.authenticationService.authenticationServiceLogin(this.username, this.password).subscribe(
       data => {
 
-        console.log('Authentication success in authenticationService.login.');
+        console.log('Authentication in authenticationService.Login.');
         console.log('Server response: ' + data);
 
         if (data) {
@@ -111,11 +111,8 @@ export class LoginFormComponent implements OnInit {
           this.successMessage = 'Login Successful.';
           console.log(this.successMessage);
 
-          /*sessionStorage.setItem(
-            'token',
-            btoa(this.username + ':' + this.password)
-          );*/
-
+          this.authenticationService.username = this.username;
+          this.authenticationService.password = this.password;
           this.authenticationService.registerSuccessfulLogin(this.username);
           console.log(sessionStorage.getItem('authenticatedUser'));
 
@@ -128,12 +125,13 @@ export class LoginFormComponent implements OnInit {
         }
 
       }, error => {
+        console.log(error);
         alert('Authentication failed.');
         console.log('Authentication failed.');
       });
   }
 
-  private localLoginTest() {
+  /*private localLoginTest() {
     // only for testing purpose
     if ((this.username === this.authenticationService.admin && this.password === this.authenticationService.adminPassword)
       || (this.username === this.authenticationService.user && this.password === this.authenticationService.userPassword)
@@ -152,7 +150,7 @@ export class LoginFormComponent implements OnInit {
       this.invalidLogin = true;
       this.loginSuccess = false;
     }
-  }
+  }*/
 
   navigateToRegistration() {
     this.router.navigate(['registration']);

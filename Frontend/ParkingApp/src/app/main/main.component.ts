@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from '../data.service';
-import { ParkingLot } from '../Model/ParkingLot';
-import { Router, ActivatedRoute } from '@angular/router';
-import {AuthenticationService} from '../Account/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {DataService} from '../data.service';
+import {ParkingLot} from '../Model/ParkingLot';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -19,8 +18,7 @@ export class MainComponent implements OnInit {
 
   constructor(private dataService: DataService,
               private router: Router,
-              private route: ActivatedRoute,
-              private authenticationService: AuthenticationService) { }
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.noData = new Array<number>();

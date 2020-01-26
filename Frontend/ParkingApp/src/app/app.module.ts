@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {Injectable, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {RouterModule, Routes} from '@angular/router';
 
 import {AppComponent} from './app.component';
@@ -18,6 +18,18 @@ import {Feature2Component} from './feature/feature2/feature2.component';
 import {ParkingLayoutComponent} from './main/parking-layout/parking-layout.component';
 import {RegFormComponent} from './Account/registration-form/registration-form.component';
 import {EqualValidator} from './Account/registration-form/equal-validator.directive';
+import {AuthenticationService} from './Account/auth.service';
+
+@Injectable()
+export class XhrInterceptor implements HttpInterceptor {
+
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    const xhr = req.clone({
+      headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
+    });
+    return next.handle(xhr);
+  }
+}
 
 const routes: Routes = [
   {path: 'test', component: FeatureComponent},
@@ -64,9 +76,11 @@ const routes: Routes = [
 
   exports: [RouterModule],
 
-  providers: [],
+  providers: [AuthenticationService, {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true}],
   bootstrap: [AppComponent],
 
 })
+
+
 export class AppModule {
 }

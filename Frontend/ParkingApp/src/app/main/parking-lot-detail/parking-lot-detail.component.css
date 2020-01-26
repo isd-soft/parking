@@ -26,6 +26,10 @@
   background-color: grey;
 }
 
+.yellow {
+  background-color: #ffea00;
+}
+
 .fas, .far {
   font-size: 3rem;
 }

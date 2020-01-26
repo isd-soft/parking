@@ -2,6 +2,9 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ParkingLot} from 'src/app/Model/ParkingLot';
 import {ActivatedRoute} from '@angular/router';
 import {AuthenticationService} from '../../Account/auth.service';
+import {Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-parking-lot-detail',
@@ -22,7 +25,8 @@ export class ParkingLotDetailComponent implements OnInit {
   action: string;
 
   constructor(private route: ActivatedRoute,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private  http: HttpClient) {
   }
 
   ngOnInit() {
@@ -32,7 +36,7 @@ export class ParkingLotDetailComponent implements OnInit {
 
     this.route.queryParams.subscribe(
       params => {
-        this.action = params['action'];
+        this.action = params.action;
       }
     );
   }
@@ -41,8 +45,78 @@ export class ParkingLotDetailComponent implements OnInit {
     this.goBackEvent.emit();
   }
 
-  booking() {
-    this.bookingEvent.emit();
+  handleReservation() {
+
+    const parkingLotNumber = this.parkingLot.number;
+    const parkingLotStatus = this.parkingLot.status;
+
+    if (parkingLotStatus === 'RESERVED') {
+      this.unreservate(parkingLotNumber).subscribe(data => {
+
+        console.log('Cancel reservation in handleReservation.');
+        console.log('Server response: ' + data);
+
+        if (data) {
+          alert('Cancel reservation success.');
+          this.bookingEvent.emit();
+        } else {
+          alert('Cancel reservation failed.');
+        }
+
+      }, error => {
+        console.log(error);
+        alert('Cancel reservation failed.');
+      });
+    }
+
+    if (parkingLotStatus === 'FREE') {
+      this.reservate(parkingLotNumber).subscribe(data => {
+
+        console.log('Reservation in handleReservation.');
+        console.log('Server response: ' + data);
+
+        if (data) {
+          alert('Reservation success.');
+          this.bookingEvent.emit();
+        } else {
+          alert('Reservation failed.');
+        }
+
+      }, error => {
+        console.log(error);
+        alert('Reservation failed.');
+      });
+    }
+
+    this.goBack();
+  }
+
+  reservate(parkingLotNumber: number) {
+
+    const url = environment.restUrl + '/reservate/' + parkingLotNumber;
+
+    console.log('Reservation... parking lot #' + parkingLotNumber);
+
+    return this.http.get<Observable<boolean>>(url, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Basic ' + sessionStorage.getItem('token')
+      }
+    });
+  }
+
+  unreservate(parkingLotNumber: number) {
+
+    const url = environment.restUrl + '/unreservate/' + parkingLotNumber;
+
+    console.log('Cancel reservation... parking lot #' + parkingLotNumber);
+
+    return this.http.get<Observable<boolean>>(url, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Basic ' + sessionStorage.getItem('token')
+      }
+    });
   }
 
   isAdminLoggedIn() {
@@ -53,4 +127,7 @@ export class ParkingLotDetailComponent implements OnInit {
     return this.authenticationService.isUserLoggedIn();
   }
 
+  refresh(): void {
+    window.location.reload();
+  }
 }

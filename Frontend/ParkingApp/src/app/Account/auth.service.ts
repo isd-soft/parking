@@ -1,8 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {Router} from '@angular/router';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -29,17 +28,17 @@ export class AuthenticationService {
   public user1 = 'user2';
   public userPassword1 = 'aRduin1$';
 
-  constructor(private http: HttpClient, private  router: Router) {
+  constructor(private http: HttpClient) {
 
   }
 
   // TODO: alternative login method
-  login(username: string, password: string) {
+  authenticationServiceLogin(username: string, password: string) {
 
-    const url = 'http://localhost:8080/login';
+    const url = environment.restUrl + '/login';
 
     console.log('Auth login');
-    console.log('Login' + username + '  ' + password);
+    console.log('Login ' + username + '  ' + password);
 
     return this.http.post<Observable<boolean>>(url, {
       headers: {
@@ -52,34 +51,21 @@ export class AuthenticationService {
     });
   }
 
-  // old not properly working
-  /*authenticationServiceLogin(username: string, password: string) {
-
-    console.log('Auth login');
-    console.log('Login' + username + '  ' + password);
-
-    return this.http.get(`http://localhost:8080/login`,
-      {headers: {authorization: this.createBasicAuthToken(username, password)}}).pipe(map((res) => {
-
-      console.log(res);
-
-      this.username = username;
-      this.password = password;
-      this.registerSuccessfulLogin(username);
-
-    }));
-  }*/
-
   authenticationServiceRegistration(username: string, password: string) {
 
-    // TODO: registration post logic here
+    const url = environment.restUrl + `/registration`;
 
-    return this.http.get(`http://localhost:8080/registration`,
-      {headers: {authorization: this.createBasicAuthToken(username, password)}}).pipe(map((res) => {
-      this.username = username;
-      this.password = password;
-      this.registerSuccessfulLogin(username);
-    }));
+    console.log('Auth registration');
+    console.log('Reg credentials ' + username + '  ' + password);
+
+    return this.http.post<Observable<boolean>>(url, {
+      headers: {
+        Accept: 'application/json',
+      },
+
+      username,
+      password
+    });
   }
 
   createBasicAuthToken(username: string, password: string) {
@@ -88,28 +74,27 @@ export class AuthenticationService {
 
   registerSuccessfulLogin(username) {
     sessionStorage.setItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME, username);
+    sessionStorage.setItem(
+      'token',
+      btoa(this.username + ':' + this.password)
+    );
   }
 
-  logout() {
+  authenticationServiceLogout() {
     sessionStorage.removeItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME);
+    sessionStorage.removeItem('token');
+
     this.username = null;
     this.password = null;
   }
 
   isUserLoggedIn() {
     const user = sessionStorage.getItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME);
-    if (user === null) {
-      return false;
-    }
-    return true;
+    return user !== null;
   }
 
   isAdminLoggedIn() {
-    if (this.isUserLoggedIn() && this.getLoggedInUserName() === this.admin) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.isUserLoggedIn() && this.getLoggedInUserName() === this.admin;
   }
 
   getLoggedInUserName() {
