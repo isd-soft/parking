@@ -33,14 +33,14 @@ public class SpringLdapIntegrationTest {
         log.info("Users found:" + users);
         log.info("Users count:" + users.size());
 
-        assertEquals(users.size(), 5);
+        assertEquals(users.size(), 6);
     }
 
     @Test
     public void testGetAllUsersNames() {
         List<String> users = userLdapService.getAllUserNames();
         assertNotNull(users);
-        assertEquals(users.size(), 5);
+        assertEquals(users.size(), 6);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class SpringLdapIntegrationTest {
         log.info("Users found:" + users);
         log.info("Users count:" + users.size());
 
-        assertEquals(users.size(), 5);
+        assertEquals(users.size(), 6);
     }
 
     @Test

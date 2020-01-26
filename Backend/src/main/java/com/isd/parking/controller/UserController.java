@@ -68,6 +68,8 @@ public class UserController {
 
         if (Boolean.parseBoolean(ldapEnabled)) {
             // LDAP
+            log.info("Request body: " + user.getUsername() + " " + user.getPassword());
+            log.info(String.valueOf(userService.authenticate(user.getUsername(), user.getPassword())));
             return userService.authenticate(user.getUsername(), user.getPassword());
             //   return userLdapService.authenticate(user.getUsername(), user.getPassword());       unusable don't return boolean
         } else {
@@ -91,7 +93,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Boolean> reservation(@PathVariable("id") Long parkingLotId) {
 
-        Optional<ParkingLot> parkingLotOptional = parkingLotService.findById(Long.valueOf(parkingLotId));
+        Optional<ParkingLot> parkingLotOptional = parkingLotService.findById(parkingLotId);
 
         AtomicBoolean hasErrors = new AtomicBoolean(false);
 

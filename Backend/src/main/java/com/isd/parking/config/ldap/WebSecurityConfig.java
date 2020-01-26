@@ -2,32 +2,18 @@ package com.isd.parking.config.ldap;
 
 import com.isd.parking.model.Roles;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.LdapShaPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
-
-import javax.servlet.*;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /*
-    * Ldap config
-    * */
+     * Ldap config
+     * */
     @Value("${ldap.enabled}")
     private String ldapEnabled;
 
@@ -47,8 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private String ldapPrincipalPassword;
 
     /*
-    * For 'in memory' auth
-    * */
+     * For 'in memory' auth
+     * */
     @Value("${http.auth.admin.name}")
     private String admin;
 
@@ -66,23 +52,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable()
+        http.cors()
+                .and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login", "/parking").permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic();
-
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/login**", "/parking").permitAll()
-//                .antMatchers("/").permitAll()
-//                .and()
-//                .logout()
-//                .invalidateHttpSession(true)
-//                .deleteCookies("JSESSIONID")
-//                .permitAll();
+                .antMatchers("/login").permitAll()
+                .anyRequest().fullyAuthenticated()
+                .and().httpBasic();
     }
 
     @Override
@@ -94,9 +69,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .userDnPatterns(ldapUserDnPattern)
                     .groupSearchBase("ou=groups")
                     .contextSource()
-                    .url(ldapUrl + "/" + ldapBaseDn)
-                    .managerDn(ldapSecurityPrincipal)
-                    .managerPassword(ldapPrincipalPassword)
+                    .url("ldap://localhost:18889/dc=isd,dc=com")
+                    // .managerDn(ldapSecurityPrincipal)
+                    // .managerPassword(ldapPrincipalPassword)
                     .and()
                     .passwordCompare()
                     .passwordEncoder(new LdapShaPasswordEncoder())
@@ -109,60 +84,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                     .withUser(admin).password(adminPass).roles(String.valueOf(Roles.ADMIN));
         }
-
-        /*if (Boolean.parseBoolean(ldapEnabled)) {
-            auth
-                    .ldapAuthentication()
-                    .contextSource()
-                    .url(ldapUrl + "/" + ldapBaseDn)
-                    .managerDn(ldapSecurityPrincipal)
-                    .managerPassword(ldapPrincipalPassword)
-                    .and()
-                    .userDnPatterns(ldapUserDnPattern);
-        } else {
-            // use basic HTTP authentication
-            auth
-                    .inMemoryAuthentication()
-                    .withUser(user).password(userPass).roles(String.valueOf(Roles.USER))
-                    .and()
-                    .withUser(admin).password(adminPass).roles(String.valueOf(Roles.ADMIN));
-        }*/
-    }
-
-    @Bean
-    public CsrfTokenRepository csrfTokenRepository() {
-        CookieCsrfTokenRepository repository = new CookieCsrfTokenRepository();
-        repository.setHeaderName("X-XSRF-TOKEN");
-        repository.setCookieHttpOnly(false);
-        return repository;
-    }
-
-    /*
-     * CORS issue
-     * https://github.com/spring-projects/spring-boot/issues/5834
-     */
-    protected class WebSecurityCorsFilter implements Filter {
-        @Override
-        public void init(FilterConfig filterConfig) throws ServletException {
-        }
-
-        @Override
-        public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-            HttpServletResponse res = (HttpServletResponse) response;
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
-            res.setHeader("Access-Control-Max-Age", "3600");
-            res.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept, x-requested-with, Cache-Control");
-            chain.doFilter(request, res);
-        }
-
-        @Override
-        public void destroy() {
-        }
-    }
-
-    @Bean
-    public static PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }
