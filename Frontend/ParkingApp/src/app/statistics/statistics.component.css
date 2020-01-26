@@ -145,3 +145,14 @@ span {
   padding: 0;
 }
 
+tr:hover{
+  -webkit-filter: brightness(90%);
+   filter: brightness(90%);
+   transition: 0.5s;
+}
+
+@media (max-width: 992px) {
+  .input-group-text{
+    width: 150px;
+  }
+  }
