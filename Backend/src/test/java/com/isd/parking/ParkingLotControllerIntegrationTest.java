@@ -19,6 +19,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 
+/**
+ * Tests for parking lot controller
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ParkingApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ParkingLotControllerIntegrationTest {
@@ -29,6 +32,9 @@ public class ParkingLotControllerIntegrationTest {
     @LocalServerPort
     private int port;
 
+    /**
+     * Get environment root url
+     */
     private String getRootUrl() {
         return "http://localhost:" + port;
     }
@@ -38,6 +44,10 @@ public class ParkingLotControllerIntegrationTest {
 
     }
 
+    /**
+     * Test for get all parking lots by api request
+     * Asserts that response body is not null and contains parking lots
+     */
     @Test
     public void testGetAllParkingLots() {
         HttpHeaders headers = new HttpHeaders();
@@ -47,6 +57,10 @@ public class ParkingLotControllerIntegrationTest {
         assertNotNull(response.getBody());
     }
 
+    /**
+     * Test for get parking lot by id api request
+     * Asserts that response body is not null and contains parking lot specified by id
+     */
     @Test
     public void testGetParkingLotById() {
         ParkingLot parkingLot = restTemplate.getForObject(getRootUrl() + "/parking/1", ParkingLot.class);
@@ -54,6 +68,10 @@ public class ParkingLotControllerIntegrationTest {
         assertNotNull(parkingLot);
     }
 
+    /**
+     * Test for update parking lot by id
+     * Asserts that updated parking lot is not null
+     */
     @Test
     public void testUpdateParkingLot() {
         long id = 1L;
@@ -67,21 +85,10 @@ public class ParkingLotControllerIntegrationTest {
         assertNotNull(updatedParkingLot);
     }
 
-    //TODO: tests creating and deleting parking lots
-
-    @Test
-    public void testCreateParkingLot() {
-        ParkingLot parkingLot = ParkingLot.builder()
-                .id(1L)
-                .number(1)
-                .status(ParkingLotStatus.FREE)
-                .updatedAt(new Date()).build();
-
-        ResponseEntity<ParkingLot> postResponse = restTemplate.postForEntity(getRootUrl() + "/parking", parkingLot, ParkingLot.class);
-        assertNotNull(postResponse);
-        assertNotNull(postResponse.getBody());
-    }
-
+    /**
+     * Test for deleting parking lot by id from database
+     * Asserts that can't access parking lot by request
+     */
     @Test
     public void testDeleteParkingLot() {
         long id = 2L;

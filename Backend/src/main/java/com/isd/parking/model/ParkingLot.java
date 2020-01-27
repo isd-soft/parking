@@ -10,6 +10,10 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import java.util.Date;
 
+
+/**
+ * Parking Lot model class
+ */
 @Entity(name = "parking_lots")
 @DynamicUpdate
 @Data
@@ -32,12 +36,7 @@ public class ParkingLot {
     @Column(name = "status")
     private ParkingLotStatus status;
 
-//    private boolean reserved;
-
-//    private User user;
-
     public void setUpdatedNow() {
         this.setUpdatedAt(new java.sql.Date(System.currentTimeMillis()));
     }
-
 }

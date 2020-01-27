@@ -1,5 +1,5 @@
 
--- INSERT INITIAL DATA
+-- Initial database parking lots data
 
 INSERT INTO parking_lots(id, lot_number, status, updated_at) VALUES (1, 1, 2, CURRENT_TIMESTAMP);
 INSERT INTO parking_lots(id, lot_number, status, updated_at) VALUES (2, 2, 2, CURRENT_TIMESTAMP);

@@ -19,21 +19,25 @@
     </properties>
 
     <dependencies>
+        <!--    Starter for using Spring Data JPA with Hibernate    -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
+        <!--    Starter for building web, including RESTful, applications using Spring MVC. Uses Tomcat as the default embedded container    -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!--    Starter for building WebSocket applications using Spring Framework's WebSocket support      -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 
+        <!--    Spring Boot developer tools    -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -41,26 +45,22 @@
             <optional>true</optional>
         </dependency>
 
+        <!--   SpringSource Org PostgreSQL JDBC 4       -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.200</version>
-            <scope>runtime</scope>
-        </dependency>
-
+        <!--   Project Lombok plugin: Spice up your java: Automatic Resource Management, automatic generation of getters, setters, equals,
+        hashCode and toString, and more     -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
 
+        <!--    Starter for testing Spring Boot applications with libraries including JUnit, Hamcrest and Mockito   -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -78,14 +78,14 @@
             <scope>test</scope>
         </dependency>
 
+        <!--    JSON is a light-weight, language independent, data interchange format. See http://www.JSON.org/ The files in this package implement JSON encoders/decoders in Java.
+        It also includes the capability to convert between JSON and XML, HTTP headers, Cookies, and CDL. This is a reference implementation.-->
         <!-- https://mvnrepository.com/artifact/org.json/json -->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20190722</version>
         </dependency>
-
-
     </dependencies>
 
     <build>
