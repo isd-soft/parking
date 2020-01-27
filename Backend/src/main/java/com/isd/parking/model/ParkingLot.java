@@ -32,12 +32,7 @@ public class ParkingLot {
     @Column(name = "status")
     private ParkingLotStatus status;
 
-//    private boolean reserved;
-
-//    private User user;
-
     public void setUpdatedNow() {
         this.setUpdatedAt(new java.sql.Date(System.currentTimeMillis()));
     }
-
 }

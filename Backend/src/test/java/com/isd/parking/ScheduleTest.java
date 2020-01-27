@@ -20,9 +20,7 @@ public class ScheduleTest {
     @Scheduled(fixedDelay = 5000)
     public void scheduleFixedDelayTask() {
         StatisticsService statisticsService = mock(StatisticsService.class);
-
         log.info("Fixed delay task executing - " + System.currentTimeMillis() / 1000);
-
         statisticsService.deleteStatsOlderThanWeek();
     }
 }
