@@ -5,6 +5,7 @@ import com.isd.parking.model.ParkingLot;
 import com.isd.parking.model.StatisticsRecord;
 import com.isd.parking.model.User;
 import com.isd.parking.model.enums.ParkingLotStatus;
+import com.isd.parking.service.ParkingLotLocalService;
 import com.isd.parking.service.ParkingLotService;
 import com.isd.parking.service.StatisticsService;
 
@@ -37,7 +38,7 @@ public class UserController {
 
     private final ParkingLotService parkingLotService;
 
-    //    private final ParkingLotLocalService parkingLotLocalService;
+    private final ParkingLotLocalService parkingLotLocalService;
 
     private final StatisticsService statisticsService;
 
@@ -58,9 +59,10 @@ public class UserController {
     private String ldapEnabled;
 
     @Autowired
-    public UserController(UserService userService, ParkingLotService parkingLotService, StatisticsService statisticsService) {
+    public UserController(UserService userService, ParkingLotService parkingLotService, ParkingLotLocalService parkingLotLocalService, StatisticsService statisticsService) {
         this.userService = userService;
         this.parkingLotService = parkingLotService;
+        this.parkingLotLocalService = parkingLotLocalService;
         this.statisticsService = statisticsService;
     }
 
@@ -157,8 +159,7 @@ public class UserController {
                 parkingLotService.save(parkingLot);
 
                 //saving in local Java memory
-                //TODO: Save to local after merge
-                //parkingLotLocalService.save(parkingLot);
+                parkingLotLocalService.save(parkingLot);
 
                 //save new statistics to database
                 addStatisticsRecord(parkingLot);
@@ -202,8 +203,7 @@ public class UserController {
                 parkingLotService.save(parkingLot);
 
                 //saving in local Java memory
-                //TODO: Save to local after merge
-                //parkingLotLocalService.save(parkingLot);
+                parkingLotLocalService.save(parkingLot);
 
                 //save new statistics to database
                 addStatisticsRecord(parkingLot);
