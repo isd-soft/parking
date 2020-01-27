@@ -13,6 +13,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/**
+ * User Service class for ldap storage repository
+ * Contains methods for
+ * authenticate user,
+ * search user by username,
+ * create new user entry in ldap repository,
+ * modify existed user,
+ * get all users from ldap storage
+ */
 @Service
 public class UserService {
 
@@ -55,6 +65,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    /**
+     * Generates SHA encrypted string from users password
+     *
+     * @param password - user password to be encrypted
+     * @return SHA encrypted string from users password
+     */
     private String digestSHA(final String password) {
         String base64;
 
@@ -69,7 +85,4 @@ public class UserService {
 
         return "{SHA}" + base64;
     }
-
-
-
 }

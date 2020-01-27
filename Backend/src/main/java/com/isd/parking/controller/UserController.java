@@ -21,6 +21,11 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
+/**
+ * User controller
+ * Provides methods for login, registration of user,
+ * reservation and cancel reservation parking lot by user
+ */
 @RestController
 @CrossOrigin(origins = "*")
 @Slf4j
@@ -46,6 +51,7 @@ public class UserController {
     @Value("${http.auth.user.pass}")
     private String userPass;
 
+    // indicates ldap enabled
     @Value("${ldap.enabled}")
     private String ldapEnabled;
 
@@ -56,28 +62,38 @@ public class UserController {
         this.statisticsService = statisticsService;
     }
 
-    // for test in memory auth
+    /**
+     * Users login controller
+     * Used to authentificate user and login in system
+     *
+     * @return - success status of provided login
+     */
     @RequestMapping("/login")
     public boolean login(@RequestBody User user) {
 
         final String username = user.getUsername();
         final String password = user.getPassword();
 
-        log.info("Request body: " + user);
-        log.info("LDAP enabled: " + Boolean.parseBoolean(ldapEnabled));
+        // log.info("Request body: " + user);
+        // log.info("LDAP enabled: " + Boolean.parseBoolean(ldapEnabled));
 
         if (Boolean.parseBoolean(ldapEnabled)) {
             // LDAP
-            log.info("Request body: login " + username + " " + password);
-            log.info(String.valueOf(userService.authenticate(username, password)));
+            // log.info("Request body: login " + username + " " + password);
+            // log.info(String.valueOf(userService.authenticate(username, password)));
             return userService.authenticate(username, password);
-            //   return userLdapService.authenticate(user.getUsername(), user.getPassword());       unusable don't return boolean
         } else {
             return username.equals(admin) && password.equals(adminPass)
                     || username.equals(userName) && password.equals(userPass);
         }
     }
 
+    /**
+     * Users registration controller
+     * Handles user registration in system
+     *
+     * @return - success status of provided registration
+     */
     @RequestMapping("/registration")
     public boolean registration(@RequestBody User user) {
 
@@ -105,6 +121,13 @@ public class UserController {
         }
     }
 
+    /**
+     * Parking lot reservation controller
+     * Used to reservate parking lot
+     *
+     * @param parkingLotId - id of parking lot
+     * @return - success status of parking lot reservation
+     */
     @RequestMapping("/reservate/{id}")
     public boolean reservation(@PathVariable("id") Long parkingLotId) {
 
@@ -143,6 +166,13 @@ public class UserController {
         return !hasErrors.get();
     }
 
+    /**
+     * Parking lot reset reservation controller
+     * Used to cancel reservation status of parking lot
+     *
+     * @param parkingLotId - id of parking lot
+     * @return - success status of parking lot reservation
+     */
     @RequestMapping("/unreservate/{id}")
     public boolean cancelReservation(@PathVariable("id") Long parkingLotId) {
 
@@ -181,8 +211,13 @@ public class UserController {
         return !hasErrors.get();
     }
 
+    /**
+     * Method creates new statistics record
+     *
+     * @param parkingLot - input parking lot object
+     */
     private void addStatisticsRecord(ParkingLot parkingLot) {
-        StatsRow statisticsRecord = StatsRow.builder()//.id(UUID.randomUUID())
+        StatsRow statisticsRecord = StatsRow.builder()
                 .lotNumber(parkingLot.getNumber())
                 .status(parkingLot.getStatus())
                 .updatedAt(new Date(System.currentTimeMillis())).build();
@@ -193,6 +228,11 @@ public class UserController {
         statisticsService.save(statisticsRecord);
     }
 
+    /**
+     * Get user by token from ldap storage
+     *
+     * @return - Principal user
+     */
     @RequestMapping("/user")
     public Principal user(HttpServletRequest request) {
         String authToken = request.getHeader("Authorization")
@@ -201,6 +241,12 @@ public class UserController {
                 .decode(authToken)).split(":")[0];
     }
 
+
+    /**
+     * Get all users from ldap storage
+     *
+     * @return - Iterable of all users
+     */
     @ResponseBody
     @GetMapping("/users")
     public Iterable<User> getAllUsers() {

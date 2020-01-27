@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * User ldap repository
+ */
 @Repository
 public interface UserRepository extends LdapRepository<User> {
 

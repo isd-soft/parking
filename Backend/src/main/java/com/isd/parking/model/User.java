@@ -6,6 +6,9 @@ import org.springframework.ldap.odm.annotations.Id;
 
 import javax.naming.Name;
 
+/**
+ * LDAP user entry
+ */
 @Entry(base = "ou=users", objectClasses = {"person", "inetOrgPerson", "top"})
 public final class User {
 

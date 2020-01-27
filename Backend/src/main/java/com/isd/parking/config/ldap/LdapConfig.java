@@ -8,6 +8,8 @@ import org.springframework.data.ldap.repository.config.EnableLdapRepositories;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.core.support.LdapContextSource;
 
+
+
 @Configuration
 @PropertySource("classpath:application.properties")
 @ComponentScan(basePackages = {"com.isd.parking.*"})
