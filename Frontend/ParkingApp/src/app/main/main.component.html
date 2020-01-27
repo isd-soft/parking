@@ -1,14 +1,17 @@
-<div class="btn btn-info refresh" (click)="refresh()">Refresh</div>
+<!-- <div class="d-flex justify-content-center" >
+  <div class="btn refresh mt-3 mb-4" (click)="refresh()">Refresh</div>
+</div> -->
 
+<!--<div class="display-4 text-light d-flex justify-content-center mb-2 title mt-3">ParKing</div>-->
 
 <app-parking-lot-detail *ngIf="action === 'view'" [parkingLot]="selectedParkingLot" (goBackEvent)="refresh()"></app-parking-lot-detail>
 
 
-<div class="row" *ngIf="action !== 'view'">
+<div class="container row p-0 mx-auto" *ngIf="action !== 'view'">
   <div class="col-12 col-sm-6 col-md-4 col-lg-3 elem" *ngFor="let parkingLot of parkingLots">
     <div class="lot-name">{{'LOT ' + parkingLot.number}}</div>
     <div class="btn lot col-12"  [ngClass]="{'green': parkingLot.status === 'FREE',
-                                            'red' : parkingLot.status === 'OCCUPIED',
+                                            'red' : parkingLot.status === 'OCCUPIED' || parkingLot.status == null,
                                             'grey' : parkingLot.status === 'UNKNOWN'}" (click)="showDetails(parkingLot.id)">
       <i class="fas fa-car" *ngIf="parkingLot.status === 'OCCUPIED'"></i>
       <i class="fas fa-parking" *ngIf="parkingLot.status === 'FREE'"></i>

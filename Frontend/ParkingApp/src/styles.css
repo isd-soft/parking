@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+/*@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700&display=swap');*/
+
+.ngx-pagination a:hover, .ngx-pagination button:hover {
+  background: none!important;
+}
+
+.ngx-pagination a {
+  color: black!important;
+  transition: color 1s;
+}
+.ngx-pagination a:hover {
+  color: #f44e00!important;
+}
+
+.ngx-pagination .current{
+  background: #f44e00!important;
+}
+/** {*/
+/*  font-family: 'Roboto Condensed', sans-serif!important;*/
+/*}*/
+
+body {
+  background-color: white!important;
+}
+
+footer {
+color: #919495 !important;
+}

@@ -3,16 +3,23 @@
 }
 
 .refresh {
-  min-width: 100%;
-  margin-top: 20px;
+  color: #fff;
+  border-color: #fff;
+  background-color: #f44e00;
+}
+
+.refresh:hover {
+  color: #f44e00;
+  background-color: #fff;
+  border-color: #fff;
 }
 
 .green {
-  background-color: #20b600;
+  background-color: #0aff7c;
 }
 
 .red {
-  background-color: #fb0006;
+  background-color: #ff640a;
 }
 
 .grey {
@@ -25,4 +32,8 @@
 
 .lot {
   cursor: unset;
+}
+
+span {
+  color: black;
 }
