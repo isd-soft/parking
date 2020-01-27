@@ -39,12 +39,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${ldap.user.dn.pattern}")
     private String ldapUserDnPattern;
 
-    // @Value("${ldap.principal}")
-    // private String ldapSecurityPrincipal;
-    //
-    // @Value("${ldap.password}")
-    // private String ldapPrincipalPassword;
-
     /*
      * For 'in memory' auth
      * */
@@ -87,8 +81,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .groupSearchBase("ou=groups")
                     .contextSource()
                     .url("ldap://localhost:18889/dc=isd,dc=com")
-                    // .managerDn(ldapSecurityPrincipal)
-                    // .managerPassword(ldapPrincipalPassword)
                     .and()
                     .passwordCompare()
                     .passwordEncoder(new LdapShaPasswordEncoder())

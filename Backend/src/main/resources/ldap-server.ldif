@@ -34,32 +34,9 @@ objectclass: top
 objectclass: organizationalUnit
 ou: otherusers
 
-dn: uid=ben,ou=users,dc=isd,dc=com
-objectclass: top
-objectclass: person
-objectclass: organizationalPerson
-objectclass: inetOrgPerson
-cn: Ben Alex
-sn: Alex
-uid: ben
-userPassword: {SHA}nFCebWjxfaLbHHG1Qk5UU4trbvQ=
+########  USERS  ################
 
-dn: uid=bob,ou=users,dc=isd,dc=com
-objectclass: top
-objectclass: person
-objectclass: organizationalPerson
-objectclass: inetOrgPerson
-cn: Bob Hamilton
-sn: Hamilton
-uid: bob
-userPassword: bobspassword
-# userPassword: {SHA}Ym9ic3Bhc3N3b3Jk
-
-
-
-# custom user
-
-dn: uid=alex,ou=users,dc=isd,dc=com
+dn: uid=aleks,ou=users,dc=isd,dc=com
 objectclass: top
 objectclass: person
 objectclass: organizationalPerson
@@ -79,7 +56,7 @@ sn: A
 uid: admin
 userPassword: sYst3m@
 
-
+###################################
 
 
 dn: uid=joe,ou=otherusers,dc=isd,dc=com
@@ -92,24 +69,13 @@ sn: Smeth
 uid: joe
 userPassword: joespassword
 
-dn: cn=quote\"guy,ou=\"quoted users\",dc=isd,dc=com
-objectclass: top
-objectclass: person
-objectclass: organizationalPerson
-objectclass: inetOrgPerson
-cn: quote\"guy
-sn: Quote
-uid: quoteguy
-userPassword: quoteguyspassword
-
-
 dn: cn=developers,ou=groups,dc=isd,dc=com
 objectclass: top
 objectclass: groupOfUniqueNames
 cn: developers
 ou: developer
 uniqueMember: uid=ben,ou=users,dc=isd,dc=com
-uniqueMember: uid=bob,ou=users,dc=isd,dc=com
+uniqueMember: uid=aleks,ou=users,dc=isd,dc=com
 
 dn: cn=managers,ou=groups,dc=isd,dc=com
 objectclass: top
@@ -117,7 +83,6 @@ objectclass: groupOfUniqueNames
 cn: managers
 ou: manager
 uniqueMember: uid=ben,ou=users,dc=isd,dc=com
-uniqueMember: cn=mouse\, jerry,ou=users,dc=isd,dc=com
 
 dn: cn=submanagers,ou=subgroups,ou=groups,dc=isd,dc=com
 objectclass: top
