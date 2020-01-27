@@ -6,7 +6,11 @@
 #define SLAVE_ONE   1   // declare id of first slave
 #define SLAVE_TWO   2   // deckare id of second slave
 
-String slave_id;
+#define SONAR_1_ID '1'
+#define SONAR_2_ID '2'
+
+char slave_id;
+char sensor_id;
 String status_of_lot;
 String last_known_status;
 
@@ -16,7 +20,7 @@ WebsocketsClient client;
 
 const char *ssid = "Inther";                         //Enter SSID
 const char *password = "inth3rmoldova";              //Enter Password
-const char *websockets_server_host = "172.17.41.36"; //Enter server address
+const char *websockets_server_host = "172.17.41.34"; //Enter server address
 const uint16_t websockets_server_port = 8080;        // Enter server port
 
 //WebSocket
@@ -78,8 +82,8 @@ void loop() {
   status_of_lot = ""; 
   
   digitalWrite(MASTER_EN , HIGH);     // Make Enable pin high to send Data
-  delay(1000);                        // required minimum delay of 5ms
-  Serial.println(SLAVE_ONE);          // Send character A serially
+  delay(500);                        // required minimum delay of 5ms
+  Serial.print(SLAVE_ONE); Serial.println(SONAR_1_ID);         // Send character A serially
   Serial.flush();                     // wait for transmission of data
   digitalWrite(MASTER_EN , LOW);      // Receiving mode ON
 
@@ -88,13 +92,14 @@ void loop() {
     answer = Serial.readString();
   }
 
-  slave_id = answer.substring(0, 1);
+  slave_id = answer.charAt(0);
+  sensor_id = answer.charAt(1);
   status_of_lot = answer.substring(2);
 
-  Serial.println("Lot: " + slave_id + String(status_of_lot));
+//  Serial.println("Lot: " + slave_id + sensor_id + String(status_of_lot));
 
   if (status_of_lot != last_known_status) {
-    client.send(msg + String(slave_id) + String("\", \"status\":\"") + status_of_lot + String("\", \"token\":\"") + security_token + String("\"}"));
+    client.send(msg + String(sensor_id) + String("\", \"status\":\"") + status_of_lot + String("\", \"token\":\"") + security_token + String("\"}"));
     last_known_status = status_of_lot;
   }
 
