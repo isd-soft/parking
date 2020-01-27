@@ -1,4 +1,158 @@
+h1, label {
+  color: #D1E7FA;
+}
+
 .btn {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+
+.refresh {
+  width: 100%;
+  /*color: #D1E7FA;*/
+  /*border-color: #D1E7FA;*/
+  /*background-color: #0A8EFF;*/
+  margin-top: 0;
+}
+
+.refresh:hover {
+  color: #0A8EFF;
+  background-color: #D1E7FA;
+  border-color: #D1E7FA;
+}
+
+.table {
+  box-sizing: content-box;
+  background: white;
+  color: black;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 10px;
+  border-spacing: 0;
+}
+
+.table td {
+  color: white;
+}
+
+.table thead {
+  background-color: #3a383a;
+  color: white;
+
+}
+
+.table thead th {
+  border-bottom: 0;
+}
+
+td, th {
+  text-align: center;
+  border-top : 0;
+}
+
+th .lot,
+th .time,
+th .date {
+  cursor: pointer;
+}
+
+th .lot:hover,
+th .time:hover,
+th .date:hover {
+  text-decoration: underline;
+}
+
+tr:hover{
+  -webkit-filter: brightness(90%);
+   filter: brightness(90%);
+   transition: 0.5s;
+}
+
+span {
+  position: relative;
+}
+
+.lot .fas {
+  position: absolute;
+  left: 90px;
+  bottom: 1px;
+}
+
+.date .fas {
+  position: absolute;
+  left: 39px;
+  bottom: 1px;
+}
+
+.time .fas {
+  position: absolute;
+  left: 41px;
+  bottom: 1px;
+}
+
+@media only screen and (max-width: 416px) {
+  .lot .fas {
+    left: 89px;
+    bottom: 2px;
+  }
+
+  .date .fas {
+    position: absolute;
+    left: 39px;
+    bottom: 1px;
+  }
+
+  .time .fas {
+    position: absolute;
+    left: 41px;
+    bottom: 1px;
+  }
+
+  .table thead th {
+    vertical-align: middle;
+  }
+
+  .table td, .table th {
+    padding: 0.5rem
+  }
+}
+
+@media (max-width: 384px) {
+  .lot .fas {
+    left: 65px;
+    bottom: 12px;
+  }
+
+  th {
+    font-size: smaller;
+  }
+
+  .lot .fas {
+    left: 74px;
+    bottom: 1px;
+  }
+
+  .date .fas {
+    left: 33px;
+    bottom: 1px;
+  }
+
+  .time .fas {
+    left: 34px;
+    bottom: 1px;
+  }
+}
+
+.statistics-form {
+  padding-top: 10px;
+}
+
+.form-control {
+  padding: 0;
+}
+
+@media (max-width: 992px) {
+  .input-group-text{
+    width: 150px;
+  }
+  }
