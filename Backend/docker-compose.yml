@@ -1,5 +1,6 @@
 version: "3"
 services:
+  # DB*****************************************
   postgres:
     image: postgres:latest
     network_mode: bridge
@@ -15,9 +16,10 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=parking
     restart: unless-stopped
-  # APP*****************************************
+
+  # angular*****************************************
   angular-docker-service:
-    image: angular-docker-service
+    image: angular-docker-service1
     build:
       context: ../Frontend/ParkingApp
       dockerfile: ./Dockerfile.angular
@@ -25,7 +27,7 @@ services:
       - 4200:4200
 
 
-
+  # app*****************************************
   springbootapp:
     image: springbootapp:latest
     network_mode: bridge
@@ -43,4 +45,4 @@ services:
 
 volumes:
   postgres-data:
-  # angular*****************************************
+
