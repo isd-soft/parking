@@ -1,11 +1,69 @@
-<div class="login-form">
-  <div class="container">
-    <img src="assets/img/isd-logo.png" style="height: 200px; width: 200px;">
-    <h1>ParKing</h1>
-    <div class="box">
-      <input type="text" placeholder="username" >
-	    <input type="password" placeholder="password" >
-	    <button class="btn btn-default full-width" (click)="onSubmit()"><span class="fas fa-check"></span></button>
+<div class="container col-lg-5 mt-5">
+
+  <div class="card border-radius-m z-depth-5">
+    <div class="card-body mx-auto text-center">
+
+      <img src="assets/img/isd-logo.png" style="height: 200px; width: 200px;">
+      <h1 class="h1">ParKing</h1>
+
+      <form [formGroup]="loginForm" class="form-group mx-auto text-center" (ngSubmit)="onSubmit()">
+
+        <div class="alert alert-warning" *ngIf='invalidLogin'>{{errorMessage}}</div>
+        <div class="alert alert-success" *ngIf='loginSuccess'>{{successMessage}}</div>
+
+        <div class="form-group mx-auto text-center">
+          <label for="username">User Name :</label>
+          <input type="text" class="form-control full-width" formControlName="username" style="width: 22rem" id="username"
+                 [(ngModel)]="username"
+                 placeholder="Enter User Name"
+                 name="username" required minlength="5">
+          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger font-error ">
+
+            <div *ngIf="name.errors.required">
+              Name is required.
+            </div>
+            <div *ngIf="name.errors.minlength">
+              Name must be at least 5 characters long.
+            </div>
+            <div *ngIf="name.errors.maxlength">
+              Name must be maximum 15 characters long.
+            </div>
+            <div *ngIf="name.errors.forbiddenName">
+              Name should contain only<br/>
+              A-Z, a-z, 0-9 symbols and "_".
+            </div>
+          </div>
+        </div>
+        <div class="form-group mx-auto text-center">
+          <label for="password">Password:</label>
+          <input type="password" class="form-control full-width" formControlName="password" style="width: 22rem" id="password"
+                 [(ngModel)]="password"
+                 placeholder="Enter password"
+                 name="password" required minlength="6">
+          <div *ngIf="pass.invalid && (pass.dirty || pass.touched)" class="alert alert-danger font-error ">
+
+            <div *ngIf="pass.errors.required">
+              Password is required.
+            </div>
+            <div *ngIf="pass.errors.minlength">
+              Password must be at least 6 characters long.
+            </div>
+            <div *ngIf="pass.errors.maxlength">
+              Password must be maximum <br/>10 characters long.
+            </div>
+            <div *ngIf="pass.errors.pattern">
+              Password should contain<br/>
+              at least one uppercase letter, <br/>
+              one lowercase letter, one number <br/>
+              and one special character from @$!%*?&
+            </div>
+          </div>
+        </div>
+        <button type = "submit" class="btn btn-default isd-red full-width rounded-pill mt-3 hoverable z-depth-5 login-btn" (click)=onSubmit()><span
+          class="fas fa-check"></span></button>
+      </form>
     </div>
   </div>
+  <!--  <a class="btn full-width rounded-pill mt-3 link" (click)=navigateToRegistration()>Don't have an account yet? Register <span-->
+  <!--    class="fas fa-arrow-right"></span></a>-->
 </div>

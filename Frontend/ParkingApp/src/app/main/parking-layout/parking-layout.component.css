@@ -1,0 +1,463 @@
+.green {
+  background-color: #2DF726;
+}
+
+.red {
+  background-color: #FF4038;
+}
+
+.grey {
+  background-color: grey;
+}
+
+.refresh {
+  background-color: #0A8EFF;
+}
+
+img {
+  width: 42rem;
+}
+
+span {
+  font-family: 'Allerta Stencil';
+  font-size: 22px;
+}
+
+.carv {
+  /* width: 5.1rem;
+  height: 2.3rem; */
+  background-image: url("../../../assets/img/car2.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.car {
+  background-image: url("../../../assets/img/car.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.container {
+  position: relative;
+}
+
+.lot-number-top {
+  text-orientation: mixed;
+  writing-mode: vertical-rl;
+}
+
+.lot-side {
+  position: absolute;
+  width: 5.1rem;
+  height: 2.3rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+}
+
+.lot-side:hover, .lot-top:hover {
+  opacity: .75;
+}
+
+.lot-top {
+  position: absolute;
+  width: 2.4rem;
+  height: 5.2rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+}
+
+.lot-1 {
+  top: 26.89rem;
+  left: 15.09rem;
+}
+
+.lot-2 {
+  top: 29.28rem;
+  left: 15.09rem;
+}
+
+.lot-3 {
+  top: 31.7rem;
+  left: 15.09rem;
+}
+
+.lot-4 {
+  top: 0.5rem;
+  left: 34.46rem;
+}
+
+.lot-5 {
+  top: 0.5rem;
+  left: 36.9rem;
+}
+
+.lot-6 {
+  top: 0.5rem;
+  left: 39.26rem;
+}
+
+.lot-7 {
+  top: 0.5rem;
+  left: 41.7rem;
+}
+
+.lot-8 {
+  top: 0.5rem;
+  left: 44.15rem;
+}
+
+.lot-9 {
+  top: 0.5rem;
+  left: 46.55rem;
+}
+
+.lot-10 {
+  top: 0.5rem;
+  left: 49rem;
+}
+
+.smoking {
+  position: absolute;
+  top: 33.4rem;
+  left: 30rem;
+}
+
+.backDoor {
+  position: absolute;
+  bottom: 3rem;
+  left: 15rem;
+  font-size: 1.5rem;
+}
+
+@media (max-width: 1199px) {
+  .lot-side {
+    width: 5.15rem;
+    height: 2.4rem;
+  }
+
+  .lot-top {
+    width: 2rem;
+    height: 4.35rem;
+  }
+
+  .lot-1 {
+    left: 11.23rem;
+  }
+
+  .lot-2 {
+    height: 1.92rem;
+    left: 11.23rem;
+  }
+
+  .lot-3 {
+    left: 11.23rem;
+    top: 27.9rem;
+  }
+
+  .lot-4 {
+    top: 1.34rem;
+    left: 27.8rem;
+  }
+
+  .lot-5 {
+    top: 1.34rem;
+    left: 29.9rem;
+  }
+
+  .lot-6 {
+    top: 1.34rem;
+    left: 31.9rem;
+  }
+
+  .lot-7 {
+    top: 1.34rem;
+    left: 33.9rem;
+  }
+
+  .lot-8 {
+    top: 1.34rem;
+    left: 36rem;
+  }
+
+  .lot-9 {
+    top: 1.34rem;
+    left: 38.1rem;
+  }
+
+  .lot-10 {
+    top: 1.34rem;
+    left: 40.15rem;
+  }
+
+  .smoking {
+    top: 29.4rem;
+    left: 23.9rem;
+  }
+
+  .backDoor {
+    left: 9rem;
+  }
+}
+
+@media (max-width: 991px) {
+  .lot-1 {
+    left: 4.15rem;
+    top: 23.78rem;
+  }
+
+  .lot-2 {
+    left: 4.15rem;
+    top: 25.84rem;
+  }
+
+  .lot-3 {
+    left: 4.15rem;
+  }
+
+  .lot-4 {
+    top: 1.34rem;
+    left: 20.6rem;
+  }
+
+  .lot-5 {
+    top: 1.34rem;
+    left: 22.7rem;
+  }
+
+  .lot-6 {
+    top: 1.34rem;
+    left: 24.8rem;
+  }
+
+  .lot-7 {
+    top: 1.34rem;
+    left: 26.8rem;
+  }
+
+  .lot-8 {
+    top: 1.34rem;
+    left: 28.9rem;
+  }
+
+  .lot-9 {
+    top: 1.34rem;
+    left: 30.95rem;
+  }
+
+  .lot-10 {
+    top: 1.34rem;
+    left: 33rem;
+  }
+
+  .smoking {
+    top: 29.4rem;
+    left: 16.9rem;
+  }
+
+  .backDoor {
+    left: 1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  img {
+    width: 31rem;
+  }
+
+  .lot-side {
+    width: 3.25rem;
+    height: 1.45rem;
+  }
+
+  .lot-top {
+    width: 1.6rem;
+    height: 3.6rem;
+  }
+
+  .lot-1 {
+    top: 19.05rem;
+    left: 3.3rem;
+  }
+
+  .lot-2 {
+    top: 20.55rem;
+    left: 3.3rem;
+  }
+
+  .lot-3 {
+    top: 22.05rem;
+    left: 3.3rem;
+  }
+
+  .smoking {
+    top: 21.4rem;
+    left: 12.5rem;
+  }
+
+  .backDoor {
+    left: 1rem;
+    font-size: .8rem;
+    bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 425px) {
+  img {
+    width: 22rem;
+  }
+
+  .lot-side {
+    width: 2.25rem;
+    height: .95rem;
+  }
+
+  .lot-top {
+    width: 1.6rem;
+    height: 3.6rem;
+  }
+
+  .lot-1 {
+    top: 12.46rem;
+    left: 3.05rem;
+  }
+
+  .lot-2 {
+    top: 13.53rem;
+    left: 3.05rem;
+  }
+
+  .lot-3 {
+    top: 14.6rem;
+    left: 3.05rem;
+  }
+
+  .smoking {
+    top: 15.3rem;
+    left: 9.59rem;
+    font-size: .6rem;
+  }
+
+  .backDoor {
+    left: 1.4rem;
+    font-size: .8rem;
+    bottom: 2rem;
+  }
+}
+
+@media (max-width: 394px) {
+  img {
+    width: 24.5rem;
+  }
+
+  .lot-side {
+    width: 3.05rem;
+    height: 1.4rem;
+  }
+
+  .lot-top {
+    width: 1.4rem;
+    height: 3rem;
+  }
+
+  .lot-1 {
+    top: 15.65rem;
+    left: 0.3rem;
+  }
+
+  .lot-2 {
+    top: 17.04rem;
+    left: 0.3rem;
+  }
+
+  .lot-3 {
+    top: 18.5rem;
+    left: 0.3rem;
+  }
+
+  .lot-4 {
+    top: .3rem;
+    left: 11.66rem;
+  }
+
+  .lot-5 {
+    top: .3rem;
+    left: 12.95rem;
+  }
+
+  .lot-6 {
+    top: .3rem;
+    left: 14.4rem;
+  }
+
+  .lot-7 {
+    top: .3rem;
+    left: 15.8rem;
+  }
+
+  .lot-8 {
+    top: .3rem;
+    left: 17.2rem;
+  }
+
+  .lot-9 {
+    top: .3rem;
+    left: 18.6rem;
+    width: 1.44rem;
+  }
+
+  .lot-10 {
+    top: .3rem;
+    left: 20.03rem;
+    width: 1.44rem;
+  }
+
+  .smoking {
+    top: 19.7rem;
+    left: 9.1rem;
+  }
+
+  span {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 375px) {
+  img {
+    width: 20.5rem;
+  }
+
+  .lot-side {
+    width: 2.15rem;
+    height: .93rem;
+  }
+
+  .lot-top {
+    width: 1.6rem;
+    height: 3.6rem;
+  }
+
+  .lot-1 {
+    top: 12.6rem;
+    left: 2.5rem;
+  }
+
+  .lot-2 {
+    top: 13.61rem;
+    left: 2.5rem;
+  }
+
+  .lot-3 {
+    top: 14.60rem;
+    left: 2.5rem;
+  }
+
+  .smoking {
+    left: 8.55rem;
+  }
+
+  .backDoor {
+    left: 1rem;
+  }
+}

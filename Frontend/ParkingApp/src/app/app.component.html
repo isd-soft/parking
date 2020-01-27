@@ -1,6 +1,11 @@
-<div class="container" *ngIf="userLogged">
-  <app-menu ></app-menu>
-  <router-outlet></router-outlet>
-</div>
+<div class="container p-0">
+  <app-menu *ngIf="userLogged || action !== 'login'"></app-menu>
+  <router-outlet *ngIf="!userLogged"></router-outlet>
 
-<app-login-form *ngIf="!userLogged" (userLoginEvent)="userLogged = true"></app-login-form>
+  <!--  <app-login-form *ngIf="!userLogged" (userLoginEvent)="userLogged = true"></app-login-form>-->
+
+  <footer class="fixed-bottom blockquote-footer text-right">
+    <cite>ParKing Project </cite>
+    <cite>by ISD Internship Team</cite>
+  </footer>
+</div>

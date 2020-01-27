@@ -1,5 +1,7 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { DataService } from 'src/app/data.service.local';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthenticationService} from '../auth.service';
+import {AbstractControl, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-login-form',
@@ -8,19 +10,151 @@ import { DataService } from 'src/app/data.service.local';
 })
 export class LoginFormComponent implements OnInit {
 
+  username: string;
+  password: string;
+  errorMessage = 'Invalid Credentials';
+  successMessage: string;
+
+  invalidLogin = false;
+  loginSuccess = false;
+
   @Output()
   userLoginEvent = new EventEmitter();
 
-  userLogin: string;
-  userPassword: string;
+  private loginForm: FormGroup;
 
-  constructor(private dataService: DataService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private authenticationService: AuthenticationService) {
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
+
+    /* username regexp validation */
+    function forbiddenNameValidator(nameRe: RegExp): ValidatorFn {
+      return (control: AbstractControl): { [key: string]: any } | null => {
+        const forbidden = nameRe.test(control.value);
+        return !forbidden ? {forbiddenName: {value: control.value}} : null;
+      };
+    }
+
+    this.loginForm = new FormGroup({
+      username: new FormControl(this.username, [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(15),
+
+        // <-- Here's how you pass in the custom validator.
+
+        /*
+        * ^(?=.{6,15}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$
+           └─────┬────┘└───┬──┘└─────┬─────┘└─────┬─────┘ └───┬───┘
+                 │         │         │            │           no _ or . at the end
+                 │         │         │            allowed characters
+                 │         │         no __ or _. or ._ or .. inside
+                 │         no _ or . at the beginning
+                 username is 5-15 characters long
+        */
+
+        forbiddenNameValidator(/^(?=.{5,15}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/i)
+      ]),
+
+      password: new FormControl(this.password, [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(10),
+
+        /*
+        Minimum 6 characters, at least one uppercase letter, one lowercase letter, one number and one special character
+
+        * "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$"
+        */
+
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$')
+      ])
+    });
+  }
+
+  get name() {
+    return this.loginForm.get('username');
+  }
+
+  get pass() {
+    return this.loginForm.get('password');
   }
 
   onSubmit() {
-    this.userLoginEvent.emit();
+    if (this.username !== '' && this.password !== '') {
+
+      console.log(this.username + '  ' + this.password);
+
+      // for local login test
+      // this.localLoginTest();
+
+      // backend api based http authentication
+      this.handleLogin();
+    }
   }
 
+  handleLogin() {
+
+    this.authenticationService.authenticationServiceLogin(this.username, this.password).subscribe(
+      data => {
+
+        console.log('Authentication in authenticationService.Login.');
+        console.log('Server response: ' + data);
+
+        if (data) {
+          this.invalidLogin = false;
+          this.loginSuccess = true;
+          this.successMessage = 'Login Successful.';
+          console.log(this.successMessage);
+
+          this.authenticationService.username = this.username;
+          this.authenticationService.password = this.password;
+          this.authenticationService.registerSuccessfulLogin(this.username);
+
+          console.log(sessionStorage.getItem('authenticatedUser'));
+          console.log(sessionStorage.getItem('token'));
+
+          this.router.navigate(['']);
+        } else {
+          this.invalidLogin = true;
+          this.loginSuccess = false;
+
+          console.log(this.successMessage);
+        }
+
+      }, error => {
+        console.log(error);
+        alert('Authentication failed.');
+        console.log('Authentication failed.');
+      });
+  }
+
+  /*private localLoginTest() {
+    // only for testing purpose
+    if ((this.username === this.authenticationService.admin && this.password === this.authenticationService.adminPassword)
+      || (this.username === this.authenticationService.user && this.password === this.authenticationService.userPassword)
+    ) {
+      // credentials error handle
+      this.invalidLogin = false;
+      this.loginSuccess = true;
+
+      this.authenticationService.registerSuccessfulLogin(this.username);
+
+      console.log(sessionStorage.getItem('authenticatedUser'));
+
+      this.router.navigate(['']);
+      this.userLoginEvent.emit();
+    } else {
+      this.invalidLogin = true;
+      this.loginSuccess = false;
+    }
+  }*/
+
+  navigateToRegistration() {
+    this.router.navigate(['registration']);
+  }
 }

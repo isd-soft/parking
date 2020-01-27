@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { ParkingLot } from '../Model/ParkingLot';
 import { Router, ActivatedRoute } from '@angular/router';
+import {delay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-main',
@@ -31,7 +32,17 @@ export class MainComponent implements OnInit {
 
   loadData() {
     this.dataService.getAllParkingLots().subscribe(
-      data => this.parkingLots = data
+      data => {
+        if (data.length !== 0) {
+          this.parkingLots = data.sort((a, b) => (a.number > b.number) ? 1 : (a.number < b.number ? -1 : 0));
+        } else {
+          this.parkingLots = null;
+        }
+
+      },
+      error => {
+        this.parkingLots = null;
+      }
     );
   }
 
@@ -42,12 +53,13 @@ export class MainComponent implements OnInit {
     );
   }
 
-  refresh() {
+  async refresh() {
+    await delay(300);
     this.loadData();
     this.router.navigate(['']);
   }
 
-  showDetails(id: string) {
+  showDetails(id: number) {
     this.router.navigate([''], {queryParams : {id , action : 'view'}});
     this.selectedParkingLot = this.parkingLots.find(pl => pl.id === id);
     this.processUrlParams();
