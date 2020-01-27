@@ -16,6 +16,16 @@ services:
       - POSTGRES_DB=parking
     restart: unless-stopped
   # APP*****************************************
+  angular-docker-service:
+    image: angular-docker-service
+    build:
+      context: ../Frontend/ParkingApp
+      dockerfile: ./Dockerfile.angular
+    ports:
+      - 4200:4200
+
+
+
   springbootapp:
     image: springbootapp:latest
     network_mode: bridge
@@ -29,5 +39,8 @@ services:
       - postgres
     links:
       - postgres
+
+
 volumes:
   postgres-data:
+  # angular*****************************************
