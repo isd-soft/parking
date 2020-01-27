@@ -10,38 +10,33 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto text-light">
-
-          <li class="nav-item" *ngIf='!this.isUserLoggedIn()' (click)="navigateToLogin()">
-            <a class="nav-link">
-              Login <i class="fas fa-sign-in-alt"></i></a>
-          </li>
-
-          <li class="nav-item" *ngIf='this.isUserLoggedIn()'>
-            <a class="nav-link" href="#"><i class="fas fa-user"></i>
-              <span class="capitalize"
-                    href="#"> {{this?.getUserName() == null ? 'Unknown user' : this.capitalize(this?.getUserName())}} </span></a>
-          </li>
-          <li class="nav-item" *ngIf='this.isUserLoggedIn()' (click)="logout()">
-            <a class="nav-link">Sign out <i class="fa fa-sign-out-alt"></i></a>
-          </li>
-          <li class="nav-item dropdown" *ngIf='this.isUserLoggedIn()'>
-            <a class="nav-link dropdown-toggle text-light" data-toggle="dropdown">
-              Menu
-            </a>
-            <div class="dropdown-menu bg-blue" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item text-light" (click)="navigateToStats()"><i class="fa fa-clipboard"></i>
-                Statistics</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item text-light" (click)="navigateToTest2()"><i class="fa fa-map"></i> Parking
-                layout</a>
-              <!-- <a class="dropdown-item text-light" (click)="navigateToTest2()">Test layout</a> -->
-            </div>
-          </li>
-        </ul>
-      </div>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto text-light">
+        <!-- <div class="user nav-link text-light" (click)="navigateTo404()"><i class="fas fa-user"></i> User</div> -->
+        <li class="nav-item" *ngIf='!this.isUserLoggedIn()'>
+          <a class="nav-link" (click)="navigateToLogin()"><i class="fa fa-user"></i> Login</a>
+        </li>
+        <li class="nav-item" *ngIf='this.isUserLoggedIn()'>
+          <a class="nav-link" (click)="navigateTo404()"><i
+            class="fa fa-user"></i> {{this?.getUserName() == null ? 'Unknown user' : this.capitalize(this?.getUserName())}}
+          </a>
+        </li>
+        <li class="nav-item" *ngIf='this.isUserLoggedIn()'>
+          <a class="nav-link" (click)="logout()"><i class="fa fa-sign-out-alt"></i> Logout</a>
+        </li>
+        <li class="nav-item dropdown" *ngIf='this.isUserLoggedIn()'>
+          <a class="nav-link dropdown-toggle text-light" data-toggle="dropdown">
+            Menu
+          </a>
+          <div class="dropdown-menu bg-blue" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item text-light" (click)="navigateToStats()"><i class="fa fa-clipboard"></i>
+              Statistics</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-light" (click)="navigateToTest2()"><i class="fa fa-map"></i> Parking layout</a>
+            <!-- <a class="dropdown-item text-light" (click)="navigateToTest2()">Test layout</a> -->
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
