@@ -43,7 +43,7 @@ export class ParkingLotDetailComponent implements OnInit {
   }
 
   goBack() {
-    delay(200);
+    delay(500);
     this.goBackEvent.emit();
   }
 

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from '../data.service';
-import { ParkingLot } from '../Model/ParkingLot';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {DataService} from '../data.service';
+import {ParkingLot} from '../Model/ParkingLot';
+import {ActivatedRoute, Router} from '@angular/router';
 import {delay} from 'rxjs/operators';
 
 @Component({
@@ -19,7 +19,8 @@ export class MainComponent implements OnInit {
 
   constructor(private dataService: DataService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.noData = new Array<number>();
@@ -54,13 +55,15 @@ export class MainComponent implements OnInit {
   }
 
   async refresh() {
+    this.loadData();
     await delay(500);
     this.router.navigate(['']);
+    await delay(1500);
     this.loadData();
   }
 
   showDetails(id: number) {
-    this.router.navigate([''], {queryParams : {id , action : 'view'}});
+    this.router.navigate([''], {queryParams: {id, action: 'view'}});
     this.selectedParkingLot = this.parkingLots.find(pl => pl.id === id);
     this.processUrlParams();
   }

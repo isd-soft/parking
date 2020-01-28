@@ -37,10 +37,11 @@
 }
 
 .dropdown-item {
-  transition:  1s;
+  transition: 1s;
 }
+
 .dropdown-item:hover {
-  color: black!important;
+  color: black !important;
 }
 
 .dropdown-menu {
@@ -60,14 +61,28 @@
   width: 10rem;
 }
 
+@media (min-width: 992px) {
+  .appname-logo {
+    position: relative;
+    left: 150%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .appname-logo {
+    position: relative;
+    left: 190%;
+  }
+}
+
 .navbar-brand.abs:hover {
   cursor: default;
 }
 
 
 .isd-navbar {
-  background-color: white!important;
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  background-color: white !important;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
   /*border-bottom: 3px solid rgb(241, 93, 34) !important;*/
 }
@@ -77,13 +92,12 @@
   transition: 0.4s;
 }
 
-.isd-navbar  a:hover{
-  color: #f44e00!important;
+.isd-navbar a:hover {
+  color: #f44e00 !important;
 }
 
-
-#navbarNav > ul > li > div > a:hover{
-  color: #f44e00!important;
+#navbarNav > ul > li > div > a:hover {
+  color: #f44e00 !important;
   padding-left: 30px;
 }
 
@@ -102,6 +116,6 @@
 
   .dropdown-item {
     padding: 5px;
-    color: rgba(0,0,0,.5);
+    color: rgba(0, 0, 0, .5);
   }
 }
