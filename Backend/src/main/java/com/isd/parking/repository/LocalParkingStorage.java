@@ -5,6 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 
+
+/**
+ * Local Java memory parking lots storage class
+ */
 public class LocalParkingStorage {
 
     @Autowired

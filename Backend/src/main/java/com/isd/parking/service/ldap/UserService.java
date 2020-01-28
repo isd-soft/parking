@@ -29,24 +29,41 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Method authenticates user with given credentials
+     *
+     * @param username - user name
+     * @param password - user pass
+     * @return - success or denied boolean status of user authentication
+     */
     public Boolean authenticate(final String username, final String password) {
         User user = userRepository.findByUsernameAndPassword(username, password);
         return user != null;
     }
 
+    /**
+     * Method search user by given username
+     *
+     * @param username - user name
+     * @return - List of user names equals with given
+     */
     public List<String> search(final String username) {
         List<User> userList = userRepository.findByUsernameLikeIgnoreCase(username);
         if (userList == null) {
             return Collections.emptyList();
         }
-
         //return userList;
-
         return userList.stream()
                 .map(User::getFullName)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Method create user with given username and password
+     *
+     * @param username - user name
+     * @param password - user pass
+     */
     public void create(final String username, final String password) {
         User newUser = new User(username, digestSHA(password));
         newUser.setId(LdapUtils.emptyLdapName());
@@ -54,6 +71,12 @@ public class UserService {
         userRepository.save(newUser);
     }
 
+    /**
+     * Method update user with given username and password
+     *
+     * @param username - user name
+     * @param password - user pass
+     */
     public void modify(final String username, final String password) {
         User user = userRepository.findByUsername(username);
         user.setPassword(password);
@@ -61,6 +84,11 @@ public class UserService {
         userRepository.save(user);
     }
 
+    /**
+     * Get all users request method
+     *
+     * @return - list of all users
+     */
     public List<User> findAll() {
         return userRepository.findAll();
     }

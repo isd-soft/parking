@@ -13,12 +13,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+
+/**
+ * Parking lots controller
+ * Provides methods for getting all parking lots stored in local Java memory and database
+ */
 @RestController("/")
 @CrossOrigin(origins = "*")
 @Slf4j
 public class ParkingLotController {
 
-    //For using database uncomment this and comment parkingLotService below
+    /* For using separate SQL-like database uncomment this and comment parkingLotService
+       below and import necessary class
+       Otherwise data is obtained from local Java memory
+    */
     /*@Autowired
     private ParkingLotService parkingLotService;*/
 
@@ -29,6 +37,13 @@ public class ParkingLotController {
         this.parkingLotService = parkingLotService;
     }
 
+
+    /**
+     * Parking lots get controller
+     * Used to get all parking lots from the local Java memory
+     *
+     * @return Parking lots list
+     */
     @GetMapping("parking")
     public List<ParkingLot> getAllParkingLots() {
 
@@ -37,6 +52,14 @@ public class ParkingLotController {
         return parkingLotService.listAll();
     }
 
+
+    /**
+     * Parking lots get by id controller
+     * Used to get parking lot by its id from the local Java memory
+     *
+     * @return ResponseEntity.OK with body of Parking lot if exists in storage else
+     * @throw ResourceNotFoundException
+     */
     @GetMapping("parking/{id}")
     public ResponseEntity<ParkingLot> getParkingLotById(@PathVariable("id") Long parkingLotId)
             throws ResourceNotFoundException {

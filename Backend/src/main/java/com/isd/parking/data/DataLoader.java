@@ -17,6 +17,10 @@ import java.sql.Date;
 import java.util.Optional;
 
 
+/**
+ * Utility class
+ * Fills the database and local Java memory storage with initial data
+ */
 @Component
 @Slf4j
 public class DataLoader implements ApplicationRunner {
@@ -31,19 +35,13 @@ public class DataLoader implements ApplicationRunner {
         this.parkingLotLocalService = parkingLotLocalService;
     }
 
-    //another fallback method for initializing database
-    @Override
-    public void run(ApplicationArguments args) {
-        Date date = new Date(System.currentTimeMillis());
-
-        //initiate parking lots in database
-        /*for (int i = 1; i <= ParkingNumber.totalParkingLotsNumber; i++) {
-            //an fallback method to load initial data
-            //parkingLotService.save(new ParkingLot((long) i, i, date, ParkingLotStatus.FREE));
-            //parkingLotLocalService.save(new ParkingLot((long) i, i, date, ParkingLotStatus.FREE));
-        }*/
-    }
-
+    /**
+     * Method initiates the database and local Java memory storage with necessary data
+     * This method runs once at every application start.
+     *
+     * @param parkingLotService - parking lots service
+     * @return - result of provided operation
+     */
     @Bean
     public CommandLineRunner loadData(ParkingLotService parkingLotService) {
         return (args) -> {
@@ -62,7 +60,7 @@ public class DataLoader implements ApplicationRunner {
 
             // fetch all parking lots from database
             log.info("ParkingLot found with findAll() from DATABASE:");
-            log.info("-------------------------------");
+            printSeparator();
             for (ParkingLot parkingLot : parkingLotService.listAll()) {
                 log.info(parkingLot.toString());
             }
@@ -72,13 +70,13 @@ public class DataLoader implements ApplicationRunner {
             Optional<ParkingLot> parkingLot = parkingLotService.findById(1L);
 
             log.info("Parking Lot found with findById(1L):");
-            log.info("--------------------------------");
+            printSeparator();
             log.info(parkingLot.toString());
             log.info("");
 
             // fetch all parking lots from local Java memory
             log.info("ParkingLot found with findAll() from LOCAL Java memory:");
-            log.info("-------------------------------");
+            printSeparator();
             for (ParkingLot parkingLotLocal : parkingLotLocalService.listAll()) {
                 log.info(parkingLotLocal.toString());
             }
@@ -88,9 +86,31 @@ public class DataLoader implements ApplicationRunner {
             Optional<ParkingLot> parkingLotLocal = parkingLotLocalService.findById(1L);
 
             log.info("Parking Lot found with findById(1L):");
-            log.info("--------------------------------");
+            printSeparator();
             log.info(parkingLotLocal.toString());
             log.info("");
         };
+    }
+
+    private void printSeparator() {
+        log.info("--------------------------------");
+    }
+
+    /**
+     * Fallback method for initializing database.
+     * Use this if the previous one does not work
+     *
+     * @param args - application arguments
+     */
+    @Override
+    public void run(ApplicationArguments args) {
+        Date date = new Date(System.currentTimeMillis());
+
+        //initiate parking lots in database
+        /*for (int i = 1; i <= ParkingNumber.totalParkingLotsNumber; i++) {
+            //an fallback method to load initial data
+            //parkingLotService.save(new ParkingLot((long) i, i, date, ParkingLotStatus.FREE));
+            //parkingLotLocalService.save(new ParkingLot((long) i, i, date, ParkingLotStatus.FREE));
+        }*/
     }
 }

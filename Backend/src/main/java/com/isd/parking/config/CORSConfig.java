@@ -11,6 +11,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
+/**
+ * Enable CORS access to resources from the frontend,
+ * connection point between frontend SPA and backend API
+ * specifies in a flexible way what kind of cross domain requests are authorized
+ */
 @Configuration
 @Slf4j
 public class CORSConfig implements WebMvcConfigurer {
@@ -18,6 +24,12 @@ public class CORSConfig implements WebMvcConfigurer {
     @Value("${front.url}")
     private String frontUrl;
 
+
+    /**
+     * Method specifies CORS mapping - which methods are allowed from allowed origins (frontend Angular SPA)
+     *
+     * @param registry - standard build-in CorsRegistry
+     */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
 

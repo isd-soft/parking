@@ -10,6 +10,10 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import java.util.Date;
 
+
+/**
+ * Parking Lot model class
+ */
 @Entity(name = "parking_lots")
 @DynamicUpdate
 @Data

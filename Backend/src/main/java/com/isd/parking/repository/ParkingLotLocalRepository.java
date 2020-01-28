@@ -9,6 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * Local Java memory parking lots repository class
+ */
 @Repository
 @Slf4j
 public class ParkingLotLocalRepository {
@@ -16,22 +20,38 @@ public class ParkingLotLocalRepository {
     //Local in-memory storage of parking lots
     private HashMap<Long, ParkingLot> parkingMap = new HashMap<>();
 
+
+    public ParkingLotLocalRepository() {
+    }
+
+    /**
+     * Get all parking lots method
+     *
+     * @return - Parking lots list
+     */
     public synchronized List<ParkingLot> findAll() {
         List<ParkingLot> parkingLots = new ArrayList<>(parkingMap.values());
         log.info("Parking lots" + parkingLots);
         return parkingLots;
     }
 
+    /**
+     * Get parking lot by id method
+     *
+     * @return - specified parking lot
+     */
     public synchronized Optional<ParkingLot> findById(Long parkingLotId) {
         ParkingLot parkingLot = parkingMap.get(parkingLotId);
         log.info("Get parking lot: " + parkingLot);
         return Optional.ofNullable(parkingLot);
     }
 
-    public ParkingLotLocalRepository() {
-
-    }
-
+    /**
+     * Save parking lot in local memory method
+     * Used for update status of parking lot
+     *
+     * @return - Parking lot which was saved in database
+     */
     public synchronized ParkingLot save(ParkingLot parkingLot) {
 
         if (parkingMap.containsValue(parkingLot)) {
@@ -40,14 +60,12 @@ public class ParkingLotLocalRepository {
             updatedParkingLot.setUpdatedNow();
 
             parkingMap.put(updatedParkingLot.getId(), updatedParkingLot);
-
             log.info("Updated parking lot: " + updatedParkingLot);
 
             return updatedParkingLot;
 
         } else {
             parkingMap.put(parkingLot.getId(), parkingLot);
-
             log.info("Added parking lot: " + parkingLot);
 
             return parkingLot;
@@ -56,8 +74,6 @@ public class ParkingLotLocalRepository {
 
     //alternative fallback initialization method
     /*private void initParkingMap() {
-
-
         for (int i = 1; i <= ParkingNumber.totalParkingLotsNumber; i++) {
             ParkingLot parkingLot = ParkingLot.builder()
                     .id((long) i)
@@ -100,12 +116,10 @@ public class ParkingLotLocalRepository {
         if (parkingLotList.contains(parkingLot)) {
             ParkingLot updatedParkingLot = parkingLotList.get(Math.toIntExact(parkingLot.getId()));
             updatedParkingLot.setUpdatedAt(new Date(System.currentTimeMillis()));
-
             return updatedParkingLot;
 
         } else {
             parkingLotList.add(parkingLot);
-
             return parkingLot;
         }
     }

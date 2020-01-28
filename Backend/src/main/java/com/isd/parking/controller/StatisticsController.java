@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+
+/**
+ * Statistics controller
+ * Provides methods for getting all statistics records stored in database
+ */
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @Slf4j
@@ -22,6 +27,13 @@ public class StatisticsController {
         this.statisticsService = statisticsService;
     }
 
+
+    /**
+     * Statistics records get controller
+     * Used to get all statistics records from database
+     *
+     * @return Statistics records list
+     */
     @GetMapping("/statistics")
     public List<StatisticsRecord> getAllStats() {
         log.info("Controller get all statistics executed...");
