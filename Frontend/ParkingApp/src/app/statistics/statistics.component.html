@@ -7,7 +7,7 @@
                     <span><i class="fas fa-calendar-check"></i> Start date</span>
                 </span>
         </div>
-        <input class="form-control" id="dataBegin" type="date" [(ngModel)]="startDate" (change)="filterData()"/><br>
+        <input class="form-control pl-1" id="dataBegin" type="date" [(ngModel)]="startDate" (change)="filterData()"/><br>
       </div>
     </div>
     <div class="col-sm-3">
@@ -17,7 +17,7 @@
                     <span><i class="fas fa-calendar-times"></i> End date</span>
                 </span>
         </div>
-        <input class="form-control" id="dateEnd" type="date" [(ngModel)]="endDate" (change)="filterData()"/>
+        <input class="form-control pl-1" id="dateEnd" type="date" [(ngModel)]="endDate" (change)="filterData()"/>
       </div>
     </div>
     <div class="col-sm-3">
@@ -27,7 +27,7 @@
                     <span><i class="fas fa-car-side"></i> Parking lot id</span>
                 </span>
         </div>
-        <select class="form-control" name="lots" [(ngModel)]="selectedLotNumber" (change)="filterData()">
+        <select class="form-control pl-1" name="lots" [(ngModel)]="selectedLotNumber" (change)="filterData()">
           <option>All</option>
           <option *ngFor="let lot of lotNumber">{{lot}}</option>
         </select>
