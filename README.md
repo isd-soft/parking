@@ -48,10 +48,37 @@ This project is made to provide the ISD company parking area with the necessary 
 
 The project aims to create a new informative application for monitoring and providing information for end-users about free parking spaces. The purpose of this application is to provide the information in advance if there is an avaliable parking lot or you have to pick up another place.
 
+Login page
+<p align="center">
+    <img src="images/img1.png" alt="Logo" width="800" height="450">
+</p>
+
+Parking lot dashboard page
+<p align="center">
+    <img src="images/img2.png" alt="Logo" width="800" height="450">
+    <img src="images/img3.png" alt="Logo" width="800" height="450">
+</p>
+
+Parking lot detail page
+<p align="center">
+    <img src="images/img4.png" alt="Logo" width="800" height="450">
+</p>
+
+Statistics page
+<p align="center">
+    <img src="images/img5.png" alt="Logo" width="800" height="450">
+    <img src="images/img6.png" alt="Logo" width="800" height="450">
+</p>
+
+Parking map page
+<p align="center">
+    <img src="images/img7.png" alt="Logo" width="800" height="450">
+</p>
+
 ### Used technologies
 Frontend single page application  - Angular Framework,
-Backend service                   - Spring Boot Framework + JPA, Hibernate,
-Database                          - PostgreSQL database.
+Backend service - Spring Boot Framework + JPA, Hibernate,
+Database - PostgreSQL database.
 
 Here you will find an implementation of Restful API (Server) & Web Single page application(Client).
 
