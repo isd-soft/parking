@@ -34,7 +34,6 @@ const routes: Routes = [
     MainComponent,
     MenuComponent,
     ParkingLotDetailComponent,
-    LoginFormComponent,
     StatisticsComponent,
     FeatureComponent,
     Feature2Component,
