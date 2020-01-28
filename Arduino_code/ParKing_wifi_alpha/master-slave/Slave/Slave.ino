@@ -4,7 +4,7 @@
 #define TRIGGER_PIN_1  2  // Arduino pin tied to trigger pin on the ultrasonic sensor 1.
 #define ECHO_PIN_1     5  // Arduino pin tied to echo pin on the ultrasonic sensor 1.
 
-//Sonar 1 details
+//Sonar 2 details
 #define TRIGGER_PIN_2  3  // Arduino pin tied to trigger pin on the ultrasonic sensor 2.
 #define ECHO_PIN_2     6  // Arduino pin tied to echo pin on the ultrasonic sensor 2.
 
@@ -46,68 +46,60 @@ NewPing sonar_2(TRIGGER_PIN_2, ECHO_PIN_2, MAX_DISTANCE); // NewPing setup of pi
 void setup() {
   pinMode(SLAVE_EN , OUTPUT);                   // Declare Enable pin as output
   Serial.begin(9600);                           // set serial communication baudrate 
-  digitalWrite(SLAVE_EN , LOW);                 // Make Enable pin low
+  //digitalWrite(SLAVE_EN , LOW);                 // Make Enable pin low
                                                 // Receiving mode ON 
 
                                                     //Sensor Connections
   pinMode(TRIGGER_PIN_1, OUTPUT);
   pinMode(ECHO_PIN_1, INPUT);
 
-    pinMode(TRIGGER_PIN_2, OUTPUT);
+  pinMode(TRIGGER_PIN_2, OUTPUT);
   pinMode(ECHO_PIN_2, INPUT);
 }
 
 void loop() {
-  filteredSonarDistance_1 = sonar_1.ping_median(10) / US_ROUNDTRIP_CM; // get real time distance in cm from sonar 1
-//  Serial.print("filtered_1: "); Serial.println(filteredSonarDistance_1);  
-
-  if (filteredSonarDistance_1 != lastSonarDistance_1) { 
-      if (!sonarInitialized_1 || ((filteredSonarDistance_1 >= targetDistance || filteredSonarDistance_1 == 0)&& !isLotFreeSonar_1) 
-          || (filteredSonarDistance_1 < targetDistance && isLotFreeSonar_1))
-      {
-          sonarInitialized_1 = true;
-          isLotFreeSonar_1 = (filteredSonarDistance_1 >= targetDistance || filteredSonarDistance_1 == 0) ? true : false;
-          actual_status_1 = isLotFreeSonar_1 ? status_free : status_occupied;
-          Serial.print(actual_status_1);
-
-      } 
-      lastSonarDistance_1 = filteredSonarDistance_1;
-    }
-
-      filteredSonarDistance_2 = sonar_2.ping_median(10) / US_ROUNDTRIP_CM; // get real time distance in cm from sonar 1
-//  Serial.print("filtered_2: "); Serial.println(filteredSonarDistance_2);  
-
-  if (filteredSonarDistance_2 != lastSonarDistance_2) { 
-      if (!sonarInitialized_2 || ((filteredSonarDistance_2 >= targetDistance || filteredSonarDistance_2 == 0)&& !isLotFreeSonar_2) 
-          || (filteredSonarDistance_2 < targetDistance && isLotFreeSonar_2))
-      {
-          sonarInitialized_2 = true;
-          isLotFreeSonar_2 = (filteredSonarDistance_2 >= targetDistance || filteredSonarDistance_2 == 0) ? true : false;
-          actual_status_2 = isLotFreeSonar_2 ? status_free : status_occupied;
-          Serial.print(actual_status_2);
-
-      } 
-      lastSonarDistance_2 = filteredSonarDistance_2;
-    }
+   
+  digitalWrite(SLAVE_EN , LOW);     // Receiving mode ON
+  delay(50);
   
   while(Serial.available())                     // If serial data is available then enter into while loop
   {
     int request = Serial.parseInt();
     if (request != 0) {
+      Serial.print("request: ");Serial.println(request);
       if ((request / 10U) % 10 == SLAVE_ID) {
         if ((request / 1U) % 10 == SONAR_1_ID) {
-          digitalWrite(SLAVE_EN, HIGH);
-          delay(500);
-          Serial.print(String(SLAVE_ID)+ String(SONAR_1_ID) + String(actual_status_1));
+          filteredSonarDistance_1 = sonar_1.ping_median(10) / US_ROUNDTRIP_CM; // get real time distance in cm from sonar 1
+          if (!sonarInitialized_1 || ((filteredSonarDistance_1 >= targetDistance || filteredSonarDistance_1 == 0)&& !isLotFreeSonar_1) 
+                                  || (filteredSonarDistance_1 < targetDistance && isLotFreeSonar_1))
+          {
+            sonarInitialized_1 = true;
+            isLotFreeSonar_1 = (filteredSonarDistance_1 >= targetDistance || filteredSonarDistance_1 == 0) ? true : false;
+            actual_status_1 = isLotFreeSonar_1 ? status_free : status_occupied;
+          } 
+          
+          digitalWrite(SLAVE_EN , HIGH);     // Make Enable pin high to send Data
+          delay(50);                        // required minimum delay of 5ms
+          Serial.println(String(SLAVE_ID)+ String(SONAR_1_ID) + String(actual_status_1));
           Serial.flush();
-        } else if ((request / 1U) % 10 == SONAR_2_ID) {
-          digitalWrite(SLAVE_EN, HIGH);
-          delay(500);
-          Serial.print(String(SLAVE_ID)+ String(SONAR_2_ID) + String(actual_status_2));
+        } 
+        
+        if ((request / 1U) % 10 == SONAR_2_ID) {
+          filteredSonarDistance_2 = sonar_2.ping_median(10) / US_ROUNDTRIP_CM; // get real time distance in cm from sonar 2
+          if (!sonarInitialized_2 || ((filteredSonarDistance_2 >= targetDistance || filteredSonarDistance_2 == 0)&& !isLotFreeSonar_2) 
+                                  || (filteredSonarDistance_2 < targetDistance && isLotFreeSonar_2))
+          {
+            sonarInitialized_2 = true;
+            isLotFreeSonar_2 = (filteredSonarDistance_2 >= targetDistance || filteredSonarDistance_2 == 0) ? true : false;
+            actual_status_2 = isLotFreeSonar_2 ? status_free : status_occupied;
+          } 
+          
+          digitalWrite(SLAVE_EN , HIGH);     // Make Enable pin high to send Data
+          delay(50);                        // required minimum delay of 5ms
+          Serial.println(String(SLAVE_ID)+ String(SONAR_2_ID) + String(actual_status_2));
           Serial.flush();
         }
       }
     }
   }
-  digitalWrite(SLAVE_EN, LOW);
 }
