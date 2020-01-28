@@ -5,6 +5,7 @@ import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
 import {AuthenticationService} from '../../Account/auth.service';
 import {HttpClient} from '@angular/common/http';
+import {delay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-parking-lot-detail',
@@ -42,6 +43,7 @@ export class ParkingLotDetailComponent implements OnInit {
   }
 
   goBack() {
+    delay(200);
     this.goBackEvent.emit();
   }
 
@@ -52,9 +54,6 @@ export class ParkingLotDetailComponent implements OnInit {
 
     if (parkingLotStatus === 'RESERVED') {
       this.unreservate(parkingLotNumber).subscribe(data => {
-
-        console.log('Cancel reservation in handleReservation.');
-        console.log('Server response: ' + data);
 
         if (data) {
           alert('Cancel reservation success.');
@@ -71,9 +70,6 @@ export class ParkingLotDetailComponent implements OnInit {
 
     if (parkingLotStatus === 'FREE') {
       this.reservate(parkingLotNumber).subscribe(data => {
-
-        console.log('Reservation in handleReservation.');
-        console.log('Server response: ' + data);
 
         if (data) {
           alert('Reservation success.');

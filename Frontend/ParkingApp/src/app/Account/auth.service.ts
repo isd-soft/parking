@@ -10,7 +10,6 @@ export class AuthenticationService {
 
   // BASE_PATH: 'http://localhost:8080'
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser';
-  ADMIN_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedAdmin';
 
   public username: string;
   public password: string;
@@ -32,13 +31,12 @@ export class AuthenticationService {
 
   }
 
-  // TODO: alternative login method
   authenticationServiceLogin(username: string, password: string) {
 
     const url = environment.restUrl + '/login';
 
-    console.log('Auth login');
-    console.log('Login ' + username + '  ' + password);
+    // console.log('Auth login');
+    // console.log('Login ' + username + '  ' + password);
 
     return this.http.post<Observable<boolean>>(url, {
       headers: {
@@ -55,8 +53,8 @@ export class AuthenticationService {
 
     const url = environment.restUrl + `/registration`;
 
-    console.log('Auth registration');
-    console.log('Reg credentials ' + username + '  ' + password);
+    // console.log('Auth registration');
+    // console.log('Reg credentials ' + username + '  ' + password);
 
     return this.http.post<Observable<boolean>>(url, {
       headers: {

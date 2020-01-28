@@ -111,9 +111,6 @@ export class RegFormComponent implements OnInit {
     this.authenticationService.authenticationServiceRegistration(this.username, this.password).subscribe(
       data => {
 
-        console.log('Registration in authenticationService.Registration.');
-        console.log('Server response: ' + data);
-
         if (data) {
           this.invalidReg = false;
           this.regSuccess = true;
@@ -125,7 +122,6 @@ export class RegFormComponent implements OnInit {
         } else {
           this.invalidReg = true;
           this.regSuccess = false;
-
           console.log(this.successMessage);
         }
 

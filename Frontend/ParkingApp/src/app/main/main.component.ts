@@ -54,9 +54,9 @@ export class MainComponent implements OnInit {
   }
 
   async refresh() {
-    await delay(300);
-    this.loadData();
+    await delay(500);
     this.router.navigate(['']);
+    this.loadData();
   }
 
   showDetails(id: number) {

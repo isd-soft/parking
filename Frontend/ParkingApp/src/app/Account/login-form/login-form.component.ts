@@ -102,9 +102,6 @@ export class LoginFormComponent implements OnInit {
     this.authenticationService.authenticationServiceLogin(this.username, this.password).subscribe(
       data => {
 
-        console.log('Authentication in authenticationService.Login.');
-        console.log('Server response: ' + data);
-
         if (data) {
           this.invalidLogin = false;
           this.loginSuccess = true;
@@ -115,14 +112,13 @@ export class LoginFormComponent implements OnInit {
           this.authenticationService.password = this.password;
           this.authenticationService.registerSuccessfulLogin(this.username);
 
-          console.log(sessionStorage.getItem('authenticatedUser'));
-          console.log(sessionStorage.getItem('token'));
+          // console.log(sessionStorage.getItem('authenticatedUser'));
+          // console.log(sessionStorage.getItem('token'));
 
           this.router.navigate(['']);
         } else {
           this.invalidLogin = true;
           this.loginSuccess = false;
-
           console.log(this.successMessage);
         }
 
