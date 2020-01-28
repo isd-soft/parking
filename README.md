@@ -4,9 +4,9 @@
 
 <p align="center">
   <a href="https://github.com/isd-soft/parking">
-    <img src="https://ibb.co/xznXWkK" alt="Logo" width="80" height="80">
+    <img src="images/ParKingLogo.png" alt="Logo" width="190" height="100">
   </a>
-  <a href="http://isd-soft.com/"><img src="https://ibb.co/hLVfRg4" title="ISD::Software" alt="ISD::Software"></a>
+  <a href="http://isd-soft.com/"><img src="images/isd-logo.png"  width="190" height="190" title="ISD::Software" alt="ISD::Software"></a>
    </br>
    <a href="https://github.com/isd-soft/parking/issues">Report Bug</a>
    ·
