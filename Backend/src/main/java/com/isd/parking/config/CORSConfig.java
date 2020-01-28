@@ -21,6 +21,6 @@ public class CORSConfig implements WebMvcConfigurer {
 
         registry.addMapping("/**")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
-                .allowedOrigins("http://localhost:4200");  //TODO: change the URL for the prod URL when we deploy
+                .allowedOrigins("*");  //TODO: change the URL for the prod URL when we deploy
     }
 }

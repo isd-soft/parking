@@ -3,7 +3,8 @@ services:
   # DB*****************************************
   postgres:
     image: postgres:latest
-    network_mode: bridge
+    networks:
+      - parking-network
     container_name: postgres
     volumes:
       - postgres-data:/var/lib/postgresql/data
@@ -20,17 +21,23 @@ services:
   # angular*****************************************
   angular-docker-service:
     image: angular-docker-service1
+    networks:
+      - parking-network
     build:
       context: ../Frontend/ParkingApp
       dockerfile: ./Dockerfile.angular
     ports:
       - 4200:4200
+    expose:
+      - 4200
 
 
   # app*****************************************
   springbootapp:
     image: springbootapp:latest
-    network_mode: bridge
+    networks:
+      - parking-network
+
     container_name: springbootapp
     expose:
       - 8080
@@ -39,9 +46,9 @@ services:
     restart: unless-stopped
     depends_on:
       - postgres
-    links:
-      - postgres
 
+networks:
+  parking-network:
 
 volumes:
   postgres-data:

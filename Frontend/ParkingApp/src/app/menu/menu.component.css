@@ -54,14 +54,15 @@
 .dropdown-divider {
   margin: 0;
 }
- 
-.navbar-brand.abs
+@media (min-width: 768px) {
+  .navbar-brand.abs
   {
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    width: 100%;
+    left: 0;
+    text-align: center;
+  }
 }
-
 
 .appname-logo {
   width: 10rem;
