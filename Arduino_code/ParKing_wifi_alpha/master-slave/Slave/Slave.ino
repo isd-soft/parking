@@ -60,7 +60,7 @@ void setup() {
 void loop() {
    
   digitalWrite(SLAVE_EN , LOW);     // Receiving mode ON
-  delay(50);
+  delay(5);
   
   while(Serial.available())                     // If serial data is available then enter into while loop
   {
@@ -79,7 +79,7 @@ void loop() {
           } 
           
           digitalWrite(SLAVE_EN , HIGH);     // Make Enable pin high to send Data
-          delay(50);                        // required minimum delay of 5ms
+          delay(5);                        // required minimum delay of 5ms
           Serial.println(String(SLAVE_ID)+ String(SONAR_1_ID) + String(actual_status_1));
           Serial.flush();
         } 
@@ -95,7 +95,7 @@ void loop() {
           } 
           
           digitalWrite(SLAVE_EN , HIGH);     // Make Enable pin high to send Data
-          delay(50);                        // required minimum delay of 5ms
+          delay(5);                        // required minimum delay of 5ms
           Serial.println(String(SLAVE_ID)+ String(SONAR_2_ID) + String(actual_status_2));
           Serial.flush();
         }

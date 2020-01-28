@@ -1,18 +1,26 @@
 #include <ArduinoWebsockets.h>
 #include <WiFi.h>
 
+#define ARRAY_SIZE(array) ((sizeof(array))/(sizeof(array[0])))
+
 #define MASTER_EN   5             // connected to RS485 Enable pin
 #define SLAVE_ONE   1             // declare id of first slave
 #define SLAVE_TWO   2             // deckare id of second slave
 
+int slave_ids[5] = {1, 2, 3, 4, 5};
+#define SLAVE_IDS_SIZE 5
 
-int sonar_ids[] = {1, 2};
-#define SONAR_IDS_SIZE 2          // change value when will be added more sensors
+int active_slave_ids[5];
+#define ACTIVE_SLAVE_IDS_SIZE 2           // change value when will be added more slaves
+int sonar_ids[] = {1, 2, 3, 4, 5, 6, 7};
+#define SONAR_IDS_SIZE 7           // change value when will be added more sensors
+
+int active_sonars[35];
 
 char slave_id;
 char sensor_id;
 String status_of_lot;
-String last_known_status[2];      // statuses of each sensor, index of the status must be the same as the id of sensor
+String last_known_status[7];      // statuses of each sensor, index of the status must be the same as the id of sensor
                                   // change size when will be added more sensors
 
 //Wifi
@@ -75,39 +83,42 @@ void setup() {
     });
 
     client.onEvent(onEventsCallback); 
-    
+
+    getActiveSonars();
+
 }
 
 void loop() {
   String answer;
   status_of_lot = ""; 
-
-  for (int i = 0; i < SONAR_IDS_SIZE; i++) {
-    digitalWrite(MASTER_EN , HIGH);     // Make Enable pin high to send Data
-    delay(50);                        // required minimum delay of 5ms
-    Serial.print(SLAVE_ONE); Serial.println(sonar_ids[i]);         // Send character A serially
-    Serial.flush();                     // wait for transmission of data
-    digitalWrite(MASTER_EN , LOW);      // Receiving mode ON
-  
-    delay(500);
-    while(Serial.available()) {
-      answer = Serial.readString();
-      answer.trim();
-    }
-  
-    slave_id = answer.charAt(0);
-    sensor_id = answer.charAt(1);
-    status_of_lot = answer.substring(2);
+    for (int i = 0; i < ARRAY_SIZE(active_sonars); i++) {
+      if (active_sonars[i]) {
+        digitalWrite(MASTER_EN , HIGH);                                   // Make Enable pin high to send Data
+        delay(50);                                                        // required minimum delay of 5ms
+        Serial.println(active_sonars[i]);         // Send slave and sensor id
+        Serial.flush();                                                   // wait for transmission of data
+        digitalWrite(MASTER_EN , LOW);                                    // Receiving mode ON
+      
+        delay(500);
+        while(Serial.available()) {
+          answer = Serial.readString();
+          answer.trim();
+        }
+      
+        slave_id = answer.charAt(0);
+        sensor_id = answer.charAt(1);
+        status_of_lot = answer.substring(2);
+        
     
-
-    if (status_of_lot != "") {
-      if (status_of_lot != last_known_status[i]) {
-        client.send(msg + String(sensor_id)+ String("\", \"status\":\"") + status_of_lot + String("\", \"token\":\"") + security_token + String("\"}"));
+        if (status_of_lot != "") {
+          if (status_of_lot != last_known_status[i]) {
+            client.send(msg + String(slave_id) + String(sensor_id) + String("\", \"status\":\"") + status_of_lot + String("\", \"token\":\"") + security_token + String("\"}"));
+          }
+          last_known_status[i] = status_of_lot;
+        }
       }
-      last_known_status[i] = status_of_lot;
     }
-    
-  }
+  
 
 
   if (client.available())
@@ -148,4 +159,46 @@ void onEventsCallback(WebsocketsEvent event, String data)
     {
 //        Serial.println("Got a Pong!");
     }
+}
+
+int getSize(int arr[]) {
+  int size = sizeof(arr)/sizeof(arr[0]);
+  return size;
+}
+
+void getActiveSonars() {
+  int index = 0;
+  int last_sonar;
+  String answer;
+  for (int j = 0; j < ARRAY_SIZE(slave_ids); j++) {
+    for (int i = 0; i < ARRAY_SIZE(sonar_ids); i++) {
+      if (sonar_ids[i]) {
+        digitalWrite(MASTER_EN , HIGH);                                   // Make Enable pin high to send Data
+        delay(50);                                                        // required minimum delay of 5ms
+        Serial.print(slave_ids[j]); Serial.println(sonar_ids[i]);         // Send slave and sensor id
+        Serial.flush();                                                   // wait for transmission of data
+        digitalWrite(MASTER_EN , LOW);                                    // Receiving mode ON
+      
+        delay(500);
+        while(Serial.available()) {
+          answer = Serial.readString();
+          answer.trim();
+        }
+      
+        slave_id = answer.charAt(0);
+        sensor_id = answer.charAt(1);
+        status_of_lot = answer.substring(2);
+        
+    
+        if (status_of_lot != "") {
+          int sonar = (slave_id - '0') * 10 + (sensor_id - '0');
+          if (sonar != last_sonar) {
+            active_sonars[index] = sonar;
+          }
+          index++;
+          last_sonar = sonar;
+        }
+      }
+    }
+  }
 }
