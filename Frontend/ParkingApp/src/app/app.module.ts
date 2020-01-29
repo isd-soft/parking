@@ -10,16 +10,10 @@ import {MainComponent} from './main/main.component';
 import {MenuComponent} from './menu/menu.component';
 import {ParkingLotDetailComponent} from './main/parking-lot-detail/parking-lot-detail.component';
 import {StatisticsComponent} from './statistics/statistics.component';
-import {FeatureComponent} from './feature/feature.component';
 import {PrefetchStatsService} from './prefetch-stats.service';
 import {PrefetchParkingLotsService} from './prefetch-parking-lots.service';
-import {Feature2Component} from './feature/feature2/feature2.component';
-import {ParkingLayoutComponent} from './main/parking-layout/parking-layout.component';
 
 const routes: Routes = [
-  {path: 'test', component: FeatureComponent},
-  {path: 'test2', component: Feature2Component},
-  {path: 'layout', component: ParkingLayoutComponent},
   {path: 'stats', component: StatisticsComponent, resolve: {stats: PrefetchStatsService, parkingLots: PrefetchParkingLotsService}},
   {path: '', component: MainComponent},
   {path: '404', component: PageNotFoundComponent},
@@ -33,10 +27,7 @@ const routes: Routes = [
     MainComponent,
     MenuComponent,
     ParkingLotDetailComponent,
-    StatisticsComponent,
-    FeatureComponent,
-    Feature2Component,
-    ParkingLayoutComponent
+    StatisticsComponent
   ],
 
   imports: [

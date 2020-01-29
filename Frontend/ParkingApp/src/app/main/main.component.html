@@ -1,31 +1,70 @@
-<!-- <div class="d-flex justify-content-center" >
-  <div class="btn refresh mt-3 mb-4" (click)="refresh()">Refresh</div>
-</div> -->
+<div class="background mt-3">
+  <div class="bg-warning display-5 d-flex justify-content-center text-center mb-2 message" *ngIf="message">{{message}}</div>
 
-<!--<div class="display-4 text-light d-flex justify-content-center mb-2 title mt-3">ParKing</div>-->
+  <app-parking-lot-detail *ngIf="action === 'view'" [parkingLot]="selectedParkingLot" (goBackEvent)="refresh()"></app-parking-lot-detail>
 
-<app-parking-lot-detail *ngIf="action === 'view'" [parkingLot]="selectedParkingLot" (goBackEvent)="refresh()"></app-parking-lot-detail>
-
-
-<div class="container row p-0 mx-auto" *ngIf="action !== 'view'">
-  <div class="col-12 col-sm-6 col-md-4 col-lg-3 elem" *ngFor="let parkingLot of parkingLots">
-    <div class="lot-name">{{'LOT ' + parkingLot.number}}</div>
-    <div class="btn lot col-12"  [ngClass]="{'green': parkingLot.status === 'FREE',
-                                            'red' : parkingLot.status === 'OCCUPIED' || parkingLot.status == null,
-                                            'grey' : parkingLot.status === 'UNKNOWN'}" (click)="showDetails(parkingLot.id)">
-      <i class="fas fa-car" *ngIf="parkingLot.status === 'OCCUPIED'"></i>
-      <i class="fas fa-parking" *ngIf="parkingLot.status === 'FREE'"></i>
-      <i class="fas fa-ban" *ngIf="parkingLot.status === 'UNKNOWN'"></i>
+  <!-- legend -->
+  <div class="d-flex legend-group text-center mb-2" *ngIf="action !== 'view'">
+    <div class="legend-elem">
+      <img class="legend" src="assets/img/car-side-blue-free-border.png">
+      <div class="text-dark col-3">free</div>
+    </div>
+    <div class="legend-elem">
+      <img class="legend" src="assets/img/car-side-blue.png">
+      <div class="text-dark col-3">occupied</div>
+    </div>
+    <div class="legend-elem">
+      <img class="legend" src="assets/img/car-side-blue-lost.png">
+      <div class="text-dark col-3">no connection</div>
     </div>
   </div>
-</div>
 
-<div class="row" *ngIf="parkingLots == null">
-  <h2 class="error col-12" style="text-align: center; margin-bottom: 20px;">Connection error, please contact support</h2>
-  <div class="col-12 col-sm-6 col-md-4 col-lg-3 elem" *ngFor="let lot of noData">
-    <div class="lot-name">{{'LOT ' + (lot < 10 ? 0 : '') + lot}}</div>
-    <div class="btn lot col-12"  [ngClass]="{'grey' : parkingLot == null}">
-      <i class="fas fa-ban"></i>
+  <!-- parking lots generator -->
+  <div class="container p-0 text-center" *ngIf="action !== 'view' ">
+    <img class="layout" src="assets/img/isd-parking-layout-blue-striped-car.png" alt="layout">
+    <div  *ngIf='dataLoaded' >
+      <div *ngFor="let num of numberOfParkingLots">
+        <div class="car-icon lot-"
+          [ngClass]="{
+            'lot-side' : parkingLots[num]?.number < 4,
+            'lot-top' : parkingLots[num]?.number >= 4,
+
+            'car-occupied-side' : (parkingLots[num]?.status === 'OCCUPIED' || parkingLots[num].status == null) && parkingLots[num]?.number < 4,
+            'car-lost-side' : (parkingLots[num]?.status === 'UNKNOWN') && parkingLots[num]?.number < 4,
+            'car-free-side' : parkingLots[num]?.status === 'FREE'  && parkingLots[num]?.number < 4,
+
+            'car-occupied-top' : (parkingLots[num]?.status === 'OCCUPIED'  || parkingLots[num].status == null) && parkingLots[num]?.number >= 4,
+            'car-lost-top' : (parkingLots[num]?.status === 'UNKNOWN') && parkingLots[num]?.number >= 4,
+            'car-free-top' : parkingLots[num]?.status === 'FREE' && parkingLots[num]?.number >= 4,
+
+            'lot-1' : parkingLots[num]?.number === 1,
+            'lot-2' : parkingLots[num]?.number === 2,
+            'lot-3' : parkingLots[num]?.number === 3,
+            'lot-4' : parkingLots[num]?.number === 4,
+            'lot-5' : parkingLots[num]?.number === 5,
+            'lot-6' : parkingLots[num]?.number === 6,
+            'lot-7' : parkingLots[num]?.number === 7,
+            'lot-8' : parkingLots[num]?.number === 8,
+            'lot-9' : parkingLots[num]?.number === 9,
+            'lot-10' : parkingLots[num]?.number === 10
+          }"
+          (click)="showDetails(parkingLots[num]?.id)">
+          <span *ngIf="parkingLots[num]?.status === 'FREE'"
+            [ngClass]="{
+              'lot-number-side' : parkingLots[num]?.number < 4,
+              'lot-number-top' : parkingLots[num]?.number >= 4
+            }">{{'L' + (parkingLots[num]?.number < 10 ? 0 : '') + parkingLots[num]?.number}}</span>
+        </div>
+      </div>
+      <div class="smoking text-secondary"><i class="fas fa-smoking"></i></div>
+      <div class="backDoor first">
+        <div class="display-5">ISD 2nd</div>
+        <div class="display-5">Back Door</div>
+      </div>
+      <div class="backDoor second" *ngIf="true">
+        <div class="display-5">ISD 1st</div>
+        <div class="display-5">Back Door</div>
+      </div>
     </div>
   </div>
 </div>
