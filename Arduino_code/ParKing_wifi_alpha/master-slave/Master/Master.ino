@@ -17,14 +17,13 @@
       #define TRIGGER_PIN  2                                         // Arduino pin tied to trigger pin on the ultrasonic sensor
       #define ECHO_PIN     4                                         // Arduino pin tied to echo pin on the ultrasonic sensor
       
-      
       #define MAX_DISTANCE 400                                       // Maximum distance we want to ping for (in centimeters). 
                                                                      // Maximum sensor distance is rated at 400-500cm.
       
       unsigned int filteredSonarDistance;                            // real time distance from sonar
-      unsigned int lastSonarDistance;                                // last known distance of sonar, used to prevent double values
+      unsigned int lastSonarDistance = 1;                                // last known distance of sonar, used to prevent double values
       
-      long targetDistance = 200;                                     // target distance value when the status should be trigerred, common for all sensors (can be added for each sensor)
+      long targetDistance = 100;                                     // target distance value when the status should be trigerred, common for all sensors (can be added for each sensor)
       
       //parking lot
       boolean isLotFreeSonar = false;                                // Sonar's boolean variable to define if the status of parking lot was changed or not
@@ -89,6 +88,8 @@ void setup() {
 
 /*#######################################################################################################*/
 
+
+
   // Connect to wifi
     WiFi.begin(ssid, password);
 
@@ -116,6 +117,9 @@ void setup() {
     else
     {
         Serial.println("Not Connected to WebSocket!");
+        Serial.println("Trying to reconnect...");
+        delay(20000);
+        resetFunc();
     }
 
     // run callback when messages are received
@@ -142,17 +146,19 @@ void loop() {
         {
             sonarInitialized = true;
             isLotFreeSonar = (filteredSonarDistance >= targetDistance || filteredSonarDistance == 0) ? true : false;
-            Serial.println(isLotFreeSonar ? "SONAR_1 : FREE " + String(filteredSonarDistance) 
-                                            : "SONAR_1 : OCCUPIED " + String(filteredSonarDistance));
-            client.send(isLotFreeSonar ? msg + String(2) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + 
+            Serial.println(isLotFreeSonar ? "SONAR_3 : FREE " + String(filteredSonarDistance) 
+                                          : "SONAR_3 : OCCUPIED " + String(filteredSonarDistance));
+            client.send(isLotFreeSonar ? msg + String(3) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + 
                                         security_token + String("\"}")
-                                        : msg + String(2) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + 
+                                       : msg + String(3) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + 
                                         security_token + String("\"}"));
         } 
         lastSonarDistance = filteredSonarDistance;
       }
               
 /*#######################################################################################################*/
+
+
   
   String answer;
   status_of_lot = ""; 
@@ -177,7 +183,7 @@ void loop() {
     
         if (status_of_lot != "") {
           if (status_of_lot != last_known_status[i]) {
-            client.send(msg +/* String(slave_id) + */String(sensor_id) + String("\", \"status\":\"") + status_of_lot + String("\", \"token\":\"") + security_token + String("\"}"));
+            client.send(msg + String(slave_id) + String(sensor_id) + String("\", \"status\":\"") + status_of_lot + String("\", \"token\":\"") + security_token + String("\"}"));
           }
           last_known_status[i] = status_of_lot;
         }
@@ -211,11 +217,8 @@ void onEventsCallback(WebsocketsEvent event, String data)
     {
         Serial.println("WebSocket connection closed!");
         Serial.println("Trying to reconnect to WebSocket ...");
-        delay(10000);
-        bool connected = client.connect(websockets_server_host, websockets_server_port, "/demo");
-        resetFunc();
-
-        
+        delay(20000);
+        resetFunc();        
     }
     else if (event == WebsocketsEvent::GotPing)
     {
