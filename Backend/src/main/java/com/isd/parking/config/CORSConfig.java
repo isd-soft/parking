@@ -17,8 +17,6 @@ public class CORSConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
 
-        log.info("Call from front");
-
         registry.addMapping("/**")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedOrigins("*");  //TODO: change the URL for the prod URL when we deploy

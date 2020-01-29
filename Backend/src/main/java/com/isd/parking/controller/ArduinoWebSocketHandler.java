@@ -41,72 +41,37 @@ public class ArduinoWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
-        try {
-            super.afterConnectionEstablished(session);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         log.info("A user with session Id:" + session.getId() + " created a session");
     }
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
 
-        // try {
-        //     super.handleTextMessage(session, message);
-        // } catch (Exception e) {
-        //     e.printStackTrace();
-        // }
-
         log.info("Session Id: " + session.getId() + ", message body" + message.toString());
-        log.info("Message : " + message.getPayload());
 
-        //message sample
-        /*
-            {"mBody":"Arduino data", "id":"1", "status":"FREE", "token":"4a0a8679643673d083b23f52c21f27cac2b03fa2"};
-         */
-
-        //parsing data from message
         JSONObject msgObject = new JSONObject(message.getPayload());
-
         String arduinoToken = msgObject.getString("token");
 
         if (arduinoToken.equals(securityToken)) {
 
-            log.info("Handle text message from arduino");
-
             String lotId = msgObject.getString("id");
-            log.info("Parking lot number: " + lotId);
-
             String parkingLotStatus = msgObject.getString("status");
-            log.info("Parking lot status: " + parkingLotStatus);
 
             Optional<ParkingLot> parkingLotOptional = parkingLotService.findById(Long.valueOf(lotId));
 
-            //if lot with this number exists in database
             parkingLotOptional.ifPresent(parkingLot -> {
 
-                log.info("Parking lot found in database: " + parkingLot);
-
-                parkingLot.setStatus(ParkingLotStatus.valueOf(parkingLotStatus));       //get enum value from string
+                parkingLot.setStatus(ParkingLotStatus.valueOf(parkingLotStatus));
                 parkingLot.setUpdatedNow();
 
-                log.info("Updated parking lot: " + parkingLot);
-
-                //saving in database
                 parkingLotService.save(parkingLot);
-                //saving in local Java memory
                 parkingLotLocalService.save(parkingLot);
 
-                //save new statistics to database
-                StatisticsRecord statisticsRecord = StatisticsRecord.builder()//.id(UUID.randomUUID())
+                StatisticsRecord statisticsRecord = StatisticsRecord.builder()
                         .lotNumber(parkingLot.getNumber())
                         .status(parkingLot.getStatus())
                         .updatedAt(new Date(System.currentTimeMillis())).build();
-
-                log.info("Statistics record: " + statisticsRecord);
-
-                log.info("Controller update statistics executed...");
 
                 statisticsService.save(statisticsRecord);
             });
@@ -114,14 +79,8 @@ public class ArduinoWebSocketHandler extends TextWebSocketHandler {
     }
 
     @Override
-
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
 
         log.info("Session Id:" + session.getId() + " changed status to " + status);
-        log.info("test");
     }
-
-
-
-
 }

@@ -17,10 +17,6 @@ import java.util.List;
 @Slf4j
 public class ParkingLotController {
 
-    //For using database uncomment this and comment parkingLotService below
-    /*@Autowired
-    private ParkingLotService parkingLotService;*/
-
     private final ParkingLotLocalService parkingLotService;
 
     @Autowired
