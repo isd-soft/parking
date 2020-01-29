@@ -1,10 +1,10 @@
-package com.isd.parking.data;
+package com.isd.parking.util;
 
 import com.isd.parking.model.ParkingLot;
-import com.isd.parking.model.ParkingNumber;
 import com.isd.parking.model.enums.ParkingLotStatus;
 import com.isd.parking.service.ParkingLotLocalService;
 import com.isd.parking.service.ParkingLotService;
+import com.isd.parking.util.ParkingNumber;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -36,12 +36,6 @@ public class DataLoader implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         Date date = new Date(System.currentTimeMillis());
 
-        //initiate parking lots in database
-        /*for (int i = 1; i <= ParkingNumber.totalParkingLotsNumber; i++) {
-            //an fallback method to load initial data
-            //parkingLotService.save(new ParkingLot((long) i, i, date, ParkingLotStatus.FREE));
-            //parkingLotLocalService.save(new ParkingLot((long) i, i, date, ParkingLotStatus.FREE));
-        }*/
     }
 
     @Bean
@@ -54,10 +48,10 @@ public class DataLoader implements ApplicationRunner {
             for (int i = 1; i <= ParkingNumber.totalParkingLotsNumber; i++) {
 
                 //initial saving parking lots to database
-                parkingLotService.save(new ParkingLot((long) i, i, date, ParkingLotStatus.FREE));
+                parkingLotService.save(new ParkingLot((long) i, i, date, ParkingLotStatus.UNKNOWN));
 
                 //initial saving parking lots to local Java memory
-                parkingLotLocalService.save(new ParkingLot((long) i, i, date, ParkingLotStatus.FREE));
+                parkingLotLocalService.save(new ParkingLot((long) i, i, date, ParkingLotStatus.UNKNOWN));
             }
 
             // fetch all parking lots from database
