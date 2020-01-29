@@ -37,6 +37,6 @@ public class ParkingLot {
     private ParkingLotStatus status;
 
     public void setUpdatedNow() {
-        this.setUpdatedAt(new java.sql.Date(System.currentTimeMillis()));
+        this.setUpdatedAt(new Date(System.currentTimeMillis()));
     }
 }
