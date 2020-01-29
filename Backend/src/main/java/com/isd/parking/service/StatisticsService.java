@@ -10,6 +10,13 @@ import javax.transaction.Transactional;
 import java.util.Calendar;
 import java.util.List;
 
+
+/**
+ * Statistics Service class for database repository
+ * Contains methods for
+ * getting all statistics records,
+ * delete statistics records older than one week
+ */
 @Service
 @Slf4j
 public class StatisticsService {
@@ -21,6 +28,11 @@ public class StatisticsService {
         this.statisticsRepository = statisticsRepository;
     }
 
+    /**
+     * Get all statistics records from database method
+     *
+     * @return - Statistics records list
+     */
     public List<StatisticsRecord> listAll() {
 
         log.info("Service get statistics list executed...");
@@ -28,6 +40,9 @@ public class StatisticsService {
         return statisticsRepository.findAll();
     }
 
+    /**
+     * Method deletes all statistics records older than one week
+     */
     @Transactional
     public void deleteStatsOlderThanWeek() {
 
@@ -41,6 +56,11 @@ public class StatisticsService {
 
     }
 
+    /**
+     * Save statistics record in database method
+     *
+     * @return - StatisticsRecord which was saved in database
+     */
     @Transactional
     public StatisticsRecord save(StatisticsRecord statisticsRecord) {
 
