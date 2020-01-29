@@ -15,6 +15,12 @@ import javax.validation.Valid;
 import java.sql.Date;
 import java.util.Optional;
 
+
+/**
+ * Arduino controller
+ * Reserve class for network connection over HTTP protocol
+ * Contains methods for updating database stored parking lots from Arduino board
+ */
 @RestController
 @Slf4j
 public class ArduinoController {
@@ -32,6 +38,13 @@ public class ArduinoController {
         this.statisticsService = statisticsService;
     }
 
+    /**
+     * Parking lot status updating controller for PUT request
+     * Used to update status of an parking lot in the database
+     *
+     * @param parkingLot - parking lot object, contains all necessary data
+     * @return HttpStatus.OK
+     */
     @PutMapping("/arduino")
     @ResponseStatus(HttpStatus.OK)
     public void updateParkingLot(@Valid @RequestBody ParkingLot parkingLot) {
@@ -46,22 +59,21 @@ public class ArduinoController {
             parkingLotService.save(updatingParkingLot);
             parkingLotLocalService.save(updatingParkingLot);
 
-            StatisticsRecord statisticsRecord = StatisticsRecord.builder()
-                    .lotNumber(updatingParkingLot.getNumber())
-                    .status(updatingParkingLot.getStatus())
-                    .updatedAt(new Date(System.currentTimeMillis())).build();
-
-            log.info("Controller update statistics executed...");
-
-            statisticsService.save(statisticsRecord);
+            addStatisticsRecord(updatingParkingLot);
         });
     }
 
-    /*
-    alternative fallback method for updating data
-    not working via Postman (required parameter not present) (fixed)
+     /*
+    alternative fallback method for updating data using id and status
      */
 
+    /**
+     * Parking lot status updating controller for PUT request
+     * Used to update status of an parking lot in the database by parking lot id
+     *
+     * @param id               - parking lot id
+     * @param parkingLotStatus - parking lot status
+     */
     @PutMapping("/arduino/update")
     @ResponseStatus(HttpStatus.OK)
     public void updateParkingLotById(@RequestParam(value = "id") Long id,
@@ -77,15 +89,18 @@ public class ArduinoController {
             parkingLotService.save(parkingLot);
             parkingLotLocalService.save(parkingLot);
 
-            StatisticsRecord statisticsRecord = StatisticsRecord.builder()
-                    .lotNumber(parkingLot.getNumber())
-                    .status(parkingLot.getStatus())
-                    .updatedAt(new Date(System.currentTimeMillis())).build();
-
-            log.info("Controller update statistics executed...");
-
-            statisticsService.save(statisticsRecord);
+            addStatisticsRecord(parkingLot);
         });
+    }
+
+    private void addStatisticsRecord(ParkingLot parkingLot) {
+        StatisticsRecord statisticsRecord = StatisticsRecord.builder()
+                .lotNumber(parkingLot.getNumber())
+                .status(parkingLot.getStatus())
+                .updatedAt(new Date(System.currentTimeMillis())).build();
+
+        log.info("Controller update statistics executed...");
+        statisticsService.save(statisticsRecord);
     }
 }
 

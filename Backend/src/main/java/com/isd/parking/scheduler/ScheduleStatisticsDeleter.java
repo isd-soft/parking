@@ -11,6 +11,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 
+/**
+ * Schedule statistics deleter
+ * Contains method for delete stats in background
+ */
 @EnableScheduling
 @Configuration
 @ConditionalOnProperty(name = "spring.enable.scheduling")
@@ -24,14 +28,26 @@ public class ScheduleStatisticsDeleter {
         this.statisticsService = statisticsService;
     }
 
+    /**
+     * Deletes statistics older than one week
+     *
+     * Cron:
+     * 0 0 1 * * * =>
+     * second, minute, hour, day of month, month, day(s) of week
+     * (*) means match any
+     *  X means "every X"
+     * */
     @Scheduled(cron = "0 0 1 * * *")            //task will be executed at 13:00 every day
     public void scheduleTaskDeleteStats() {
-
         log.info("Delete stats schedule job executing...");
-
         statisticsService.deleteStatsOlderThanWeek();
     }
 
+    /**
+     * Configuration method used for setting up ScheduledExecutorService's pool size
+     *
+     * @return - ThreadPoolTaskScheduler bean
+     */
     //for resolve conflict launching schedule in main thread
     @Bean
     public ThreadPoolTaskScheduler taskScheduler() {

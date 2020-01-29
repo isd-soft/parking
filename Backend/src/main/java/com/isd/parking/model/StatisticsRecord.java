@@ -9,6 +9,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 
+
+/**
+ * Statistics Record model class
+ */
 @Entity(name = "statistics")
 @Data
 @Builder

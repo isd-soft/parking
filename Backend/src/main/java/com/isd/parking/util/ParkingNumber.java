@@ -7,5 +7,4 @@ public class ParkingNumber {
     * */
 
     public final static int totalParkingLotsNumber = 10;
-
 }
