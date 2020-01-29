@@ -58,7 +58,7 @@ WebsocketsClient client;
 
 const char *ssid = "Inther";                                    // Enter SSID
 const char *password = "inth3rmoldova";                         // Enter Password
-const char *websockets_server_host = "104.248.250.89";          // Enter server address 
+const char *websockets_server_host = "104.248.250.89";          // Enter server address 104.248.250.89
 const uint16_t websockets_server_port = 8080;                   // Enter server port
 
 //WebSocket
@@ -108,7 +108,7 @@ void setup() {
 
     Serial.println("Connected to Wifi, Connecting to server.");
     // try to connect to WebSockets server
-    bool connected = client.connect(websockets_server_host, websockets_server_port, "/test");
+    bool connected = client.connect(websockets_server_host, websockets_server_port, "/demo");
     if (connected)
     {
         Serial.println("Connected to WebSocket!");
@@ -212,7 +212,7 @@ void onEventsCallback(WebsocketsEvent event, String data)
         Serial.println("WebSocket connection closed!");
         Serial.println("Trying to reconnect to WebSocket ...");
         delay(10000);
-        bool connected = client.connect(websockets_server_host, websockets_server_port, "/arduino");
+        bool connected = client.connect(websockets_server_host, websockets_server_port, "/demo");
         resetFunc();
 
         
