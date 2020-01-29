@@ -2,13 +2,44 @@
 * Master Arduino firmware
 */
 
-
 #include <ArduinoWebsockets.h>
 #include <WiFi.h>
 
 #define ARRAY_SIZE(array) ((sizeof(array))/(sizeof(array[0])))  // used to calculate de length of an array
 
 #define MASTER_EN   5                                           // connected to RS485 Enable pin
+
+/*########################### used for connecting sensor directly to the master #########################*/
+
+      #include <NewPing.h>
+      
+      //Sonar 1 details
+      #define TRIGGER_PIN  2                                         // Arduino pin tied to trigger pin on the ultrasonic sensor
+      #define ECHO_PIN     4                                         // Arduino pin tied to echo pin on the ultrasonic sensor
+      
+      
+      #define MAX_DISTANCE 400                                       // Maximum distance we want to ping for (in centimeters). 
+                                                                     // Maximum sensor distance is rated at 400-500cm.
+      
+      unsigned int filteredSonarDistance;                            // real time distance from sonar
+      unsigned int lastSonarDistance;                                // last known distance of sonar, used to prevent double values
+      
+      long targetDistance = 200;                                     // target distance value when the status should be trigerred, common for all sensors (can be added for each sensor)
+      
+      //parking lot
+      boolean isLotFreeSonar = false;                                // Sonar's boolean variable to define if the status of parking lot was changed or not
+      boolean sonarInitialized = false;                              // initialized flag for sonar
+      
+      //parking lot states
+      String status_free = "FREE";
+      String status_occupied = "OCCUPIED";
+      String status_unknown = "UNKNOWN";
+      String actual_status;
+      
+      NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);        // NewPing setup of pins and maximum distance for first sensor
+
+/*#######################################################################################################*/
+
 
 int slave_ids[] = {1, 2, 3};                                    // add new id when adding new slaves
 int sonar_ids[] = {1, 2, 3};                                    // add new id when will be added more sensors
@@ -42,13 +73,21 @@ long timer;
 
 void(* resetFunc) (void) = 0;                                   // reseting the arduino board
 
-void setup() {
+void setup() { 
   timer = millis();                                   
 
   pinMode(MASTER_EN , OUTPUT);                                  // Declare Enable pin as output
   Serial.begin(9600);                                           // set serial communication baudrate 
   digitalWrite(MASTER_EN , LOW);                                // Make Enable pin low
                                                                 // Receiving mode ON 
+                                                       
+/*########################### used for connecting sensor directly to the master #########################*/
+
+      //Sensor Connections
+      pinMode(TRIGGER_PIN, OUTPUT);
+      pinMode(ECHO_PIN, INPUT);
+
+/*#######################################################################################################*/
 
   // Connect to wifi
     WiFi.begin(ssid, password);
@@ -93,6 +132,28 @@ void setup() {
 }
 
 void loop() {
+
+/*########################### used for connecting sensor directly to the master #########################*/
+
+      filteredSonarDistance = sonar.ping_median(10) / US_ROUNDTRIP_CM; // get real time distance in cm from sonar
+      if (filteredSonarDistance != lastSonarDistance) { 
+        if (!sonarInitialized || ((filteredSonarDistance >= targetDistance || filteredSonarDistance == 0)&& !isLotFreeSonar) 
+            || (filteredSonarDistance < targetDistance && isLotFreeSonar))
+        {
+            sonarInitialized = true;
+            isLotFreeSonar = (filteredSonarDistance >= targetDistance || filteredSonarDistance == 0) ? true : false;
+            Serial.println(isLotFreeSonar ? "SONAR_1 : FREE " + String(filteredSonarDistance) 
+                                            : "SONAR_1 : OCCUPIED " + String(filteredSonarDistance));
+            client.send(isLotFreeSonar ? msg + String(2) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + 
+                                        security_token + String("\"}")
+                                        : msg + String(2) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + 
+                                        security_token + String("\"}"));
+        } 
+        lastSonarDistance = filteredSonarDistance;
+      }
+              
+/*#######################################################################################################*/
+  
   String answer;
   status_of_lot = ""; 
     for (int i = 0; i < ARRAY_SIZE(active_sonars); i++) {
@@ -123,8 +184,7 @@ void loop() {
       }
     }
   
-
-
+  // ping server to check if connection is up
   if (client.available())
     {
         client.poll();
@@ -132,13 +192,11 @@ void loop() {
 
     }
 
-   /// reset arduino after 1 hour    
-  if ((millis() - timer) > 1800000) {
+  // reset arduino after 1 hour    
+  if ((millis() - timer) > 900000) {
     resetFunc();
   }
 }
-
-
 
 
 void onEventsCallback(WebsocketsEvent event, String data)
@@ -154,7 +212,7 @@ void onEventsCallback(WebsocketsEvent event, String data)
         Serial.println("WebSocket connection closed!");
         Serial.println("Trying to reconnect to WebSocket ...");
         delay(10000);
-        bool connected = client.connect(websockets_server_host, websockets_server_port, "/test");
+        bool connected = client.connect(websockets_server_host, websockets_server_port, "/arduino");
         resetFunc();
 
         
