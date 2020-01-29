@@ -1,36 +1,34 @@
+/**
+* Master Arduino firmware
+*/
+
+
 #include <ArduinoWebsockets.h>
 #include <WiFi.h>
 
-#define ARRAY_SIZE(array) ((sizeof(array))/(sizeof(array[0])))
+#define ARRAY_SIZE(array) ((sizeof(array))/(sizeof(array[0])))  // used to calculate de length of an array
 
-#define MASTER_EN   5             // connected to RS485 Enable pin
-#define SLAVE_ONE   1             // declare id of first slave
-#define SLAVE_TWO   2             // deckare id of second slave
+#define MASTER_EN   5                                           // connected to RS485 Enable pin
 
-int slave_ids[5] = {1, 2, 3, 4, 5};
-#define SLAVE_IDS_SIZE 5
+int slave_ids[] = {1, 2, 3};                                    // add new id when adding new slaves
+int sonar_ids[] = {1, 2, 3};                                    // add new id when will be added more sensors
 
-int active_slave_ids[5];
-#define ACTIVE_SLAVE_IDS_SIZE 2           // change value when will be added more slaves
-int sonar_ids[] = {1, 2, 3, 4, 5, 6, 7};
-#define SONAR_IDS_SIZE 7           // change value when will be added more sensors
-
-int active_sonars[35];
+int active_sonars[9];                                           // active sensors with which will work master
 
 char slave_id;
 char sensor_id;
 String status_of_lot;
-String last_known_status[7];      // statuses of each sensor, index of the status must be the same as the id of sensor
-                                  // change size when will be added more sensors
+String last_known_status[9];                                    // statuses of each sensor, index of the status must be the same as the id of sensor
+                                                                // change size when will be added more sensors
 
 //Wifi
 using namespace websockets;
 WebsocketsClient client;
 
-const char *ssid = "Inther";                         //Enter SSID
-const char *password = "inth3rmoldova";              //Enter Password
-const char *websockets_server_host = "172.17.41.34"; //Enter server address
-const uint16_t websockets_server_port = 8080;        // Enter server port
+const char *ssid = "Inther";                                    // Enter SSID
+const char *password = "inth3rmoldova";                         // Enter Password
+const char *websockets_server_host = "128.199.34.112";          // Enter server address 
+const uint16_t websockets_server_port = 8080;                   // Enter server port
 
 //WebSocket
 //sample message for WebSocket
@@ -39,13 +37,18 @@ char *msg = "{\"mBody\":\"Arduino data\", \"id\":\"";
 //security
 char *security_token = "4a0a8679643673d083b23f52c21f27cac2b03fa2"; //some security token to verify connection ({SHA1}"arduino")
 
+// timer to restart program every 60 min
+long timer;
+
+void(* resetFunc) (void) = 0;                                   // reseting the arduino board
 
 void setup() {
+  timer = millis();                                   
 
-  pinMode(MASTER_EN , OUTPUT);      // Declare Enable pin as output
-  Serial.begin(9600);               // set serial communication baudrate 
-  digitalWrite(MASTER_EN , LOW);    // Make Enable pin low
-                                    // Receiving mode ON 
+  pinMode(MASTER_EN , OUTPUT);                                  // Declare Enable pin as output
+  Serial.begin(9600);                                           // set serial communication baudrate 
+  digitalWrite(MASTER_EN , LOW);                                // Make Enable pin low
+                                                                // Receiving mode ON 
 
   // Connect to wifi
     WiFi.begin(ssid, password);
@@ -84,6 +87,7 @@ void setup() {
 
     client.onEvent(onEventsCallback); 
 
+    // check which sensors are working
     getActiveSonars();
 
 }
@@ -93,11 +97,11 @@ void loop() {
   status_of_lot = ""; 
     for (int i = 0; i < ARRAY_SIZE(active_sonars); i++) {
       if (active_sonars[i]) {
-        digitalWrite(MASTER_EN , HIGH);                                   // Make Enable pin high to send Data
-        delay(50);                                                        // required minimum delay of 5ms
-        Serial.println(active_sonars[i]);         // Send slave and sensor id
-        Serial.flush();                                                   // wait for transmission of data
-        digitalWrite(MASTER_EN , LOW);                                    // Receiving mode ON
+        digitalWrite(MASTER_EN , HIGH);                            // Make Enable pin high to send Data
+        delay(50);                                                 // required minimum delay of 5ms
+        Serial.println(active_sonars[i]);                          // Send slave and sensor id
+        Serial.flush();                                            // wait for transmission of data
+        digitalWrite(MASTER_EN , LOW);                             // Receiving mode ON
       
         delay(500);
         while(Serial.available()) {
@@ -112,7 +116,7 @@ void loop() {
     
         if (status_of_lot != "") {
           if (status_of_lot != last_known_status[i]) {
-            client.send(msg + String(slave_id) + String(sensor_id) + String("\", \"status\":\"") + status_of_lot + String("\", \"token\":\"") + security_token + String("\"}"));
+            client.send(msg +/* String(slave_id) + */String(sensor_id) + String("\", \"status\":\"") + status_of_lot + String("\", \"token\":\"") + security_token + String("\"}"));
           }
           last_known_status[i] = status_of_lot;
         }
@@ -127,10 +131,14 @@ void loop() {
         client.ping();
 
     }
-  
+
+   /// reset arduino after 1 hour    
+  if ((millis() - timer) > 3600000) {
+    resetFunc();
+  }
 }
 
-void(* resetFunc) (void) = 0;
+
 
 
 void onEventsCallback(WebsocketsEvent event, String data)
@@ -173,11 +181,11 @@ void getActiveSonars() {
   for (int j = 0; j < ARRAY_SIZE(slave_ids); j++) {
     for (int i = 0; i < ARRAY_SIZE(sonar_ids); i++) {
       if (sonar_ids[i]) {
-        digitalWrite(MASTER_EN , HIGH);                                   // Make Enable pin high to send Data
-        delay(50);                                                        // required minimum delay of 5ms
-        Serial.print(slave_ids[j]); Serial.println(sonar_ids[i]);         // Send slave and sensor id
-        Serial.flush();                                                   // wait for transmission of data
-        digitalWrite(MASTER_EN , LOW);                                    // Receiving mode ON
+        digitalWrite(MASTER_EN , HIGH);                                // Make Enable pin high to send Data
+        delay(50);                                                     // required minimum delay of 5ms
+        Serial.print(slave_ids[j]); Serial.println(sonar_ids[i]);      // Send slave and sensor id
+        Serial.flush();                                                // wait for transmission of data
+        digitalWrite(MASTER_EN , LOW);                                 // Receiving mode ON
       
         delay(500);
         while(Serial.available()) {
