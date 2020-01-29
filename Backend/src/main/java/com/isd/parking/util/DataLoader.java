@@ -52,7 +52,8 @@ public class DataLoader implements ApplicationRunner {
             // save parking lots
             Date date = new Date(System.currentTimeMillis());
 
-            for (int i = 1; i <= ParkingNumber.totalParkingLotsNumber; i++) {
+            int totalParkingLotsNumber = Integer.parseInt(this.totalParkingLotsNumber);
+            for (int i = 1; i <= totalParkingLotsNumber; i++) {
 
                 //initial saving parking lots to database
                 parkingLotService.save(new ParkingLot((long) i, i, date, ParkingLotStatus.UNKNOWN));
