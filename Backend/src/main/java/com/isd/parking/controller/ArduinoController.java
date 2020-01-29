@@ -36,20 +36,31 @@ public class ArduinoController {
     @ResponseStatus(HttpStatus.OK)
     public void updateParkingLot(@Valid @RequestBody ParkingLot parkingLot) {
 
+        log.info("Controller update parking lot executed...");
+
         Optional<ParkingLot> parkingLotOptional = parkingLotService.findById(parkingLot.getId());
 
         parkingLotOptional.ifPresent(updatingParkingLot -> {
 
+            log.info("Parking lot found in database: " + updatingParkingLot);
+
             updatingParkingLot.setStatus(parkingLot.getStatus());
             updatingParkingLot.setUpdatedNow();
 
+            log.info("Updated parking lot: " + updatingParkingLot);
+
+            //saving in database
             parkingLotService.save(updatingParkingLot);
+            //saving in local Java memory
             parkingLotLocalService.save(updatingParkingLot);
 
+            //save new statistics to database
             StatisticsRecord statisticsRecord = StatisticsRecord.builder()
                     .lotNumber(updatingParkingLot.getNumber())
                     .status(updatingParkingLot.getStatus())
                     .updatedAt(new Date(System.currentTimeMillis())).build();
+
+            log.info("Statistics record: " + statisticsRecord);
 
             log.info("Controller update statistics executed...");
 
@@ -67,20 +78,31 @@ public class ArduinoController {
     public void updateParkingLotById(@RequestParam(value = "id") Long id,
                                      @RequestParam(value = "status") ParkingLotStatus parkingLotStatus) {
 
+        log.info("Controller update parking lot executed...");
+
         Optional<ParkingLot> parkingLotOptional = parkingLotService.findById(id);
 
         parkingLotOptional.ifPresent(parkingLot -> {
 
+            log.info("Parking lot found in database: " + parkingLot);
+
             parkingLot.setStatus(parkingLotStatus);
             parkingLot.setUpdatedNow();
 
+            log.info("Updated parking lot: " + parkingLotStatus);
+
+            //saving in database
             parkingLotService.save(parkingLot);
+            //saving in local Java memory
             parkingLotLocalService.save(parkingLot);
 
-            StatisticsRecord statisticsRecord = StatisticsRecord.builder()
+            //save new statistics to database
+            StatisticsRecord statisticsRecord = StatisticsRecord.builder()//.id(UUID.randomUUID())
                     .lotNumber(parkingLot.getNumber())
                     .status(parkingLot.getStatus())
                     .updatedAt(new Date(System.currentTimeMillis())).build();
+
+            log.info("Statistics record: " + statisticsRecord);
 
             log.info("Controller update statistics executed...");
 

@@ -1,4 +1,4 @@
-package com.isd.parking.util;
+package com.isd.parking.model;
 
 public class ParkingNumber {
 

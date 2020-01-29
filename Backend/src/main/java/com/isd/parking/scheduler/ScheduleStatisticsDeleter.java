@@ -32,6 +32,13 @@ public class ScheduleStatisticsDeleter {
         statisticsService.deleteStatsOlderThanWeek();
     }
 
+    /*@Scheduled(fixedDelay = 10000)
+    public void scheduleFixedDelayTask() {
+        log.info("Fixed delay task executing - " + System.currentTimeMillis() / 1000);
+
+        statisticsService.deleteStatsOlderThanWeek();
+    }*/
+
     //for resolve conflict launching schedule in main thread
     @Bean
     public ThreadPoolTaskScheduler taskScheduler() {
