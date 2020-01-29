@@ -58,9 +58,8 @@
   .navbar-brand.abs
   {
     position: absolute;
-    width: 100%;
-    left: 0;
-    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 
