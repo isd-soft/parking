@@ -70,6 +70,7 @@ public class ArduinoWebSocketHandler extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
 
         log.info("Session Id: " + session.getId() + ", message body" + message.toString());
+        System.out.println(message.getPayLoad()); 
 
         JSONObject msgObject = new JSONObject(message.getPayload());
         String arduinoToken = msgObject.getString("token");
