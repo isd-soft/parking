@@ -1,12 +1,12 @@
 package com.isd.parking.data;
 
 import com.isd.parking.model.ParkingLot;
-import com.isd.parking.model.ParkingNumber;
 import com.isd.parking.model.enums.ParkingLotStatus;
 import com.isd.parking.service.ParkingLotLocalService;
 import com.isd.parking.service.ParkingLotService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
@@ -24,6 +24,9 @@ import java.util.Optional;
 @Component
 @Slf4j
 public class DataLoader implements ApplicationRunner {
+
+    @Value("${parking.lots.number}")
+    private String totalParkingLotsNumber;
 
     private final ParkingLotService parkingLotService;
 
@@ -49,7 +52,8 @@ public class DataLoader implements ApplicationRunner {
             // save parking lots
             Date date = new Date(System.currentTimeMillis());
 
-            for (int i = 1; i <= ParkingNumber.totalParkingLotsNumber; i++) {
+            int totalParkingLotsNumber = Integer.parseInt(this.totalParkingLotsNumber);
+            for (int i = 1; i <= totalParkingLotsNumber; i++) {
 
                 //initial saving parking lots to database
                 parkingLotService.save(new ParkingLot((long) i, i, date, ParkingLotStatus.FREE));
@@ -107,7 +111,8 @@ public class DataLoader implements ApplicationRunner {
         Date date = new Date(System.currentTimeMillis());
 
         //initiate parking lots in database
-        /*for (int i = 1; i <= ParkingNumber.totalParkingLotsNumber; i++) {
+//        int totalParkingLotsNumber = Integer.parseInt(this.totalParkingLotsNumber);
+        /*for (int i = 1; i <= totalParkingLotsNumber; i++) {
             //an fallback method to load initial data
             //parkingLotService.save(new ParkingLot((long) i, i, date, ParkingLotStatus.FREE));
             //parkingLotLocalService.save(new ParkingLot((long) i, i, date, ParkingLotStatus.FREE));

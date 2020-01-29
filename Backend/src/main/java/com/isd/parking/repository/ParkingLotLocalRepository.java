@@ -2,6 +2,7 @@ package com.isd.parking.repository;
 
 import com.isd.parking.model.ParkingLot;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -16,6 +17,9 @@ import java.util.Optional;
 @Repository
 @Slf4j
 public class ParkingLotLocalRepository {
+
+    @Value("${parking.lots.number}")
+    private String totalParkingLotsNumber;
 
     //Local in-memory storage of parking lots
     private HashMap<Long, ParkingLot> parkingMap = new HashMap<>();
@@ -76,8 +80,8 @@ public class ParkingLotLocalRepository {
     //alternative fallback initialization method
     /*private void initParkingMap() {
 
-
-        for (int i = 1; i <= ParkingNumber.totalParkingLotsNumber; i++) {
+        int totalParkingLotsNumber = Integer.parseInt(this.totalParkingLotsNumber);
+        for (int i = 1; i <= totalParkingLotsNumber; i++) {
             ParkingLot parkingLot = ParkingLot.builder()
                     .id((long) i)
                     .number(i)
@@ -95,7 +99,8 @@ public class ParkingLotLocalRepository {
     /* private void initParkingList() {
         Date date = new Date(System.currentTimeMillis());
 
-        for (int i = 0; i < ParkingNumber.totalParkingLotsNumber; i++) {
+        int totalParkingLotsNumber = Integer.parseInt(this.totalParkingLotsNumber);
+        for (int i = 1; i <= totalParkingLotsNumber; i++) {
             ParkingLot parkingLot = ParkingLot.builder()
                     .id((long) i)
                     .number(i)
