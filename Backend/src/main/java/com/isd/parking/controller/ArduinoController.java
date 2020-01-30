@@ -1,7 +1,6 @@
 package com.isd.parking.controller;
 
 import com.isd.parking.model.ParkingLot;
-import com.isd.parking.model.StatisticsRecord;
 import com.isd.parking.model.enums.ParkingLotStatus;
 import com.isd.parking.service.ParkingLotLocalService;
 import com.isd.parking.service.ParkingLotService;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.sql.Date;
 import java.util.Optional;
 
 

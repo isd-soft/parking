@@ -1,7 +1,6 @@
 package com.isd.parking.controller;
 
 import com.isd.parking.model.ParkingLot;
-import com.isd.parking.model.StatisticsRecord;
 import com.isd.parking.model.enums.ParkingLotStatus;
 import com.isd.parking.service.ParkingLotLocalService;
 import com.isd.parking.service.ParkingLotService;
@@ -15,7 +14,6 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import java.sql.Date;
 import java.util.Optional;
 
 
