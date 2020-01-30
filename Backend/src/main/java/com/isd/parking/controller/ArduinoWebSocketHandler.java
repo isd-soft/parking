@@ -84,19 +84,13 @@ public class ArduinoWebSocketHandler extends TextWebSocketHandler {
 
             parkingLotOptional.ifPresent(parkingLot -> {
 
-                if (!parkingLotStatus.equals(parkingLot.getStatus())) {
+                if (!parkingLotStatus.equals(String.valueOf(parkingLot.getStatus()))) {
                     parkingLot.setStatus(ParkingLotStatus.valueOf(parkingLotStatus));
                     parkingLot.setUpdatedNow();
 
                     parkingLotService.save(parkingLot);
                     parkingLotLocalService.save(parkingLot);
-
-                    StatisticsRecord statisticsRecord = StatisticsRecord.builder()
-                            .lotNumber(parkingLot.getNumber())
-                            .status(parkingLot.getStatus())
-                            .updatedAt(new Date(System.currentTimeMillis())).build();
-
-                    statisticsService.save(statisticsRecord);
+                    statisticsService.save(parkingLot);
                 }
             });
         }

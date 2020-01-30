@@ -59,7 +59,7 @@ public class ArduinoController {
             parkingLotService.save(updatingParkingLot);
             parkingLotLocalService.save(updatingParkingLot);
 
-            addStatisticsRecord(updatingParkingLot);
+            statisticsService.save(parkingLot);
         });
     }
 
@@ -88,19 +88,7 @@ public class ArduinoController {
 
             parkingLotService.save(parkingLot);
             parkingLotLocalService.save(parkingLot);
-
-            addStatisticsRecord(parkingLot);
+            statisticsService.save(parkingLot);
         });
     }
-
-    private void addStatisticsRecord(ParkingLot parkingLot) {
-        StatisticsRecord statisticsRecord = StatisticsRecord.builder()
-                .lotNumber(parkingLot.getNumber())
-                .status(parkingLot.getStatus())
-                .updatedAt(new Date(System.currentTimeMillis())).build();
-
-        log.info("Controller update statistics executed...");
-        statisticsService.save(statisticsRecord);
-    }
 }
-

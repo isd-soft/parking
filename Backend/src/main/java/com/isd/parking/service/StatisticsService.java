@@ -1,5 +1,6 @@
 package com.isd.parking.service;
 
+import com.isd.parking.model.ParkingLot;
 import com.isd.parking.model.StatisticsRecord;
 import com.isd.parking.repository.StatisticsRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
@@ -59,12 +61,18 @@ public class StatisticsService {
     /**
      * Save statistics record in database method
      *
+     * @param parkingLot - parking lot need to be saved in statistics record
      * @return - StatisticsRecord which was saved in database
      */
     @Transactional
-    public StatisticsRecord save(StatisticsRecord statisticsRecord) {
+    public StatisticsRecord save(ParkingLot parkingLot) {
 
         log.info("Service save statistics event executed...");
+
+        StatisticsRecord statisticsRecord = StatisticsRecord.builder()
+                .lotNumber(parkingLot.getNumber())
+                .status(parkingLot.getStatus())
+                .updatedAt(new Date(System.currentTimeMillis())).build();
 
         return statisticsRepository.save(statisticsRecord);
     }
