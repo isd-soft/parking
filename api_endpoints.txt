@@ -1,0 +1,22 @@
+	API name			|	HTTP method		|			Path			|	Status code		|	Description
+------------------------------------------------------------------------------------------------------------------
+
+											----  Front end points ----
+
+1) GET Parking lots		|		GET			|		/parking			|		200 (OK)	|	all parking lots resources are fetched
+2) GET Statistics		|		GET			|		/statistics			|		200 (OK)	|	all statistics resources are fetched
+
+											----  Arduino rest end points ----
+											
+1) PUT Parking lot		| PUT (parking lot)	|		/arduino			|		200 (OK)	|	Update parking lot 
+2) PUT Parking lot		| PUT (id, status)	|		/arduino/update		|		200 (OK)	|	Update parking lot status by parking lot id
+
+
+	API name			|	WebSocket path	|			Path			|	Description
+------------------------------------------------------------------------------------------------------------------
+
+										----  Arduino WebSocket end points ----
+											
+1) UPDATE Parking lot	| 	ws://demo 		|			/demo			|	Update parking lot status by receiving a msg with parking lot id 
+
+
