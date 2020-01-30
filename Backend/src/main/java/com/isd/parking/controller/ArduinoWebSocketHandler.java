@@ -70,7 +70,7 @@ public class ArduinoWebSocketHandler extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
 
         log.info("Session Id: " + session.getId() + ", message body" + message.toString());
-        System.out.println(message.getPayload()); 
+        System.out.println(message.getPayload());
 
         JSONObject msgObject = new JSONObject(message.getPayload());
         String arduinoToken = msgObject.getString("token");
@@ -84,18 +84,20 @@ public class ArduinoWebSocketHandler extends TextWebSocketHandler {
 
             parkingLotOptional.ifPresent(parkingLot -> {
 
-                parkingLot.setStatus(ParkingLotStatus.valueOf(parkingLotStatus));
-                parkingLot.setUpdatedNow();
+                if (!parkingLotStatus.equals(parkingLot.getStatus())) {
+                    parkingLot.setStatus(ParkingLotStatus.valueOf(parkingLotStatus));
+                    parkingLot.setUpdatedNow();
 
-                parkingLotService.save(parkingLot);
-                parkingLotLocalService.save(parkingLot);
+                    parkingLotService.save(parkingLot);
+                    parkingLotLocalService.save(parkingLot);
 
-                StatisticsRecord statisticsRecord = StatisticsRecord.builder()
-                        .lotNumber(parkingLot.getNumber())
-                        .status(parkingLot.getStatus())
-                        .updatedAt(new Date(System.currentTimeMillis())).build();
+                    StatisticsRecord statisticsRecord = StatisticsRecord.builder()
+                            .lotNumber(parkingLot.getNumber())
+                            .status(parkingLot.getStatus())
+                            .updatedAt(new Date(System.currentTimeMillis())).build();
 
-                statisticsService.save(statisticsRecord);
+                    statisticsService.save(statisticsRecord);
+                }
             });
         }
     }
