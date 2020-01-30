@@ -8,9 +8,21 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.util.Date;
 
+
+/**
+ * Exception handler for all controllers.
+ * Handles internal errors for non existing pages.
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * Method handles internal errors for non existing pages.
+     *
+     * @param ex      - ResourceNotFoundException, indicates a resource was not found.
+     * @param request - request provided
+     * @return - ResponseEntity
+     */
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<?> resourceNotFoundException(
             ResourceNotFoundException ex, WebRequest request) {
@@ -19,6 +31,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Method handles common internal errors.
+     *
+     * @param ex      - exception
+     * @param request - request provided
+     * @return - ResponseEntity
+     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> globalExceptionHandler(Exception ex, WebRequest request) {
         ErrorResponse errorDetails =

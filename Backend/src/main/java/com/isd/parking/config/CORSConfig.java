@@ -5,23 +5,31 @@
  */
 package com.isd.parking.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
 /**
- * Cross Origin Resource Sharing configuration
- *
- * @author Mircea
+ * Enable CORS access to resources from the frontend,
+ * connection point between frontend SPA and backend API
+ * specifies in a flexible way what kind of cross domain requests are authorized
  */
 @Configuration
+@Slf4j
 public class CORSConfig implements WebMvcConfigurer {
 
+    /**
+     * Method specifies CORS mapping - which methods are allowed from allowed origins (frontend Angular SPA)
+     *
+     * @param registry - standard build-in CorsRegistry
+     */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        System.out.println("call from front");
+
         registry.addMapping("/**")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
-                .allowedOrigins("http://localhost:4200");  //TODO: change the URL for the prod URL when we deploy
+                .allowedOrigins("*");  //TODO: change the URL for the prod URL when we deploy
     }
 }

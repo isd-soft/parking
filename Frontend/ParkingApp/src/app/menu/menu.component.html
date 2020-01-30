@@ -1,21 +1,27 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand btn" (click)="navigateToMain()"><img src="assets/img/isd-logo.png" alt=""/><span class="app-name">ParKing App</span></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<nav class="navbar navbar-expand-lg navbar-light isd-navbar bg-dark">
+  <div class="container">
+    <a class="navbar-brand logo" (click)="navigateToMain()"><img src="assets/img/isd-logo.png" alt="" />
+    </a>
+    <a class="navbar-brand abs">
+<!--      ParKing-->
+      <img src="../../assets/img/ParKingLogo.png" class="appname-logo" (click)="navigateToMain()"/></a>
+<!--    to do : make logo in svg-->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <div class="user nav-link" (click)="navigateTo404()"><i class="fas fa-user"></i> Mircea</div>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Menu
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" (click)="navigateToStats()">Statistics</a>
-        </div>
-      </li>
-    </ul>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto text-light">
+        <li class="nav-item" *ngIf="currentPage === '/'">
+          <a class="nav-link text-light" (click)="navigateToStats()"><i class="fa fa-clipboard"></i> Statistics</a>
+        </li>
+        <li class="nav-item" *ngIf="currentPage === '/stats'">
+          <a class="nav-link text-light" (click)="navigateToMain()"><i class="fa fa-map"></i> Parking map</a>
+        </li>
+      </ul>
+    </div>
   </div>
-
 </nav>
+<div class="container">
+<hr style="border-top: 3px solid rgb(241, 93, 34)!important;">
+</div>

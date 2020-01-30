@@ -1,45 +1,61 @@
 package com.isd.parking.controller;
 
-import com.isd.parking.api.EndpointsAPI;
 import com.isd.parking.exception.ResourceNotFoundException;
 import com.isd.parking.model.ParkingLot;
-import com.isd.parking.model.ParkingLotStatus;
+import com.isd.parking.service.ParkingLotLocalService;
 import com.isd.parking.service.ParkingLotService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.List;
 
 
 /**
- * The type ParkingLot controller.
- *
- * @author ISD Inthership Team
+ * Parking lots controller
+ * Provides methods for getting all parking lots stored in local Java memory and database
  */
-
-@RestController
-@RequestMapping(EndpointsAPI.API)
+@RestController("/")
+@Slf4j
 public class ParkingLotController {
 
-    @Autowired
-    private ParkingLotService parkingLotService;
+    private final ParkingLotLocalService parkingLotService;
 
-    @GetMapping(EndpointsAPI.PARKING_LIST)
+    @Autowired
+    public ParkingLotController(ParkingLotLocalService parkingLotService) {
+        this.parkingLotService = parkingLotService;
+    }
+
+    /**
+     * Parking lots get controller
+     * Used to get all parking lots from the local Java memory
+     *
+     * @return Parking lots list
+     */
+    @GetMapping("parking")
     public List<ParkingLot> getAllParkingLots() {
+        log.info("Controller update parking lot executed...");
         return parkingLotService.listAll();
     }
 
-    @GetMapping(EndpointsAPI.PARKING_LIST + "/{id}")
-    public ResponseEntity<ParkingLot> getEmployeeById(@PathVariable(value = "id") Long parkingLotId)
+    /**
+     * Parking lots get by id controller
+     * Used to get parking lot by its id from the local Java memory
+     *
+     * @return ResponseEntity.OK with body of Parking lot if exists in storage else
+     * @throw ResourceNotFoundException
+     */
+    @GetMapping("parking/{id}")
+    public ResponseEntity<ParkingLot> getParkingLotById(@PathVariable("id") Long parkingLotId)
             throws ResourceNotFoundException {
+
+        log.info("Controller get parking lot by id executed...");
         ParkingLot parkingLot = parkingLotService.findById(parkingLotId)
                 .orElseThrow(() -> new ResourceNotFoundException("Parking Lot not found for this id :: " + parkingLotId));
 
         return ResponseEntity.ok().body(parkingLot);
     }
-
-    //TODO: endpoint for creating and deleting parking lots
-    //branch test
 }

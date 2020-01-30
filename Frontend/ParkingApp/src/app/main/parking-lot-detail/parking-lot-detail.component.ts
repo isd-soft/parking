@@ -22,6 +22,7 @@ export class ParkingLotDetailComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(
       params => {
+        // tslint:disable-next-line: no-string-literal
         this.action = params['action'];
       }
     );

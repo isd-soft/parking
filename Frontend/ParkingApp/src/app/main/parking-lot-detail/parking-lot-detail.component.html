@@ -1,24 +1,33 @@
-<h2>Parking lot details</h2>
-<div *ngIf="parkingLot != null">
+<h2 class="text-dark">Parking lot details</h2>
+<div class="card mx-auto shadow" style="width: 20rem;">
+  <div *ngIf="parkingLot != null">
 
-  <div class="btn lot col-12"  [ngClass]="{'green': parkingLot.status === 'FREE', 'red' : parkingLot.status === 'OCCUPIED', 'grey' : parkingLot.status === 'UNKNOWN'}">
-    <i class="fas fa-car" *ngIf="parkingLot.status === 'OCCUPIED'"></i>
-    <i class="fas fa-parking" *ngIf="parkingLot.status === 'FREE'"></i>
-    <i class="fas fa-ban" *ngIf="parkingLot.status === 'UNKNOWN'"></i>
-  </div>
-
-  <div class="col-sm-12">
-    <div>
-      <span >Name: </span>
-      <span class="lot-name">{{'LOT ' + parkingLot.number}}</span>
+    <div class="btn lot col-sm-12 "  [ngClass]="{'green': parkingLot.status === 'FREE', 'red' : parkingLot.status === 'OCCUPIED', 'grey' : parkingLot.status === 'UNKNOWN'}">
+      <i class="fas fa-car" *ngIf="parkingLot.status === 'OCCUPIED'"></i>
+      <i class="fas fa-parking" *ngIf="parkingLot.status === 'FREE'"></i>
+      <i class="fas fa-ban" *ngIf="parkingLot.status === 'UNKNOWN'"></i>
     </div>
-    <div>
-      <span>Status: </span>
-      <span>{{parkingLot.status}} </span><span *ngIf="parkingLot.status === 'OCCUPIED'">since {{parkingLot.updatedAt.toUTCString()}}</span>
+
+    <div class="card-body">
+
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><b>Name: </b>{{'LOT ' + parkingLot.number}}</li>
+        <li class="list-group-item"><b>Status: </b>{{parkingLot.status}}</li>
+        <li class="list-group-item">Since {{parkingLot.updatedAt | date : 'HH:mm dd-MMM-yyyy'}}</li>
+      </ul>
+
+      <button class="btn col refresh text-center" (click)="goBack()"><i class="fa fa-backspace"></i> Back</button>
+
     </div>
   </div>
 </div>
 
-<div class="error" [hidden]="parkingLot != null">Something went wrong, please click on Refresh button</div>
+<div class="error text-dark" [hidden]="parkingLot != null">Something went wrong, please click on Refresh button</div>
 
-<div class="btn btn-info refresh" (click)="goBack()">Back</div>
+<div class="container">
+  <div class="row ">
+    <div class="col text-center">
+      <button class="btn refresh" (click)="goBack() "  [hidden]="parkingLot != null"><i class="fa fa-backspace"></i> Back</button>
+    </div>
+  </div>
+</div>
