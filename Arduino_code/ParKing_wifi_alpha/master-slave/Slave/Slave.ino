@@ -13,8 +13,8 @@
 #define ECHO_PIN_1     5                                          // Arduino pin tied to echo pin on the ultrasonic sensor 1.
 
 //Sonar 2 details
-#define TRIGGER_PIN_2  3                                          // Arduino pin tied to trigger pin on the ultrasonic sensor 2.
-#define ECHO_PIN_2     6                                          // Arduino pin tied to echo pin on the ultrasonic sensor 2.
+// #define TRIGGER_PIN_2  3                                          // Arduino pin tied to trigger pin on the ultrasonic sensor 2.
+// #define ECHO_PIN_2     6                                          // Arduino pin tied to echo pin on the ultrasonic sensor 2.
                                                                                                                                              // <-- Uncomment for using third sensor
 //Sonar 3 details
 // #define TRIGGER_PIN_3  4                                          // Arduino pin tied to trigger pin on the ultrasonic sensor 3.
@@ -28,7 +28,7 @@
 #define SLAVE_ID  1
 
 #define SONAR_1_ID 1
-#define SONAR_2_ID 2
+//#define SONAR_2_ID 2
                                                                                                                                              // <-- Uncomment for using third sensor
 // #define SONAR_3_ID 3
                                                                                                                                              // --> Uncomment for using third sensor
@@ -37,40 +37,39 @@
 unsigned int filteredSonarDistance_1;                             // real time distance from sonar 1
 unsigned int lastSonarDistance_1;                                 // last known distance of sonar 1, used to prevent double values
 
-unsigned int filteredSonarDistance_2;                             // real time distance from sonar 2
-unsigned int lastSonarDistance_2;                                 // last known distance of sonar 2, used to prevent double values
+// unsigned int filteredSonarDistance_2;                             // real time distance from sonar 2
+// unsigned int lastSonarDistance_2;                                 // last known distance of sonar 2, used to prevent double values
 
                                                                                                                                              // <-- Uncomment for using third sensor
 // unsigned int filteredSonarDistance_3;                             // real time distance from sonar 3
 // unsigned int lastSonarDistance_3;                                 // last known distance of sonar 3, used to prevent double values
                                                                                                                                              // --> Uncomment for using third sensor
 
-long targetDistance = 100;                                       // target distance value when the status should be trigerred, common for all sensors (can be added for each sensor)
+long targetDistance = 300;                                       // target distance value when the status should be trigerred, common for all sensors (can be added for each sensor)
 
 //parking lot
 boolean isLotFreeSonar_1 = false;                                // Sonar's boolean variable to define if the status of parking lot was changed or not
 boolean sonarInitialized_1 = false;                              // initialized flag for sonar
 
-boolean isLotFreeSonar_2 = false;                                // Sonar's boolean variable to define if the status of parking lot was changed or not
-boolean sonarInitialized_2 = false;                              // initialized flag for sonar
+//boolean isLotFreeSonar_2 = false;                                // Sonar's boolean variable to define if the status of parking lot was changed or not
+// boolean sonarInitialized_2 = false;                              // initialized flag for sonar
 
-
-                                                                                                                                             // <-- Uncomment for using third sensor
+// <-- Uncomment for using third sensor
 // boolean isLotFreeSonar_3 = false;                                // Sonar's boolean variable to define if the status of parking lot was changed or not
 // boolean sonarInitialized_3 = false;                              // initialized flag for sonar
                                                                                                                                              // --> Uncomment for using third sensor
 //parking lot states
-String status_free = "FREE";
-String status_occupied = "OCCUPIED";
-String status_unknown = "UNKNOWN";
+String status_free = "F";
+String status_occupied = "O";
+String status_unknown = "U";
 String actual_status_1;
-String actual_status_2;
+// String actual_status_2;
                                                                                                                                              // <-- Uncomment for using third sensor
 // String actual_status_3;
                                                                                                                                              // --> Uncomment for using third sensor
 
 NewPing sonar_1(TRIGGER_PIN_1, ECHO_PIN_1, MAX_DISTANCE);        // NewPing setup of pins and maximum distance for first sensor
-NewPing sonar_2(TRIGGER_PIN_2, ECHO_PIN_2, MAX_DISTANCE);        // NewPing setup of pins and maximum distance for second sensor
+// NewPing sonar_2(TRIGGER_PIN_2, ECHO_PIN_2, MAX_DISTANCE);        // NewPing setup of pins and maximum distance for second sensor
 
                                                                                                                                              // <-- Uncomment for using third sensor
 // NewPing sonar_3(TRIGGER_PIN_3, ECHO_PIN_3, MAX_DISTANCE);     // NewPing setup of pins and maximum distance for third sensor
@@ -84,26 +83,24 @@ void setup() {
   pinMode(TRIGGER_PIN_1, OUTPUT);
   pinMode(ECHO_PIN_1, INPUT);
 
-  pinMode(TRIGGER_PIN_2, OUTPUT);
-  pinMode(ECHO_PIN_2, INPUT);
+ // pinMode(TRIGGER_PIN_2, OUTPUT);
+ // pinMode(ECHO_PIN_2, INPUT);
 
                                                                                                                                              // <-- Uncomment for using third sensor
   // pinMode(TRIGGER_PIN_3, OUTPUT);
   // pinMode(ECHO_PIN_3, INPUT);
                                                                                                                                              // --> Uncomment for using third sensor
 }
-
 void loop() {
    
   digitalWrite(SLAVE_EN , LOW);                                  // Make Enable pin low
-                                                                 // Receiving mode ON
+                                                                 // Receiving mode ON      
   delay(5);
   
   while(Serial.available())                                      // If serial data is available then enter into while loop
   {
     int request = Serial.parseInt();
     if (request != 0) {
-      Serial.print("request: ");Serial.println(request);
       if ((request / 10U) % 10 == SLAVE_ID) {
         if ((request / 1U) % 10 == SONAR_1_ID) {
           filteredSonarDistance_1 = sonar_1.ping_median(10) / US_ROUNDTRIP_CM; // get real time distance in cm from sonar 1
@@ -121,7 +118,7 @@ void loop() {
           Serial.flush();
         } 
         
-        if ((request / 1U) % 10 == SONAR_2_ID) {
+      /*  if ((request / 1U) % 10 == SONAR_2_ID) {
           filteredSonarDistance_2 = sonar_2.ping_median(10) / US_ROUNDTRIP_CM; // get real time distance in cm from sonar 2
           if (!sonarInitialized_2 || ((filteredSonarDistance_2 >= targetDistance || filteredSonarDistance_2 == 0)&& !isLotFreeSonar_2) 
                                   || (filteredSonarDistance_2 < targetDistance && isLotFreeSonar_2))
@@ -136,7 +133,7 @@ void loop() {
           Serial.println(String(SLAVE_ID)+ String(SONAR_2_ID) + String(actual_status_2));
           Serial.flush();
         }
-        
+      */
 
                                                                                                                                              // <-- Uncomment for using third sensor
    /*     if ((request / 1U) % 10 == SONAR_3_ID) {
@@ -154,7 +151,7 @@ void loop() {
           Serial.println(String(SLAVE_ID)+ String(SONAR_3_ID) + String(actual_status_3));
           Serial.flush();
         } */
-                                                                                                                                             // --> Uncomment for using third sensor		
+                                                                                                                                             // --> Uncomment for using third sensor    
       }
     }
   }
