@@ -24,8 +24,7 @@ public class ParkingLot {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id = 11L;
 
     @Column(name = "lot_number")
     private Integer number;
