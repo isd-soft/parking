@@ -121,11 +121,11 @@ void loop() {
         if (status_of_lot != "") {
           if (status_of_lot != last_known_status[i]) {
             if (status_of_lot == "F") {
-              client.send(msg + String(slave_id) + String(sensor_id) + String("\", \"status\":\"") + status_free + String("\", \"token\":\"") + security_token + String("\"}"));              
+              client.send(msg + String(slave_id) + String(sensor_id) + String("\", \"status\":\"") + String("FREE") + String("\", \"token\":\"") + security_token + String("\"}"));              
             } else if (status_of_lot == "O") {
-              client.send(msg + String(slave_id) + String(sensor_id) + String("\", \"status\":\"") + status_occupied + String("\", \"token\":\"") + security_token + String("\"}")); 
+              client.send(msg + String(slave_id) + String(sensor_id) + String("\", \"status\":\"") + String("OCCUPIED") + String("\", \"token\":\"") + security_token + String("\"}")); 
             } else {
-              client.send(msg + String(slave_id) + String(sensor_id) + String("\", \"status\":\"") + status_unknown + String("\", \"token\":\"") + security_token + String("\"}")); 
+              client.send(msg + String(slave_id) + String(sensor_id) + String("\", \"status\":\"") + String("UNKNOWN") + String("\", \"token\":\"") + security_token + String("\"}")); 
             }
           }
           last_known_status[i] = status_of_lot;
