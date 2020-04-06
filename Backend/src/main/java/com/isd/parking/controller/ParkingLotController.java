@@ -36,7 +36,7 @@ public class ParkingLotController {
      */
     @GetMapping("parking")
     public List<ParkingLot> getAllParkingLots() {
-        log.info("Controller update parking lot executed...");
+        //log.info("Controller update parking lot executed...");
         return parkingLotService.listAll();
     }
 
@@ -51,7 +51,7 @@ public class ParkingLotController {
     public ResponseEntity<ParkingLot> getParkingLotById(@PathVariable("id") Long parkingLotId)
             throws ResourceNotFoundException {
 
-        log.info("Controller get parking lot by id executed...");
+        //log.info("Controller get parking lot by id executed...");
         ParkingLot parkingLot = parkingLotService.findById(parkingLotId)
                 .orElseThrow(() -> new ResourceNotFoundException("Parking Lot not found for this id :: " + parkingLotId));
 
