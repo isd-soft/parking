@@ -56,10 +56,17 @@ public class DataLoader implements ApplicationRunner {
             for (int i = 1; i <= totalParkingLotsNumber; i++) {
 
                 //initial saving parking lots to database
+<<<<<<< HEAD
                 parkingLotService.save(new ParkingLot((long) i + 10L, i, date, ParkingLotStatus.UNKNOWN));
 
                 //initial saving parking lots to local Java memory
                 parkingLotLocalService.save(new ParkingLot((long) i + 10L, i, date, ParkingLotStatus.UNKNOWN));
+=======
+                parkingLotService.save(new ParkingLot((long) i+10, i, date, ParkingLotStatus.UNKNOWN));
+
+                //initial saving parking lots to local Java memory
+                parkingLotLocalService.save(new ParkingLot((long) i+10, i, date, ParkingLotStatus.UNKNOWN));
+>>>>>>> b0043cb3836d857c948802da4ad4cb531a35e15e
             }
 
             // fetch all parking lots from database

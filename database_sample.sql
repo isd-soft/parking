@@ -35,11 +35,11 @@ GRANT ALL ON SCHEMA parking TO postgres;
 
 CREATE TABLE parking.parking_lots
 (
-    id uuid NOT NULL,
-    lot_number integer NOT NULL,
-    date_time timestamp without time zone NOT NULL,
-    status character varying(20) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT primary_key PRIMARY KEY (id)
+    id bigint NOT NULL DEFAULT nextval('parking_lots_id_seq'::regclass),
+    lot_number integer,
+    status integer,
+    updated_at timestamp without time zone,
+    CONSTRAINT parking_lots_pkey PRIMARY KEY (id)
 )
 
 TABLESPACE pg_default;
@@ -48,57 +48,34 @@ ALTER TABLE parking.parking_lots
     OWNER to postgres;
 
 
--- Table: parking.stats
+-- Table: parking.statistics
 
--- DROP TABLE parking.stats;
+-- DROP TABLE parking.statistics;
 
-CREATE TABLE parking.stats
+CREATE TABLE parking.statistics
 (
-    id uuid NOT NULL,
-    park_lot_id uuid NOT NULL,
-    status character varying(20) COLLATE pg_catalog."default" NOT NULL,
-    date_time timestamp without time zone NOT NULL,
-    CONSTRAINT stats_primary__key PRIMARY KEY (id),
-    CONSTRAINT f_key FOREIGN KEY (park_lot_id)
-        REFERENCES parking.parking_lots (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+    id bigint NOT NULL DEFAULT nextval('statistics_id_seq'::regclass),
+    lot_number integer,
+    parking_lot_status integer,
+    updated_at timestamp without time zone,
+    CONSTRAINT statistics_pkey PRIMARY KEY (id)
 )
 
 TABLESPACE pg_default;
 
-ALTER TABLE parking.stats
+ALTER TABLE parking.statistics
     OWNER to postgres;
 
 
 -- INSERT SAMPLE DATA
 
-INSERT INTO parking.parking_lots(id, lot_number, date_time, status)
-VALUES ('123e4567-e89b-42d3-a456-556642440000', 1, CURRENT_TIMESTAMP, 'OCCUPIED');
-
-INSERT INTO parking.parking_lots(id, lot_number, date_time, status)
-VALUES ('123e4567-e89b-42d3-a456-556642440001', 2, CURRENT_TIMESTAMP, 'FREE');
-
-INSERT INTO parking.parking_lots(id, lot_number, date_time, status)
-VALUES ('ec99292d-9f8f-4027-a355-35245c9bffb0', 3, CURRENT_TIMESTAMP, 'FREE');
-
-INSERT INTO parking.parking_lots(id, lot_number, date_time, status)
-VALUES ('b2aa019e-d5a6-474d-ab52-dcd6de2582bb', 4, CURRENT_TIMESTAMP, 'UNKNOWN');
-
-INSERT INTO parking.parking_lots(id, lot_number, date_time, status)
-VALUES ('d7270db0-43aa-44d2-8a0e-034b0a01861a', 5, CURRENT_TIMESTAMP, 'UNKNOWN');
-
-INSERT INTO parking.parking_lots(id, lot_number, date_time, status)
-VALUES ('1bfae70b-57bf-42a8-81b3-1fa2439e6372', 6, CURRENT_TIMESTAMP, 'UNKNOWN');
-
-INSERT INTO parking.parking_lots(id, lot_number, date_time, status)
-VALUES ('0a06209d-d5ec-4c15-9055-1a75009c8d38', 7, CURRENT_TIMESTAMP, 'UNKNOWN');
-
-INSERT INTO parking.parking_lots(id, lot_number, date_time, status)
-VALUES ('60190845-b908-4cdc-b4c9-ec32c6da839f', 8, CURRENT_TIMESTAMP, 'UNKNOWN');
-
-INSERT INTO parking.parking_lots(id, lot_number, date_time, status)
-VALUES ('d12772fe-ab7a-4a88-a049-9570e30c3d76', 9, CURRENT_TIMESTAMP, 'UNKNOWN');
-
-INSERT INTO parking.parking_lots(id, lot_number, date_time, status)
-VALUES ('d60d9f97-79c4-4e61-85d0-2cc4a9462bc0', 10, CURRENT_TIMESTAMP, 'UNKNOWN');
+INSERT INTO parking_lots(id, lot_number, status, updated_at) VALUES (1, 1, 2, CURRENT_TIMESTAMP);
+INSERT INTO parking_lots(id, lot_number, status, updated_at) VALUES (2, 2, 2, CURRENT_TIMESTAMP);
+INSERT INTO parking_lots(id, lot_number, status, updated_at) VALUES (3, 3, 2, CURRENT_TIMESTAMP);
+INSERT INTO parking_lots(id, lot_number, status, updated_at) VALUES (4, 4, 2, CURRENT_TIMESTAMP);
+INSERT INTO parking_lots(id, lot_number, status, updated_at) VALUES (5, 5, 2, CURRENT_TIMESTAMP);
+INSERT INTO parking_lots(id, lot_number, status, updated_at) VALUES (6, 6, 2, CURRENT_TIMESTAMP);
+INSERT INTO parking_lots(id, lot_number, status, updated_at) VALUES (7, 7, 2, CURRENT_TIMESTAMP);
+INSERT INTO parking_lots(id, lot_number, status, updated_at) VALUES (8, 8, 2, CURRENT_TIMESTAMP);
+INSERT INTO parking_lots(id, lot_number, status, updated_at) VALUES (9, 9, 2, CURRENT_TIMESTAMP);
+INSERT INTO parking_lots(id, lot_number, status, updated_at) VALUES (10, 10, 2, CURRENT_TIMESTAMP);
